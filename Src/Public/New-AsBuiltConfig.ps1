@@ -132,14 +132,14 @@ function New-AsBuiltConfig {
         Write-Host '---------------------------------------------' -ForegroundColor Cyan
         Write-Host ' <          Report Configuration           > ' -ForegroundColor Cyan
         Write-Host '---------------------------------------------' -ForegroundColor Cyan
-        $ReportConfigFolder = Read-Host -Prompt "Enter the full path of the folder to use for storing report JSON configuration Files and custom style scripts [$env:USERPROFILE\AsBuiltReport]"
+        $ReportConfigFolder = Read-Host -Prompt "Enter the full path of the folder to use for storing report JSON configuration files and custom style scripts [$env:USERPROFILE\AsBuiltReport]"
         if (($ReportConfigFolder -like $null) -or ($ReportConfigFolder -eq "")) {
-            $ReportConfigFolder = "$env:USERPROFILE\AsBuiltReport"
+            $ReportConfigFolder = $env:USERPROFILE + "\AsBuiltReport"
         }
 
         #If the folder doesn't exist, create it
         if (!(Test-Path -Path $ReportConfigFolder)) {
-            New-Item -Path $ReportConfigFolder -ItemType Directory
+            New-Item -Path $ReportConfigFolder -ItemType Directory -Force
         }
 
         #Add the path to the folder to the JSON configuration
@@ -155,7 +155,12 @@ function New-AsBuiltConfig {
         if (!(Get-ChildItem -Path $ReportConfigFolder -Force)) {
             Foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
                 $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
-                New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
+                Try {
+                    New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
+                } Catch {
+                    Write-Error $_
+                    Break
+                }
             }
         } else {
             try {
@@ -169,10 +174,20 @@ function New-AsBuiltConfig {
                                 $OverwriteReportJSON = Read-Host -Prompt "A report JSON already exists in the specified folder for $($AsBuiltReportModule.Name). Would you like to overwrite it? (y/n)"
                             }
                             if ($OverwriteReportJSON -eq 'y') {
-                                New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
+                                Try {
+                                    New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
+                                } Catch {
+                                    Write-Error $_
+                                    Break
+                                }
                             }
                         } else {
-                            New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
+                            Try {
+                                New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
+                            } Catch {
+                                Write-Error $_
+                                Break
+                            }
                         }
                     }
                 }
