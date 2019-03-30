@@ -64,7 +64,7 @@ function New-AsBuiltReportConfig {
                 Write-Error "$Name filename already exists in $Path"
             }
         } else {
-            if (!(Test-Path -Path "$($Module.ModuleBase)\$($Module.Name).json")) {
+            if (!(Test-Path -Path "$($Path)\$($Module.Name).json")) {
                 Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $Path
                 Write-Output "$($Module.Name) JSON configuration file created in $Path"
             } else {
