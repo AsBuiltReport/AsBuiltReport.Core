@@ -52,12 +52,12 @@ function New-AsBuiltConfig {
     }
 
     $Config.Company = @{
-        'FullName' = $CompanyFullName
+        'FullName'  = $CompanyFullName
         'ShortName' = $CompanyShortName
-        'Contact' = $CompanyContact
-        'Email' = $CompanyEmail
-        'Phone' = $CompanyPhone
-        'Address' = $CompanyAddress
+        'Contact'   = $CompanyContact
+        'Email'     = $CompanyEmail
+        'Phone'     = $CompanyPhone
+        'Address'   = $CompanyAddress
     }
     #endregion Company configuration
 
@@ -82,7 +82,8 @@ function New-AsBuiltConfig {
             if (($MailServerPort -eq $null) -or ($MailServerPort -eq "")) {
                 $MailServerPort = '587'
             }
-        } else {
+        }
+        else {
             $MailServerPort = Read-Host -Prompt "Enter the mail server port number [25]"
             if (($MailServerPort -eq $null) -or ($MailServerPort -eq "")) {
                 $MailServerPort = '25'
@@ -92,10 +93,20 @@ function New-AsBuiltConfig {
         while ("true", "false" -notcontains $MailServerUseSSL) {
             $MailServerUseSSL = Read-Host -Prompt "Use SSL for mail server connection? (true/false)"
         }
+        $MailServerUseSSL = Switch ($MailServerUseSSL) {
+            "true" {$true}
+            "false" {$false}
+        }
+
         $MailCredentials = Read-Host -Prompt "Require mail server authentication? (true/false)"
         while ("true", "false" -notcontains $MailCredentials) {
             $MailCredentials = Read-Host -Prompt "Require mail server authentication? (true/false)"
         }
+        $MailCredentials = Switch ($MailCredentials) {
+            "true" {$true}
+            "false" {$false}
+        }
+
         $MailFrom = Read-Host -Prompt "Enter the mail sender address"
         while (($MailFrom -eq $null) -or ($MailFrom -eq "")) {
             $MailFrom = Read-Host -Prompt "Enter the mail sender address" 
@@ -116,13 +127,13 @@ function New-AsBuiltConfig {
     }
 
     $Config.Email = @{
-        'Server' = $MailServer
-        'Port' = $MailServerPort
-        'UseSSL' = $MailServerUseSSL
+        'Server'      = $MailServer
+        'Port'        = $MailServerPort
+        'UseSSL'      = $MailServerUseSSL
         'Credentials' = $MailCredentials
-        'From' = $MailFrom
-        'To' = $MailRecipients
-        'Body' = $MailBody
+        'From'        = $MailFrom
+        'To'          = $MailRecipients
+        'Body'        = $MailBody
     }
     #endregion Email Configuration
 
@@ -157,12 +168,14 @@ function New-AsBuiltConfig {
                 $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
                 Try {
                     New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
-                } Catch {
+                }
+                Catch {
                     Write-Error $_
                     Break
                 }
             }
-        } else {
+        }
+        else {
             try {
                 foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
                     $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
@@ -176,22 +189,26 @@ function New-AsBuiltConfig {
                             if ($OverwriteReportJSON -eq 'y') {
                                 Try {
                                     New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
-                                } Catch {
+                                }
+                                Catch {
                                     Write-Error $_
                                     Break
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             Try {
                                 New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
-                            } Catch {
+                            }
+                            Catch {
                                 Write-Error $_
                                 Break
                             }
                         }
                     }
                 }
-            } catch {
+            }
+            catch {
                 Write-Error $_
             }
         }
