@@ -339,8 +339,11 @@ function New-AsBuiltReport {
         #endregion Send-Email
 
         #region Globals cleanup
-        Clear-Variable AsBuiltConfig
-        Clear-Variable ReportConfig
+        Clear-Variable AsBuiltConfig -Scope Global
+        Clear-Variable ReportConfig -Scope Global
+        Clear-Variable ReportConfigPath -Scope Global
+        Clear-Variable Healthcheck -Scope Global
+        Clear-Variable Orientation -Scope Global
         #endregion Globals cleanup
 
     } catch {
