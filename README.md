@@ -1,3 +1,7 @@
+https://img.shields.io/powershellgallery/v/AsBuiltReport.Core.svg https://img.shields.io/powershellgallery/p/AsBuiltReport.Core.svg https://img.shields.io/powershellgallery/dt/AsBuiltReport.Core.svg
+https://img.shields.io/github/last-commit/AsBuiltReport/AsBuiltReport.Core/master.svg
+https://img.shields.io/github/license/AsBuiltReport/AsBuiltReport.Core.svg
+
 # AsBuiltReport
 
 AsBuiltReport.Core is a PowerShell module which generates As-Built documentation for many common datacentre

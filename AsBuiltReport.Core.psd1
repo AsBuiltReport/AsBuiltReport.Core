@@ -99,13 +99,13 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = 'AsBuiltReport', 'Report', 'Documentation', 'PScribo'
+            Tags = @('AsBuiltReport', 'Report', 'Documentation', 'PScribo', 'PSEdition_Desktop')
 
             # A URL to the license for this module.
             LicenseUri = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/AsBuiltReport'
+            ProjectUri = 'https://github.com/AsBuiltReport/AsBuiltReport.Core'
 
             # A URL to an icon representing this module.
             # IconUri = ''
