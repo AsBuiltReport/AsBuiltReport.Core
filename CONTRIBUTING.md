@@ -7,7 +7,7 @@ Your input is welcome! Contributing to this project is as easy as:
 - Proposing new features
 - Creating a new report
 
-When contributing to this repository, please first discuss the change you wish to make via [issue](https://github.com/AsBuiltReport/AsBuiltReport/issues), or [direct message](https://powershell.slack.com/messages/D3MU9DP8S) in the [PowerShell Slack](https://powershell.slack.com) channel before making a change.
+When contributing to this repository, please first discuss the change you wish to make via [issue](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues), or [direct message](https://powershell.slack.com/messages/D3MU9DP8S) in the [PowerShell Slack](https://powershell.slack.com) channel before making a change.
 
 ## Develop with Github
 This project uses Github to host code, to track issues and feature requests, as well as accept pull requests.
@@ -25,13 +25,13 @@ A good quality pull request will have the following characteristics:
 - The code contained within will meet the best practices set by the team wherever possible.
 
 ### Submitting pull requests
-1. Fork this repository (AsBuiltReport), or if you are developing a report, fork the specific report repository. The example below uses the main AsBuiltReport repository in the command examples.
-2. Add `https://github.com/AsBuiltReport/AsBuiltReport.git` as a remote named `upstream`.
-    - `git remote add upstream https://github.com/AsBuiltReport/AsBuiltReport.git`
+1. Fork this repository (AsBuiltReport.Core), or if you are developing a report, fork the specific report repository. The example below uses the main AsBuiltReport.Core repository in the command examples.
+2. Add `https://github.com/AsBuiltReport/AsBuiltReport.Core.git` as a remote named `upstream`.
+    - `git remote add upstream https://github.com/AsBuiltReport/AsBuiltReport.Core.git`
 3. Create your feature branch from `dev`.
 4. Work on your feature.
-    - Update CHANGELOG.md in the repository you have worked in with add / remove / change information
-    - Update README.md in the repository you have worked in with any new information, such as features, instructions, parameters and/or examples
+    - Update `CHANGELOG.md` in the repository you have worked in with add / remove / change information
+    - Update `README.md` in the repository you have worked in with any new information, such as features, instructions, parameters and/or examples
 5. Squash commits into one or two succinct commits.
     - `git rebase -i HEAD~n` # n being the number of previous commits to rebase
 6. Ensure that your branch is up to date with `upstream/dev`.
@@ -48,7 +48,7 @@ Pull requests will be reviewed as soon as possible.
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
 ## Report Issues and Bugs
-[GitHub issues](https://github.com/AsBuiltReport/AsBuiltReport/issues) is used to track issues and bugs. Report a bug by opening a new issue, it's that easy!
+[GitHub issues](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues) is used to track issues and bugs. Report a bug by opening a new issue, it's that easy!
 
 ## Submit bug reports with detail, background, and sample code
 
@@ -151,7 +151,7 @@ $manifest = @{
 New-ModuleManifest @manifest
 ```
 
-9. Create a README.md file in the root folder. Ensure the README contains useful information before your first pull request!
+9. Create a `README.md` file in the root folder. Ensure the README contains useful information before your first pull request!
 
 10. That's the main shell for a new report repository completed! Make a Pull Request from your fork to the dev branch of the main repository for the initial commit with the main framework for the new report
 

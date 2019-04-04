@@ -39,6 +39,12 @@ Install-Module PScribo
 ```
 Alternatively PScribo will automatically be installed when you install the `AsBuiltReport` collection or individual report modules.
 
+To find a list of avaiable report modules, run the following;
+
+```powershell
+Find-Module -Name AsBuiltReport.* -Repository PSGallery
+```
+
 The pre-requisites for each report type will be documented within its own `README.md` located in the relevant report repository.
 
 ### Module Installation
@@ -67,19 +73,19 @@ Get-Help New-AsBuiltReport -Full
 Here are some examples to get you going.
 
 ```powershell
-# The following creates a VMware vSphere As-Built report in HTML & Word formats.
+# The following creates a VMware vSphere As Built report in HTML & Word formats.
 # The document will highlight particular issues which exist within the environment by including the Healthchecks switch.
-PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -Report Core -EnableHealthCheck
+PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputPath 'H:\Documents\'
 
-# The following creates a Pure Storage FlashArray As-Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
+# The following creates a Pure Storage FlashArray As Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
 PS C:\>$Creds = Get-Credential
-PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Credential $Creds -Format Text -Report PureStorage.FlashArray -Timestamp
+PS C:\>New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputPath 'H:\Documents\'
 
-# The following creates a Cisco UCS As-Built report in default format (Word) with a customised style.
-PS C:\>New-AsBuiltReport -IP 192.168.1.100 -Username admin -Password admin -Report Cisco.UCSManager -StylePath c:\scripts\ACME.ps1
+# The following creates a Cisco UCS As Built report in default format (Word) with a customised style.
+PS C:\>New-AsBuiltReport -Report Cisco.UCSManager -Target 192.168.1.100 -Username admin -Password admin -StylePath 'C:\scripts\ACME.ps1' -OutputPath 'H:\Documents\'
 
-# The following creates a VMware vSphere As-Built report in HTML format, using the configuration in the asbuilt.json file located in the C:\scripts\ folder.
-PS C:\>New-AsBuiltReport -IP 192.168.1.100 -Username admin -Password admin -Format HTML -Report Core -AsBuiltConfigPath C:\scripts\asbuilt.json
+# The following creates a VMware NSX-V As Built report in HTML format, using the configuration in the asbuilt.json file located in the C:\scripts\ folder.
+PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigPath 'C:\scripts\asbuilt.json' -OutputPath 'H:\Documents\'
 ```
 
 ## Known Issues
