@@ -1,21 +1,21 @@
 <p align="center">
-    <a alt="PowerShell Gallery Version">
+    <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PowerShell Gallery Version">
         <img src="https://img.shields.io/powershellgallery/v/AsBuiltReport.Core.svg" /></a>
-    <a alt="PS Gallery Downloads">
+    <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PS Gallery Downloads">
         <img src="https://img.shields.io/powershellgallery/dt/AsBuiltReport.Core.svg" /></a>
-    <a alt="PS Platform">
+    <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PS Platform">
         <img src="https://img.shields.io/powershellgallery/p/AsBuiltReport.Core.svg" /></a>
 </p>
 <p align="center">
-    <a alt="GitHub Last Commit">
+    <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/graphs/commit-activity" alt="GitHub Last Commit">
         <img src="https://img.shields.io/github/last-commit/AsBuiltReport/AsBuiltReport.Core/master.svg" /></a>
-    <a alt="GitHub License">
+    <a href="https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/LICENSE" alt="GitHub License">
         <img src="https://img.shields.io/github/license/AsBuiltReport/AsBuiltReport.Core.svg" /></a>
-    <a alt="GitHub Contributors">
+    <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/graphs/contributors" alt="GitHub Contributors">
         <img src="https://img.shields.io/github/contributors/AsBuiltReport/AsBuiltReport.Core.svg"/></a>
 </p>
 <p align="center">
-    <a alt="Twitter">
+    <a href="https://twitter.com/AsBuiltReport" alt="Twitter">
             <img src="https://img.shields.io/twitter/follow/AsBuiltReport.svg?style=social"/></a>
 </p>
 
@@ -38,6 +38,12 @@ PScribo can be installed from the PowerShell Gallery with the following command.
 Install-Module PScribo
 ```
 Alternatively PScribo will automatically be installed when you install the `AsBuiltReport` collection or individual report modules.
+
+To find a list of avaiable report modules, run the following;
+
+```powershell
+Find-Module -Name AsBuiltReport.* -Repository PSGallery
+```
 
 The pre-requisites for each report type will be documented within its own `README.md` located in the relevant report repository.
 
@@ -67,19 +73,19 @@ Get-Help New-AsBuiltReport -Full
 Here are some examples to get you going.
 
 ```powershell
-# The following creates a VMware vSphere As-Built report in HTML & Word formats.
+# The following creates a VMware vSphere As Built report in HTML & Word formats.
 # The document will highlight particular issues which exist within the environment by including the Healthchecks switch.
-PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -Report VMware.vSphere -EnableHealthCheck
+PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputPath 'H:\Documents\'
 
-# The following creates a Pure Storage FlashArray As-Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
+# The following creates a Pure Storage FlashArray As Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
 PS C:\>$Creds = Get-Credential
-PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Credential $Creds -Format Text -Report PureStorage.FlashArray -Timestamp
+PS C:\>New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputPath 'H:\Documents\'
 
-# The following creates a Cisco UCS As-Built report in default format (Word) with a customised style.
-PS C:\>New-AsBuiltReport -IP 192.168.1.100 -Username admin -Password admin -Report Cisco.UCSManager -StylePath c:\scripts\ACME.ps1
+# The following creates a Cisco UCS As Built report in default format (Word) with a customised style.
+PS C:\>New-AsBuiltReport -Report Cisco.UCSManager -Target 192.168.1.100 -Username admin -Password admin -StylePath 'C:\scripts\ACME.ps1' -OutputPath 'H:\Documents\'
 
-# The following creates a VMware vSphere As-Built report in HTML format, using the configuration in the asbuilt.json file located in the C:\scripts\ folder.
-PS C:\>New-AsBuiltReport -IP 192.168.1.100 -Username admin -Password admin -Format HTML -Report VMware.vSphere -AsBuiltConfigPath C:\scripts\asbuilt.json
+# The following creates a VMware NSX-V As Built report in HTML format, using the configuration in the asbuilt.json file located in the C:\scripts\ folder.
+PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigPath 'C:\scripts\asbuilt.json' -OutputPath 'H:\Documents\'
 ```
 
 ## Known Issues
