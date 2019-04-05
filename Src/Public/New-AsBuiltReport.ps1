@@ -92,7 +92,7 @@ function New-AsBuiltReport {
             HelpMessage = 'Please specify which report type you wish to run.'
         )]
         [ValidateScript( {
-                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable
+                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
                 $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
                     $NameArray = $InstalledReportModule.Name.Split('.')
                     "$($NameArray[-2]).$($NameArray[-1])"
@@ -339,14 +339,14 @@ function New-AsBuiltReport {
         #endregion Send-Email
 
         #region Globals cleanup
-        Clear-Variable -Name AsBuiltConfig -Scope Global
-        Clear-Variable -Name ReportConfig -Scope Global
-        Clear-Variable -Name Orientation -Scope Global
+        Remove-Variable -Name AsBuiltConfig -Scope Global
+        Remove-Variable -Name ReportConfig -Scope Global
+        Remove-Variable -Name Orientation -Scope Global
         if ($ReportConfigPath) {
-            Clear-Variable -Name ReportConfigPath
+            Remove-Variable -Name ReportConfigPath
         }
         if ($Healthcheck) {
-            Clear-Variable -Name Healthcheck -Scope Global
+            Remove-Variable -Name Healthcheck -Scope Global
         }
         #endregion Globals cleanup
 
@@ -365,7 +365,7 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReport' -ParameterName 'Repo
         $fakeBoundParameter
     )
 
-    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable
+    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
     $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
         $NameArray = $InstalledReportModule.Name.Split('.')
         "$($NameArray[-2]).$($NameArray[-1])"
