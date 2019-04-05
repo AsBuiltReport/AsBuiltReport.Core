@@ -318,19 +318,12 @@ function New-AsBuiltReport {
                 Body = $AsBuiltConfig.Email.Body
                 SmtpServer = $AsBuiltConfig.Email.Server
                 Port = $AsBuiltConfig.Email.Port
+                UseSSL = $AsBuiltConfig.Email.UseSSL
             }
 
             if ($AsBuiltConfig.Email.Credentials) {
-                if ($AsBuiltConfig.Email.UseSSL) {
-                    # If UseSsl is enabled in the JSON configuration, send the report via SMTP using SSL and with credentials
-                    Send-MailMessage @EmailArguments -UseSsl -Credential $MailCredentials
-                } else {
-                    # Send the report via SMTP using SSL
-                    Send-MailMessage @EmailArguments -Credential $MailCredentials
-                }
-            } elseif ($AsBuiltConfig.Email.UseSSL) {
-                # If UseSsl is enabled in the JSON configuration, send the report via SMTP using SSL
-                Send-MailMessage @EmailArguments -UseSsl
+                # Send the report via SMTP using SSL
+                Send-MailMessage @EmailArguments -Credential $MailCredentials
             } else {
                 # Send the report via SMTP
                 Send-MailMessage @EmailArguments
@@ -351,8 +344,7 @@ function New-AsBuiltReport {
         #endregion Globals cleanup
 
     } catch {
-        $Err = $_
-        Write-Error $Err
+        Write-Error $_
     }
 }
 
@@ -371,7 +363,7 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReport' -ParameterName 'Repo
         "$($NameArray[-2]).$($NameArray[-1])"
     }
 
-    $ValidReports | Where-Object {$_ -like "$wordToComplete*"} | ForEach-Object {
+    $ValidReports | Where-Object { $_ -like "$wordToComplete*" } | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
 }
