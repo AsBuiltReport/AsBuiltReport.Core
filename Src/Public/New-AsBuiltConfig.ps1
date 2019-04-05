@@ -14,7 +14,7 @@ function New-AsBuiltConfig {
     #>
 
     #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
-    $global:Config = @{}
+    $global:Config = @{ }
 
     #region Report configuration
     Clear-Host
@@ -52,12 +52,12 @@ function New-AsBuiltConfig {
     }
 
     $Config.Company = @{
-        'FullName'  = $CompanyFullName
+        'FullName' = $CompanyFullName
         'ShortName' = $CompanyShortName
-        'Contact'   = $CompanyContact
-        'Email'     = $CompanyEmail
-        'Phone'     = $CompanyPhone
-        'Address'   = $CompanyAddress
+        'Contact' = $CompanyContact
+        'Email' = $CompanyEmail
+        'Phone' = $CompanyPhone
+        'Address' = $CompanyAddress
     }
     #endregion Company configuration
 
@@ -82,8 +82,7 @@ function New-AsBuiltConfig {
             if (($MailServerPort -eq $null) -or ($MailServerPort -eq "")) {
                 $MailServerPort = '587'
             }
-        }
-        else {
+        } else {
             $MailServerPort = Read-Host -Prompt "Enter the mail server port number [25]"
             if (($MailServerPort -eq $null) -or ($MailServerPort -eq "")) {
                 $MailServerPort = '25'
@@ -94,8 +93,8 @@ function New-AsBuiltConfig {
             $MailServerUseSSL = Read-Host -Prompt "Use SSL for mail server connection? (true/false)"
         }
         $MailServerUseSSL = Switch ($MailServerUseSSL) {
-            "true" {$true}
-            "false" {$false}
+            "true" { $true }
+            "false" { $false }
         }
 
         $MailCredentials = Read-Host -Prompt "Require mail server authentication? (true/false)"
@@ -103,8 +102,8 @@ function New-AsBuiltConfig {
             $MailCredentials = Read-Host -Prompt "Require mail server authentication? (true/false)"
         }
         $MailCredentials = Switch ($MailCredentials) {
-            "true" {$true}
-            "false" {$false}
+            "true" { $true }
+            "false" { $false }
         }
 
         $MailFrom = Read-Host -Prompt "Enter the mail sender address"
@@ -127,13 +126,13 @@ function New-AsBuiltConfig {
     }
 
     $Config.Email = @{
-        'Server'      = $MailServer
-        'Port'        = $MailServerPort
-        'UseSSL'      = $MailServerUseSSL
+        'Server' = $MailServer
+        'Port' = $MailServerPort
+        'UseSSL' = $MailServerUseSSL
         'Credentials' = $MailCredentials
-        'From'        = $MailFrom
-        'To'          = $MailRecipients
-        'Body'        = $MailBody
+        'From' = $MailFrom
+        'To' = $MailRecipients
+        'Body' = $MailBody
     }
     #endregion Email Configuration
 
@@ -168,14 +167,12 @@ function New-AsBuiltConfig {
                 $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
                 Try {
                     New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
-                }
-                Catch {
+                } Catch {
                     Write-Error $_
                     Break
                 }
             }
-        }
-        else {
+        } else {
             try {
                 foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
                     $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
@@ -187,16 +184,14 @@ function New-AsBuiltConfig {
                         if ($OverwriteReportJSON -eq 'y') {
                             Try {
                                 New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder -Overwrite
-                            }
-                            Catch {
+                            } Catch {
                                 Write-Error $_
                                 Break
                             }
                         }
                     }
                 }
-            }
-            catch {
+            } catch {
                 Write-Error $_
             }
         }
@@ -218,9 +213,16 @@ function New-AsBuiltConfig {
         if (($AsBuiltName -like $null) -or ($AsBuiltName -eq "")) {
             $AsBuiltName = "AsBuiltReport"
         }
-        $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built report configuration file [$env:USERPROFILE\AsBuiltReport]"
-        if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
-            $AsBuiltExportPath = "$env:USERPROFILE\AsBuiltReport"
+        if ($Config.UserFolder.Path) {
+            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built report configuration file [$($Config.UserFolder.Path)]"
+            if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                $AsBuiltExportPath = $Config.UserFolder.Path
+            }
+        } else {
+            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built report configuration file [$env:USERPROFILE\AsBuiltReport]"
+            if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                $AsBuiltExportPath = "$env:USERPROFILE\AsBuiltReport"
+            }
         }
         $AsBuiltConfigPath = Join-Path -Path $AsBuiltExportPath -ChildPath "$AsBuiltName.json"
         $Config | ConvertTo-Json | Out-File $AsBuiltConfigPath
