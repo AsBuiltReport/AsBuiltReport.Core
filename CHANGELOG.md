@@ -1,5 +1,11 @@
 # AsBuiltReport.Core Changelog
 
+## Unreleased
+### Added
+- DefaultParameterSetName to New-AsBuiltReport so a user can run the cmdlet without any parameters
+- Check if OutputPath for New-AsBuiltReport exists before running the report script and error if it doesn't exist
+- Add default action to credential parameter on New-AsBuiltReport
+
 ## [1.0.0] - 2019-03-26
 ### Added
 - `AsBuiltReport.Core` module created to provide core as built report functionality

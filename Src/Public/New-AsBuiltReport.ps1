@@ -83,7 +83,8 @@ function New-AsBuiltReport {
 
     #region Script Parameters
     [CmdletBinding(
-        PositionalBinding = $false
+        PositionalBinding = $false,
+        DefaultParameterSetName = 'Credential'
     )]
     param (
         [Parameter(
@@ -121,7 +122,7 @@ function New-AsBuiltReport {
             ParameterSetName = 'Credential'
         )]
         [ValidateNotNullOrEmpty()]
-        [PSCredential] $Credential,
+        [PSCredential] $Credential = (Get-Credential),
 
         [Parameter(
             Position = 2,
@@ -211,6 +212,11 @@ function New-AsBuiltReport {
         if (($Username -and $Password)) {
             $SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force
             $Credential = New-Object System.Management.Automation.PSCredential ($Username, $SecurePassword)
+        }
+
+        if (!(Test-Path $OutputPath)) {
+            Write-Error "OutputPath $OutputPath is not a valid directory path"
+            break
         }
 
         #region Variable config
