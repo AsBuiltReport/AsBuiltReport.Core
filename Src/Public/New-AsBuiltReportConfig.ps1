@@ -20,7 +20,7 @@ function New-AsBuiltReportConfig {
         )]
         [ValidateNotNullOrEmpty()]
         [ValidateScript( {
-                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable  | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+                $InstalledReportModules = Get-InstalledModule -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
                 $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
                     $NameArray = $InstalledReportModule.Name.Split('.')
                     "$($NameArray[-2]).$($NameArray[-1])"
@@ -62,23 +62,23 @@ function New-AsBuiltReportConfig {
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
-        $Module = Get-Module -ListAvailable "AsBuiltReport.$Report"  | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+        $Module = Get-InstalledModule -Name "AsBuiltReport.$Report" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
         if ($Name) {
             if (!(Test-Path -Path "$($Path)\$($Name).json")) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($Path)\$($Name).json"
+                Copy-Item -Path "$($Module.InstalledLocation)\$($Module.Name).json" -Destination "$($Path)\$($Name).json"
                 Write-Output "$Name JSON configuration file created in $Path"
             } elseif ($Overwrite) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($Path)\$($Name).json" -Force
+                Copy-Item -Path "$($Module.InstalledLocation)\$($Module.Name).json" -Destination "$($Path)\$($Name).json" -Force
                 Write-Output "$Name JSON configuration file created in $Path"
             } else {
                 Write-Error "$Name filename already exists in $Path"
             }
         } else {
             if (!(Test-Path -Path "$($Path)\$($Module.Name).json")) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $Path
+                Copy-Item -Path "$($Module.InstalledLocation)\$($Module.Name).json" -Destination $Path
                 Write-Output "$($Module.Name) JSON configuration file created in $Path"
             } elseif ($Overwrite) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $Path -Force
+                Copy-Item -Path "$($Module.InstalledLocation)\$($Module.Name).json" -Destination $Path -Force
                 Write-Output "$($Module.Name) JSON configuration file created in $Path"
             } else {
                 Write-Error "$($Module.Name).json report configuration already exists in $Path"
@@ -98,13 +98,13 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReportConfig' -ParameterName
         $fakeBoundParameter
     )
 
-    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable  | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+    $InstalledReportModules = Get-InstalledModule -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
     $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
         $NameArray = $InstalledReportModule.Name.Split('.')
         "$($NameArray[-2]).$($NameArray[-1])"
     }
 
-    $ValidReports | Where-Object {$_ -like "$wordToComplete*"} | ForEach-Object {
+    $ValidReports | Where-Object { $_ -like "$wordToComplete*" } | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
 }

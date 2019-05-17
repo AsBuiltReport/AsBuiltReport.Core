@@ -161,7 +161,7 @@ function New-AsBuiltConfig {
         #If the folder is not empty, do a foreach loop through each currently installed report module and check if the
         #report json specific to that module exists. If it does, prompt the user to see if they want to overwrite the
         #JSON. If it doesn't exist, generate the JSON
-        $AsBuiltReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+        $AsBuiltReportModules = Get-InstalledModule -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
         if (!(Get-ChildItem -Path $ReportConfigFolder -Force)) {
             Foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
                 $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
@@ -222,6 +222,9 @@ function New-AsBuiltConfig {
             $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built report configuration file [$env:USERPROFILE\AsBuiltReport]"
             if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
                 $AsBuiltExportPath = "$env:USERPROFILE\AsBuiltReport"
+                $Config.UserFolder = @{
+                    'Path' = $AsBuiltExportPath
+                }
             }
         }
         $AsBuiltConfigPath = Join-Path -Path $AsBuiltExportPath -ChildPath "$AsBuiltName.json"

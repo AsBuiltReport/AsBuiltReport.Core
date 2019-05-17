@@ -70,7 +70,7 @@ function New-AsBuiltReport {
         Creates a VMware vSphere As Built Report in HTML format, using the configuration in the asbuiltreport.json file located in the C:\scripts\ folder.
         The report will be saved to c:\scripts.
     .NOTES
-        Version:        1.0.0
+        Version:        1.0.1
         Author(s):      Tim Carman / Matt Allford
         Twitter:        @tpcarman / @mattallford
         Github:         AsBuiltReport
@@ -84,7 +84,7 @@ function New-AsBuiltReport {
     #region Script Parameters
     [CmdletBinding(
         PositionalBinding = $false,
-        DefaultParameterSetName = 'Credential'
+        DefaultParameterSetName = 'DefaultCredential'
     )]
     param (
         [Parameter(
@@ -93,7 +93,7 @@ function New-AsBuiltReport {
             HelpMessage = 'Please specify which report type you wish to run.'
         )]
         [ValidateScript( {
-                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+                $InstalledReportModules = Get-InstalledModule -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
                 $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
                     $NameArray = $InstalledReportModule.Name.Split('.')
                     "$($NameArray[-2]).$($NameArray[-1])"
@@ -114,7 +114,8 @@ function New-AsBuiltReport {
         [ValidateNotNullOrEmpty()]
         [Alias('Cluster', 'Server', 'IP')]
         [String[]] $Target,
-
+        
+        [Parameter(Mandatory = $true, ParameterSetName = 'DefaultCredential')]
         [Parameter(
             Position = 2,
             Mandatory = $true,
@@ -122,7 +123,7 @@ function New-AsBuiltReport {
             ParameterSetName = 'Credential'
         )]
         [ValidateNotNullOrEmpty()]
-        [PSCredential] $Credential = (Get-Credential),
+        [PSCredential] $Credential,
 
         [Parameter(
             Position = 2,
@@ -287,12 +288,13 @@ function New-AsBuiltReport {
 
         #region Email Server Authentication
         # If Email Server Authentication is required, prompt user for credentials
-        if ($AsBuiltConfig.Email.Credentials) {
+        if ($SendEmail -and $AsBuiltConfig.Email.Credentials) {
             Clear-Host
             Write-Host '---------------------------------------------' -ForegroundColor Cyan
             Write-Host '  <        Email Server Credentials       >  ' -ForegroundColor Cyan
             Write-Host '---------------------------------------------' -ForegroundColor Cyan
             $MailCredentials = Get-Credential -Message "Please enter the credentials for $($AsBuiltConfig.Email.Server)"
+            Clear-Host
         }
         #endregion Email Server Authentication
 
@@ -363,7 +365,7 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReport' -ParameterName 'Repo
         $fakeBoundParameter
     )
 
-    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+    $InstalledReportModules = Get-InstalledModule -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
     $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
         $NameArray = $InstalledReportModule.Name.Split('.')
         "$($NameArray[-2]).$($NameArray[-1])"
