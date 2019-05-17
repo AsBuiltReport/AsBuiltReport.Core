@@ -84,7 +84,7 @@ function New-AsBuiltReport {
     #region Script Parameters
     [CmdletBinding(
         PositionalBinding = $false,
-        DefaultParameterSetName = 'DefaultCredential'
+        DefaultParameterSetName = 'Credential'
     )]
     param (
         [Parameter(
@@ -115,7 +115,6 @@ function New-AsBuiltReport {
         [Alias('Cluster', 'Server', 'IP')]
         [String[]] $Target,
         
-        [Parameter(Mandatory = $true, ParameterSetName = 'DefaultCredential')]
         [Parameter(
             Position = 2,
             Mandatory = $true,
