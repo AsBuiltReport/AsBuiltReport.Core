@@ -161,7 +161,7 @@ function New-AsBuiltConfig {
         #If the folder is not empty, do a foreach loop through each currently installed report module and check if the
         #report json specific to that module exists. If it does, prompt the user to see if they want to overwrite the
         #JSON. If it doesn't exist, generate the JSON
-        $AsBuiltReportModules = Get-Module -ListAvailable -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
+        $AsBuiltReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
         if (!(Get-ChildItem -Path $ReportConfigFolder -Force)) {
             Foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
                 $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
