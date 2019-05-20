@@ -20,7 +20,7 @@ function New-AsBuiltReportConfig {
         )]
         [ValidateNotNullOrEmpty()]
         [ValidateScript( {
-                $InstalledReportModules = Get-InstalledModule -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+                $InstalledReportModules = Get-Module -ListAvailable -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
                 $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
                     $NameArray = $InstalledReportModule.Name.Split('.')
                     "$($NameArray[-2]).$($NameArray[-1])"
@@ -62,7 +62,7 @@ function New-AsBuiltReportConfig {
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
-        $Module = Get-InstalledModule -Name "AsBuiltReport.$Report" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+        $Module = Get-Module -ListAvailable -Name "AsBuiltReport.$Report" | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
         if ($Name) {
             if (!(Test-Path -Path "$($Path)\$($Name).json")) {
                 Copy-Item -Path "$($Module.InstalledLocation)\$($Module.Name).json" -Destination "$($Path)\$($Name).json"
@@ -98,7 +98,7 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReportConfig' -ParameterName
         $fakeBoundParameter
     )
 
-    $InstalledReportModules = Get-InstalledModule -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+    $InstalledReportModules = Get-Module -ListAvailable -Name "AsBuiltReport.*" | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
     $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
         $NameArray = $InstalledReportModule.Name.Split('.')
         "$($NameArray[-2]).$($NameArray[-1])"
