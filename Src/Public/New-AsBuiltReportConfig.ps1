@@ -20,7 +20,7 @@ function New-AsBuiltReportConfig {
         )]
         [ValidateNotNullOrEmpty()]
         [ValidateScript( {
-                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable  | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
                 $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
                     $NameArray = $InstalledReportModule.Name.Split('.')
                     "$($NameArray[-2]).$($NameArray[-1])"
@@ -62,7 +62,7 @@ function New-AsBuiltReportConfig {
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
-        $Module = Get-Module -ListAvailable "AsBuiltReport.$Report"  | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+        $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
         if ($Name) {
             if (!(Test-Path -Path "$($Path)\$($Name).json")) {
                 Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($Path)\$($Name).json"
@@ -98,13 +98,13 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReportConfig' -ParameterName
         $fakeBoundParameter
     )
 
-    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable  | Where-Object { $_.name -ne 'AsBuiltReport.Core' }
+    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
     $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
         $NameArray = $InstalledReportModule.Name.Split('.')
         "$($NameArray[-2]).$($NameArray[-1])"
     }
 
-    $ValidReports | Where-Object {$_ -like "$wordToComplete*"} | ForEach-Object {
+    $ValidReports | Where-Object { $_ -like "$wordToComplete*" } | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
 }
