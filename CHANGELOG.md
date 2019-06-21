@@ -1,5 +1,9 @@
 # AsBuiltReport.Core Changelog
 
+## [1.0.2] - 2019-06-21
+### Changed
+- Update module manifest icon and release notes URI
+
 ## [1.0.1] - 2019-05-17
 ### Added
 - Add DefaultParameterSetName to `New-AsBuiltReport` so a user can run the cmdlet without any parameters

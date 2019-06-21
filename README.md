@@ -21,9 +21,7 @@
 
 # AsBuiltReport
 
-AsBuiltReport.Core is a PowerShell module which generates As-Built documentation for many common datacentre
-infrastructure systems. Reports can be generated in Text, XML, HTML and MS Word formats and can be presented with
-custom styling to align with your company/customer's brand. Reports are installed as separate PowerShell modules.
+AsBuiltReport.Core is a PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems. The AsBuiltReport.Core module is required by each individual report module used to generate as built documentation for a specific product and/or technology.
 
 # Getting Started
 
@@ -31,7 +29,7 @@ The following simple list of instructions will get you started with the AsBuiltR
 
 ## Pre-requisites
 
-All CmdLets and Functions require the [PScribo](https://github.com/iainbrighton/PScribo) module version 0.7.24 or later.
+All cmdLets and functions require the [PScribo](https://github.com/iainbrighton/PScribo) module version 0.7.24 or later.
 PScribo can be installed from the PowerShell Gallery with the following command.
 
 ```powershell

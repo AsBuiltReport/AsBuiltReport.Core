@@ -12,7 +12,7 @@
     RootModule = 'AsBuiltReport.Core.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.0.1'
+    ModuleVersion = '1.0.2'
 
     # Supported PSEditions
     CompatiblePSEditions = 'Desktop'
@@ -30,7 +30,7 @@
     Copyright = '(c) 2019 Tim Carman. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'A PowerShell module to generate as built documentation for the datacenter.'
+    Description = 'A PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '5.1'
@@ -51,7 +51,12 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    RequiredModules = @(@{ModuleName = 'PScribo'; ModuleVersion = '0.7.24'; })
+    RequiredModules = @(
+        @{
+            ModuleName = 'PScribo'; 
+            ModuleVersion = '0.7.24'
+        }
+    )
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
@@ -72,13 +77,13 @@
     FunctionsToExport = 'New-AsBuiltReport', 'New-AsBuiltConfig', 'New-AsBuiltReportConfig'
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport = @()
+    # CmdletsToExport = @()
 
     # Variables to export from this module
     # VariablesToExport = @()
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport = @()
+    # AliasesToExport = @()
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()
@@ -104,10 +109,10 @@
             ProjectUri = 'https://github.com/AsBuiltReport/AsBuiltReport.Core'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport/master/AsBuiltReport.png'
 
             # ReleaseNotes of this module
-            # ReleaseNotes = ''
+            ReleaseNotes = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/CHANGELOG.md'
 
             # Prerelease string of this module
             # Prerelease = ''
