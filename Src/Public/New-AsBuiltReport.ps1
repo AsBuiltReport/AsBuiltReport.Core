@@ -114,7 +114,6 @@ function New-AsBuiltReport {
         [ValidateNotNullOrEmpty()]
         [Alias('Cluster', 'Server', 'IP')]
         [String[]] $Target,
-        
         [Parameter(
             Position = 2,
             Mandatory = $true,
@@ -218,7 +217,6 @@ function New-AsBuiltReport {
             Write-Error "OutputPath $OutputPath is not a valid directory path"
             break
         }
-
         #region Variable config
 
         # Import the AsBuiltReport JSON configuration file

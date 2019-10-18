@@ -12,6 +12,7 @@
     RootModule = 'AsBuiltReport.Core.psm1'
 
     # Version number of this module.
+
     ModuleVersion = '1.0.2'
 
     # Supported PSEditions
@@ -24,7 +25,7 @@
     Author = 'Tim Carman'
 
     # Company or vendor of this module
-    CompanyName = ''
+    # CompanyName = ''
 
     # Copyright statement for this module
     Copyright = '(c) 2019 Tim Carman. All rights reserved.'
