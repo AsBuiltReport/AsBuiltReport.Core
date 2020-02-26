@@ -70,7 +70,7 @@ function New-AsBuiltReport {
         Creates a VMware vSphere As Built Report in HTML format, using the configuration in the asbuiltreport.json file located in the C:\scripts\ folder.
         The report will be saved to c:\scripts.
     .NOTES
-        Version:        1.0.1
+        Version:        1.0.3
         Author(s):      Tim Carman / Matt Allford
         Twitter:        @tpcarman / @mattallford
         Github:         AsBuiltReport
@@ -305,7 +305,7 @@ function New-AsBuiltReport {
             & "Invoke-$($ReportModule)" -Target $Target -Credential $Credential -StylePath $StylePath
         }
         Try {
-            $Document = $AsBuiltReport | Export-Document -Path $OutputPath -Format $Format -PassThru
+            $Document = $AsBuiltReport | Export-Document -Path $OutputPath -Format $Format -Options @{ TextWidth = 240 } -PassThru
             Write-Output "$FileName has been saved to $OutputPath"
         } catch {
             $Err = $_

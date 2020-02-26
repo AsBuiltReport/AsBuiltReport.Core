@@ -144,9 +144,9 @@ $manifest = @{
     Author            = 'Matthew Allford'
 	Description		  = 'A PowerShell module to generate an as built report on the configuration of HPE Nimble Storage arrays.'
     FunctionsToExport = 'Invoke-AsBuiltReport.HPE.NimbleStorage'
-    RequiredModules = @{
+    RequiredModules = @(
         'AsBuiltReport.Core'
-    }
+    )
 }
 New-ModuleManifest @manifest
 ```
