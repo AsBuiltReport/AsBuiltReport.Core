@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.0.2'
+    ModuleVersion = '1.0.3'
 
     # Supported PSEditions
     CompatiblePSEditions = 'Desktop'
@@ -28,7 +28,7 @@
     # CompanyName = ''
 
     # Copyright statement for this module
-    Copyright = '(c) 2019 Tim Carman. All rights reserved.'
+    Copyright = '(c) 2020 Tim Carman. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description = 'A PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems.'
@@ -55,7 +55,7 @@
     RequiredModules = @(
         @{
             ModuleName = 'PScribo'; 
-            ModuleVersion = '0.7.24'
+            ModuleVersion = '0.7.26'
         }
     )
 
