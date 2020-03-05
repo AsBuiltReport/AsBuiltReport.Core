@@ -76,6 +76,9 @@ Here are some examples to get you going.
 # The document will highlight particular issues which exist within the environment by including the Healthchecks switch.
 PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputPath 'H:\Documents\'
 
+# The following creates a VMware vSphere As Built report in HTML & Word formats, while displaying Verbose messages to the console
+PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -OutputPath 'H:\Documents\' -Verbose
+
 # The following creates a Pure Storage FlashArray As Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
 PS C:\>$Creds = Get-Credential
 PS C:\>New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputPath 'H:\Documents\'
