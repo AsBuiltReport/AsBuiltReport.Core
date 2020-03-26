@@ -1,6 +1,6 @@
 # AsBuiltReport.Core Changelog
 
-## {Unreleased]
+## [Unreleased]
 ### Added
 - Added support for using the -Verbose switch with New-AsBuiltReport as per [Issue 28](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/28)
 
