@@ -1,14 +1,15 @@
 # AsBuiltReport.Core Changelog
 
+## {Unreleased]
+### Added
+- Added support for using the -Verbose switch with New-AsBuiltReport as per [Issue 28](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/28)
+
 ## [1.0.3] - 2020-02-27
 ### Changed
 - Updated RequiredModules to use PScribo 0.7.26
 
 ### Fixed
 - Fixed truncated tables when using text output (Fix #26)
-
-### Added
-- Added support for using the -Verbose switch with New-AsBuiltReport as per [Issue 28](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/28)
 
 ## [1.0.2] - 2019-06-21
 ### Changed
