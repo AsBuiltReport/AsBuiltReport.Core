@@ -296,13 +296,26 @@ function New-AsBuiltReport {
         #endregion Email Server Authentication
 
         #region Generate PScribo document
-        $AsBuiltReport = Document $FileName -Verbose {
-            # Set Document Style
-            if ($StylePath) {
-                .$StylePath
+        # if Verbose has been passed
+        if ($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent) {
+            $AsBuiltReport = Document $FileName -Verbose {
+                # Set Document Style
+                if ($StylePath) {
+                    .$StylePath
+                }
+    
+                & "Invoke-$($ReportModule)" -Target $Target -Credential $Credential -StylePath $StylePath -Verbose
             }
-
-            & "Invoke-$($ReportModule)" -Target $Target -Credential $Credential -StylePath $StylePath
+        }
+        else {
+            $AsBuiltReport = Document $FileName {
+                # Set Document Style
+                if ($StylePath) {
+                    .$StylePath
+                }
+    
+                & "Invoke-$($ReportModule)" -Target $Target -Credential $Credential -StylePath $StylePath
+            }
         }
         Try {
             $Document = $AsBuiltReport | Export-Document -Path $OutputPath -Format $Format -Options @{ TextWidth = 240 } -PassThru

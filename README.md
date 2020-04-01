@@ -29,15 +29,16 @@ The following simple list of instructions will get you started with the AsBuiltR
 
 ## Pre-requisites
 
-All cmdLets and functions require the [PScribo](https://github.com/iainbrighton/PScribo) module version 0.7.24 or later.
-PScribo can be installed from the PowerShell Gallery with the following command.
+All cmdLets and functions require the [PScribo](https://github.com/iainbrighton/PScribo) module version 0.7.26 or later.
+PScribo will be automatically installed when you install any `AsBuiltReport` modules.
+
+Alternatively, PScribo can be manually installed from the PowerShell Gallery using the following command.
 
 ```powershell
-Install-Module PScribo
+Install-Module PScribo -MinimumVersion 0.7.26
 ```
-Alternatively PScribo will automatically be installed when you install the `AsBuiltReport` collection or individual report modules.
 
-To find a list of avaiable report modules, run the following;
+To find a list of available report modules, run the following;
 
 ```powershell
 Find-Module -Name AsBuiltReport.* -Repository PSGallery
@@ -75,6 +76,9 @@ Here are some examples to get you going.
 # The document will highlight particular issues which exist within the environment by including the Healthchecks switch.
 PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputPath 'H:\Documents\'
 
+# The following creates a VMware vSphere As Built report in HTML & Word formats, while displaying Verbose messages to the console
+PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -OutputPath 'H:\Documents\' -Verbose
+
 # The following creates a Pure Storage FlashArray As Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
 PS C:\>$Creds = Get-Credential
 PS C:\>New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputPath 'H:\Documents\'
@@ -86,10 +90,10 @@ PS C:\>New-AsBuiltReport -Report Cisco.UCSManager -Target 192.168.1.100 -Usernam
 PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigPath 'C:\scripts\asbuilt.json' -OutputPath 'H:\Documents\'
 ```
 
-## Known Issues
+## Notes
 - Table Of Contents (TOC) may be missing in Word formatted report
 
-    When opening the DOC report, MS Word prompts the following 
+    When opening the DOCX report, MS Word prompts the following 
     
     `"This document contains fields that may refer to other files. Do you want to update the fields in this document?"`
     
@@ -98,12 +102,3 @@ PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username adm
     Clicking `No` will prevent the TOC fields being updated and leaving the TOC empty.
 
     Always reply `Yes` to this message when prompted by MS Word.
-
-- In HTML documents, word-wrap of table cell contents is not working, causing the following issues;
-  - Cell contents may overflow table columns
-  - Tables may overflow page margin
-  - [PScribo Issue #83](https://github.com/iainbrighton/PScribo/issues/83)
-
-- In Word documents, some tables are not sized proportionately. To prevent cell overflow issues in HTML documents, most tables are auto-sized, this causes some tables to be out of proportion.
-    
-    - [PScribo Issue #83](https://github.com/iainbrighton/PScribo/issues/83)
