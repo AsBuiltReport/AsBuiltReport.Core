@@ -29,13 +29,13 @@ The following simple list of instructions will get you started with the AsBuiltR
 
 ## Pre-requisites
 
-All cmdLets and functions require the [PScribo](https://github.com/iainbrighton/PScribo) module version 0.7.26 or later.
+All cmdLets and functions require the [PScribo](https://github.com/iainbrighton/PScribo) module version 0.8.0 or later.
 PScribo will be automatically installed when you install any `AsBuiltReport` modules.
 
 Alternatively, PScribo can be manually installed from the PowerShell Gallery using the following command.
 
 ```powershell
-Install-Module PScribo -MinimumVersion 0.7.26
+Install-Module PScribo -MinimumVersion 0.8.0
 ```
 
 To find a list of available report modules, run the following;
