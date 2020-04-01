@@ -1,8 +1,14 @@
 # AsBuiltReport.Core Changelog
 
-## [Unreleased]
+## [1.0.4] - 2020-04-01
 ### Added
-- Added support for using the -Verbose switch with New-AsBuiltReport as per [Issue 28](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/28)
+- Added support for using the -Verbose switch with New-AsBuiltReport as per (Fix #28)
+
+### Changed
+- Updated RequiredModules for PScribo 0.8.0
+
+### Fixed
+- Fixed "Unable to determine the identity of the domain" issue. Resolved in PScribo 0.8.0 (Fix #17)
 
 ## [1.0.3] - 2020-02-27
 ### Changed

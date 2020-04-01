@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.0.3'
+    ModuleVersion = '1.0.4'
 
     # Supported PSEditions
     CompatiblePSEditions = 'Desktop'
@@ -55,7 +55,7 @@
     RequiredModules = @(
         @{
             ModuleName = 'PScribo'; 
-            ModuleVersion = '0.7.26'
+            ModuleVersion = '0.8.0'
         }
     )
 
@@ -101,7 +101,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = 'AsBuiltReport', 'Report', 'Documentation', 'PScribo', 'PSEdition_Desktop', 'Windows'
+            Tags = 'AsBuiltReport', 'Report', 'Documentation', 'PScribo', 'Windows', 'Linux', 'MacOS', 'PSEdition_Desktop', 'PSEdition_Core'
 
             # A URL to the license for this module.
             LicenseUri = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/LICENSE'
