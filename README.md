@@ -23,7 +23,7 @@
             <img src="https://img.shields.io/twitter/follow/AsBuiltReport.svg?style=social"/></a>
 </p>
 
-# AsBuiltReport
+# AsBuiltReport.Core
 
 AsBuiltReport.Core is a PowerShell module which provides the core framework for generating as built documentation for many common datacentre systems. The AsBuiltReport.Core module is required by each individual report module used to generate as built documentation for a specific product and/or technology.
 
