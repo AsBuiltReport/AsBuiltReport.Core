@@ -1,4 +1,8 @@
 <p align="center">
+    <a href="https://www.asbuiltreport.com/" alt="AsBuiltReport"></a> 
+            <img src='https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport/master/AsBuiltReport.png' width="8%" height="8%" /></a>
+</p>
+<p align="center">
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PowerShell Gallery Version">
         <img src="https://img.shields.io/powershellgallery/v/AsBuiltReport.Core.svg" /></a>
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PS Gallery Downloads">
@@ -21,24 +25,31 @@
 
 # AsBuiltReport
 
-AsBuiltReport.Core is a PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems. The AsBuiltReport.Core module is required by each individual report module used to generate as built documentation for a specific product and/or technology.
+AsBuiltReport.Core is a PowerShell module which provides the core framework for generating as built documentation for many common datacentre systems. The AsBuiltReport.Core module is required by each individual report module used to generate as built documentation for a specific product and/or technology.
 
-# Getting Started
+# :beginner: Getting Started
 
 The following simple list of instructions will get you started with the AsBuiltReport.Core module.
 
-## Pre-requisites
+## :floppy_disk: Supported Versions
+### **PowerShell**
+This report is compatible with the following PowerShell versions;
 
-All cmdLets and functions require the [PScribo](https://github.com/iainbrighton/PScribo) module version 0.8.0 or later.
-PScribo will be automatically installed when you install any `AsBuiltReport` modules.
+| Windows PowerShell 5.1 |  PowerShell Core   |    PowerShell 7    |
+|:----------------------:|:------------------:|:------------------:|
+|   :white_check_mark:   | :white_check_mark: | :white_check_mark: |
 
-Alternatively, PScribo can be manually installed from the PowerShell Gallery using the following command.
+## :wrench: Pre-requisites
 
-```powershell
-Install-Module PScribo -MinimumVersion 0.8.0
-```
+The following module will be automatically installed by following the [module installation](https://github.com/AsBuiltReport/AsBuiltReport.Core#package-module-installation) procedure.
 
-To find a list of available report modules, run the following;
+This module may also be installed individually.
+
+| Module Name        | Minimum Required Version |                          PS Gallery                           |                                   GitHub                                    |
+|--------------------|:------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
+| PScribo            |          0.9.0           |      [Link](https://www.powershellgallery.com/packages/PScribo)       |         [Link](https://github.com/iainbrighton/PScribo/tree/master)
+
+To find a list of available report modules, run the following PowerShell command;
 
 ```powershell
 Find-Module -Name AsBuiltReport.* -Repository PSGallery
@@ -46,29 +57,113 @@ Find-Module -Name AsBuiltReport.* -Repository PSGallery
 
 The pre-requisites for each report type will be documented within its own `README.md` located in the relevant report repository.
 
-### Module Installation
-To install as built report modules individually 
+## :package: Module Installation
+
+### **PowerShell**
+Open a PowerShell terminal window and install the required module as follows;
 ```powershell
-Install-Module AsBuiltReport.<Vendor>.<Product>
+install-module AsBuiltReport.Core
 ```
 
-or, install the complete as built report collection
+### **GitHub**
+If you are unable to use the PowerShell Gallery, you can still install the module manually. Ensure you repeat the following steps for the [pre-requistes](https://github.com/AsBuiltReport/AsBuiltReport.Core#wrench-pre-requisites) also.
+
+1. Download the [latest release](https://github.com/AsBuiltReport/AsBuiltReport.Core/releases/latest) zip from GitHub
+2. Extract the zip file
+3. Copy the folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`. By default this could be `C:\Program Files\WindowsPowerShell\Modules` or `C:\Users\<user>\Documents\WindowsPowerShell\Modules`
+4. Open a PowerShell terminal window and unblock the downloaded files with 
+    ```powershell
+    $path = (Get-Module -Name AsBuiltReport.Core -ListAvailable).ModuleBase; Unblock-File -Path $path\*.psd1; Unblock-File -Path $path\Src\Public\*.ps1
+    ```
+5. Close and reopen the PowerShell terminal window.
+
+_Note: You are not limited to installing the module to those example paths, you can add a new entry to the environment variable PSModulePath if you want to use another path._
+
+## :pencil2: Commands
+
+### **New-AsBuiltReport**
+
+The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of as built report to generate is specified by using the `Report` parameter. The report parameter relies on additional report modules being installed alongside the `AsBuiltReport.Core` module. The `Target` parameter specifies one or more systems on which to connect and run the report. User credentials to the system are specifed using the `Credential`, or the `Username` and `Password` parameters. One or more document formats, such as `HTML`, `Word` or `Text` can be specified using the `Format` parameter. Additional parameters are outlined below.
 
 ```powershell
-Install-Module AsBuiltReport
+.PARAMETER Report
+    Specifies the type of report that will be generated.
+.PARAMETER Target
+    Specifies the IP/FQDN of the system to connect.
+    Multiple targets may be specified, separated by a comma.
+.PARAMETER Credential
+    Specifies the stored credential of the target system.
+.PARAMETER Username
+    Specifies the username for the target system.
+.PARAMETER Password
+    Specifies the password for the target system.
+.PARAMETER Format
+    Specifies the output format of the report.
+    The supported output formats are WORD, HTML, XML & TEXT.
+    Multiple output formats may be specified, separated by a comma.
+.PARAMETER Orientation
+    Sets the page orientation of the report to Portrait or Landscape.
+    By default, page orientation will be set to Portrait.
+.PARAMETER StylePath
+    Specifies the path to a custom style .ps1 script for the report to use.
+.PARAMETER OutputPath
+    Specifies the path to save the report.
+.PARAMETER Timestamp
+    Specifies whether to append a timestamp string to the report filename.
+    By default, the timestamp string is not added to the report filename.
+.PARAMETER EnableHealthCheck
+    Performs a health check of the target environment and highlights known issues within the report.
+    Not all reports may provide this functionality.
+.PARAMETER SendEmail
+    Sends report to specified recipients as email attachments.
+.PARAMETER AsBuiltConfigPath
+    Enter the full path to the As Built Report configuration JSON file.
+    If this parameter is not specified, the user will be prompted for this configuration information on first 
+    run, with the option to save the configuration to a file.
+.PARAMETER ReportConfigPath
+    Enter the full path to a report JSON configuration file
+    If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
+    If this paramter is specified and the path to a JSON file is invalid, the script will terminate
 ```
 
-## Examples
-
-Each report type utilises a common set of parameters. Additional parameters specific to each
-report will be detailed in the report's `README.md` file, along with any relevant examples.
-
-For a full list of common parameters and examples you can view the `New-AsBuiltReport` CmdLet help with the following command.
+For a full list of common parameters and examples you can view the `New-AsBuiltReport` cmdlet help with the following command;
 
 ```powershell
 Get-Help New-AsBuiltReport -Full
 ```
 
+### **New-AsBuiltConfig**
+`New-AsBuiltConfig` starts a menu-driven procedure in the powershell console and asks the user a series of questions. Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the `-AsBuiltConfigPath` parameter using `New-AsBuiltReport`, to save having to answer these questions again and also to allow the automation of `New-AsBuiltReport`.
+        
+`New-AsBuiltConfig` will automatically be called by `New-AsBuiltReport` if the `-AsBuiltConfigPath` parameter is not specified. If a user wants to generate a new As Built JSON configuration without running a new report, this cmdlet can be called as a standalone cmdlet.
+
+### **New-AsBuiltReportConfig**
+
+The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files for individual As Built Reports. Cmdlet parameters and examples are outlined below.
+
+```powershell
+.PARAMETER Report
+    Specifies the type of report configuration to create.
+.PARAMETER Path
+    Specifies the path to create the report JSON configuration file.
+.PARAMETER Name
+    Specifies the name of the report JSON configuration file.
+    If Name is not specified, a JSON configuration file will be created with a default name AsBuiltReport.<Vendor>.<Product>.json
+.PARAMETER Overwrite
+        Specifies to overwrite any existing report JSON configuration file
+.EXAMPLE
+    Creates a report JSON configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder. 
+    New-AsBuiltReportConfig -Report VMware.vSphere -Path 'C:\Reports' -Name 'vSphere_Report_Config'
+.EXAMPLE
+    Creates a report JSON configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file. 
+    New-AsBuiltReportConfig -Report Nutanix.PrismCentral -Path 'C:\Reports' -Overwrite
+```
+
+```powershell
+Get-Help New-AsBuiltReportConfig -Full
+```
+
+## :computer: Examples
 Here are some examples to get you going.
 
 ```powershell
@@ -90,7 +185,7 @@ PS C:\>New-AsBuiltReport -Report Cisco.UCSManager -Target 192.168.1.100 -Usernam
 PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigPath 'C:\scripts\asbuilt.json' -OutputPath 'H:\Documents\'
 ```
 
-## Notes
+## :pencil: Notes
 - Table Of Contents (TOC) may be missing in Word formatted report
 
     When opening the DOCX report, MS Word prompts the following 

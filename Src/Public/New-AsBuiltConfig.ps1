@@ -5,7 +5,7 @@ function New-AsBuiltConfig {
     .DESCRIPTION
         New-AsBuiltConfig starts a menu-driven procedure in the powershell console and asks the user a series of questions
         Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the
-        -AsBuiltConfigPath parameter on New-AsBuiltReport, to save having to answer these questions again and also to allow
+        -AsBuiltConfigPath parameter using New-AsBuiltReport, to save having to answer these questions again and also to allow
         the automation of New-AsBuiltReport.
         
         New-AsBuiltConfig will automatically be called by New-AsBuiltReport if the -AsBuiltConfigPath parameter is not specified
