@@ -13,10 +13,10 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.0.4'
+    ModuleVersion = '1.0.5'
 
     # Supported PSEditions
-    CompatiblePSEditions = 'Desktop'
+    # CompatiblePSEditions = 'Desktop'
 
     # ID used to uniquely identify this module
     GUID = '0f1094c4-c6b1-495c-8cdd-9331f67f9f6f'
@@ -55,7 +55,7 @@
     RequiredModules = @(
         @{
             ModuleName = 'PScribo'; 
-            ModuleVersion = '0.8.0'
+            ModuleVersion = '0.9.0'
         }
     )
 

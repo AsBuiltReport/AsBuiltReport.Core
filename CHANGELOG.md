@@ -1,8 +1,15 @@
-# AsBuiltReport.Core Changelog
+# :arrows_counterclockwise: AsBuiltReport.Core Changelog
+
+## [1.0.5] - 2020-07-16
+### Changed
+- Updated `RequiredModules` for PScribo 0.9.0
+
+### Removed
+- Removed XML format option as it is scheduled to be deprecated from PScribo
 
 ## [1.0.4] - 2020-04-01
 ### Added
-- Added support for using the -Verbose switch with New-AsBuiltReport as per (Fix #28)
+- Added support for using the `-Verbose` switch with `New-AsBuiltReport` as per (Fix #28)
 
 ### Changed
 - Updated RequiredModules for PScribo 0.8.0
