@@ -15,7 +15,7 @@
 - Custom style scripts are now executed from `New-AsBuiltReport` to allow use of new PScribo features
 
 ### Added
-- Added `Filename` parameter
+- Added `Filename` parameter to `New-AsBuiltReport`
 - Added error check for incorrect `AsBuiltConfigFilePath`
 - Improvements to verbose logging
 
