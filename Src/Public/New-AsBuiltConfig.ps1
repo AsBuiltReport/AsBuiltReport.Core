@@ -5,13 +5,16 @@ function New-AsBuiltConfig {
     .DESCRIPTION
         New-AsBuiltConfig starts a menu-driven procedure in the powershell console and asks the user a series of questions
         Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the
-        -AsBuiltConfigPath parameter using New-AsBuiltReport, to save having to answer these questions again and also to allow
+        -AsBuiltConfigFilePath parameter using New-AsBuiltReport, to save having to answer these questions again and also to allow
         the automation of New-AsBuiltReport.
         
-        New-AsBuiltConfig will automatically be called by New-AsBuiltReport if the -AsBuiltConfigPath parameter is not specified
+        New-AsBuiltConfig will automatically be called by New-AsBuiltReport if the -AsBuiltConfigFilePath parameter is not specified
         If a user wants to generate a new As Built JSON configuration without running a new report, this cmdlet is exported
         in the AsBuiltReport powershell module and can be called as a standalone cmdlet.
     #>
+
+    [CmdletBinding()]
+    param()
 
     #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
     $global:Config = @{ }
@@ -59,6 +62,7 @@ function New-AsBuiltConfig {
         'Phone' = $CompanyPhone
         'Address' = $CompanyAddress
     }
+
     #endregion Company configuration
 
     #region Email configuration
@@ -229,8 +233,25 @@ function New-AsBuiltConfig {
             }
         }
         $AsBuiltConfigPath = Join-Path -Path $AsBuiltExportPath -ChildPath "$AsBuiltName.json"
+        Write-Verbose -Message "Saving As Built Report configuration file '$($AsBuiltName).json' to '$AsBuiltConfigPath'"
         $Config | ConvertTo-Json | Out-File $AsBuiltConfigPath
+    } else {
+        Write-Verbose -Message "As Built Report configuration file not saved."
     }
-    $Config
     #endregion Save configuration
+
+    # Print output to screen so that it can be captured to $Global:AsBuiltConfig variable in New-AsBuiltReport
+    $Config
+
+    # Verbose Output
+    Write-Verbose -Message "Config.Report.Author = $ReportAuthor"
+    Write-Verbose -Message "Config.UserFolder.Path = $ReportConfigFolder"
+    foreach ($x in $Config.Company.Keys) {
+        Write-Verbose -Message "Config.Company.$x = $($Config.Company[$x])"
+    }
+    foreach ($x in $Config.Email.Keys) {
+        Write-Verbose -Message "Config.Email.$x = $($Config.Email[$x])"
+    }
+
+    
 }#End New-AsBuiltConfig Function

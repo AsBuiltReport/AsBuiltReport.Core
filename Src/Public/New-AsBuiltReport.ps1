@@ -234,17 +234,30 @@ function New-AsBuiltReport {
         if ($AsBuiltConfigFilePath) {
             if (Test-Path -Path $AsBuiltConfigFilePath) {
                 $Global:AsBuiltConfig = Get-Content -Path $AsBuiltConfigFilePath | ConvertFrom-Json
+                # Verbose Output for As Built Report configuration
+                Write-Verbose -Message "Loading As Built Report configuration from '$AsBuiltConfigFilePath'."
+                <#
+                Write-Verbose -Message "AsBuiltConfig.Report.Author = $($AsBuiltConfig.Report.Author)"
+                Write-Verbose -Message "AsBuiltConfig.UserFolder.Path = $($AsBuiltConfig.UserFolder.Path)"
+                foreach ($x in $AsBuiltConfig.Company.PSObject.Properties) {
+                    Write-Verbose -Message "AsBuiltConfig.Company.$($x.name) = $($x.value)"
+                }
+                foreach ($x in $AsBuiltConfig.Email.PSObject.Properties) {
+                    Write-Verbose -Message "AsBuiltConfig.Email.$($x.name) = $($x.value)"
+                }
+                #>
             } else {
-                Write-Error "Could not find as built configuration in path '$AsBuiltConfigFilePath'."
+                Write-Error "Could not find As Built Report configuration in path '$AsBuiltConfigFilePath'."
                 break 
             }
         } else {
+            Write-Verbose -Message "Generating new As Built Report configuration"
             $Global:AsBuiltConfig = New-AsBuiltConfig
         }
 
         # Set ReportConfigPath as Global scope for use in New-AsBuiltConfig
-        if ($ReportConfigPath) {
-            $Global:ReportConfigPath = $ReportConfigPath
+        if ($ReportConfigFilePath) {
+            $Global:ReportConfigFilePath = $ReportConfigFilePath
         }
 
         # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
@@ -255,40 +268,38 @@ function New-AsBuiltReport {
             }
         }
 
-        $ReportModule = "AsBuiltReport.$Report"
+        # Report Module Information
+        $ReportModuleName = "AsBuiltReport.$Report"
+        $ReportModulePath = (Get-Module -Name $ReportModuleName -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1).ModuleBase
 
         if ($ReportConfigFilePath) {
             # If ReportConfigFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
             if (!(Test-Path -Path $ReportConfigFilePath)) {
-                Write-Error "Could not find report configuration file in path '$ReportConfigFilePath'."
+                Write-Error "Could not find $ReportModuleName report configuration file in path '$ReportConfigFilePath'."
                 break
             } else {
                 #Import the Report Configuration in to a variable
-                Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
+                Write-Verbose -Message "Loading $ReportModuleName report configuration file from path '$ReportConfigFilePath'."
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             }
         } else {
             # If a report config hasn't been provided, check for the existance of the default JSON in the paths the user specified in base config
-            $ReportConfigPath = Join-Path -Path $AsBuiltConfig.UserFolder.Path -ChildPath "$ReportModule.json"
-            
+            $ReportConfigFilePath =  "$ReportModulePath\$ReportModuleName.json"
+
             if (Test-Path -Path $ReportConfigFilePath) {
                 Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             } else {
-                # Create the report JSON and save it in the UserFolder specified in the Base Config
-                Write-Verbose -Message "Generating new report configuration file to path '$ReportConfigFilePath'."
-                New-AsBuiltReportConfig -Report $Report -FolderPath $ReportModulePath
-                Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
-                $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
+                Write-Error "Report configuration file not found in module path '$ReportModulePath'."
+                break
             }#End if test-path
         }#End if ReportConfigPath
 
-        # If Timestamp parameter is specified, add the timestamp to the report filename 
-        if ($Timestamp) {
-            $FileName = $ReportConfig.Report.Name + " - " + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss')
-        } else {
+        # If Filename parameter is not specified, set filename to the report name
+        if (!$Filename) {
             $FileName = $ReportConfig.Report.Name
         }
+        # If Timestamp parameter is specified, add the timestamp to the report filename 
         if ($Timestamp) {
             $FileName = $Filename + " - " + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss')
         }

@@ -62,37 +62,47 @@ function New-AsBuiltReportConfig {
             HelpMessage = 'Used to overwrite the destination file if it exists'
         )]
         [ValidateNotNullOrEmpty()]
-        [Switch] $Overwrite
+        [Alias('Overwrite')]
+        [Switch] $Force
     )
 
     # Test to ensure the path the user has specified does exist
     if (!(Test-Path -Path $FolderPath)) {
-        Write-Error "The Path $FolderPath does not exist. Please create the folder and re-run New-AsBuiltReportConfig"
+        Write-Error "The Path '$FolderPath' does not exist. Please create the folder and run New-AsBuiltReportConfig again."
         break
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
         $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
-        if ($Filename) {
-            if (!(Test-Path -Path "$($FolderPath)\$($Filename).json")) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json"
-                Write-Output "$Filename JSON configuration file created in $FolderPath"
-            } elseif ($Overwrite) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json" -Force
-                Write-Output "$Filename JSON configuration file created in $FolderPath"
+        if (Test-Path -Path "$($Module.ModuleBase)\$($Module.Name).json") {
+            Write-Verbose -Message "Processing report configuration file from module $($Module), version $($Module.Version)."
+            if ($Filename) {
+                if (!(Test-Path -Path "$($FolderPath)\$($Filename).json")) {
+                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to '$($FolderPath)\$($Filename).json'."
+                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json"
+                    Write-Output "Report configuration file '$($Filename).json' created in '$FolderPath'."
+                } elseif ($Force) {
+                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to '$($FolderPath)\$($Filename).json'. Overwriting existing file."
+                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json" -Force
+                    Write-Output "Report configuration file '$($Filename).json' created in '$FolderPath'."
+                } else {
+                    Write-Error "Report configuration file '$($Filename).json' already exists in '$FolderPath'. Use 'Force' parameter to overwrite existing file."
+                }
             } else {
-                Write-Error "$Filename filename already exists in $FolderPath"
+                if (!(Test-Path -Path "$($FolderPath)\$($Module.Name).json")) {
+                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to destination folder '$FolderPath'."
+                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath
+                    Write-Output "Report configuration file '$($Module.Name).json' created in '$FolderPath'."
+                } elseif ($Force) {
+                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to destination folder '$FolderPath'. Overwriting existing file."
+                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath -Force
+                    Write-Output "Report configuration file '$($Module.Name).json' created in '$FolderPath'."
+                } else {
+                    Write-Error "Report configuration file '$($Module.Name).json' already exists in '$FolderPath'. Use 'Force' parameter to overwrite existing file."
+                }
             }
         } else {
-            if (!(Test-Path -Path "$($FolderPath)\$($Module.Name).json")) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath
-                Write-Output "$($Module.Name) JSON configuration file created in $FolderPath"
-            } elseif ($Overwrite) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath -Force
-                Write-Output "$($Module.Name) JSON configuration file created in $FolderPath"
-            } else {
-                Write-Error "$($Module.Name).json report configuration already exists in $FolderPath"
-            }
+            Write-Error "Report configuration file not found in module path '$($Module.ModuleBase)'."
         }
     } catch {
         Write-Error $_

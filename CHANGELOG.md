@@ -9,7 +9,8 @@
     - `AsBuiltConfigPath` now an alias for `AsBuiltConfigFilePath`
 - Updated `New-AsBuiltReportConfig` parameter names to provide clarity of input requirements. Aliases used to prevent breaking changes.
     - `Path` now an alias for `FolderPath`
-    - `Name` now an alias for `Filename` 
+    - `Name` now an alias for `Filename`
+    - `Overwrite` now an alias for `Force`
 - Updated `RequiredModules` for PScribo 0.9.1
 - Custom style scripts are now executed from `New-AsBuiltReport` to allow use of new PScribo features
 
