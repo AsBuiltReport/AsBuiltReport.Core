@@ -24,7 +24,7 @@ function New-AsBuiltConfig {
     Write-Host '---------------------------------------------' -ForegroundColor Cyan
     Write-Host ' <        As Built Report Information      > ' -ForegroundColor Cyan
     Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    $ReportAuthor = Read-Host -Prompt "Enter the name of the Author for this As Built report [$env:USERNAME]"
+    $ReportAuthor = Read-Host -Prompt "Enter the name of the Author for this As Built Report [$env:USERNAME]"
     if (($ReportAuthor -like $null) -or ($ReportAuthor -eq "")) {
         $ReportAuthor = $env:USERNAME
     }
@@ -40,9 +40,9 @@ function New-AsBuiltConfig {
     Write-Host ' <           Company Information           > ' -ForegroundColor Cyan
     Write-Host '---------------------------------------------' -ForegroundColor Cyan
 
-    $CompanyInfo = Read-Host -Prompt "Would you like to enter Company information for the As Built report? (y/n)"
+    $CompanyInfo = Read-Host -Prompt "Would you like to enter Company information for the As Built Report? (y/n)"
     while ("y", "n" -notcontains $CompanyInfo) {
-        $CompanyInfo = Read-Host -Prompt "Would you like to enter Company information for the As Built report? (y/n)"
+        $CompanyInfo = Read-Host -Prompt "Would you like to enter Company information for the As Built Report? (y/n)"
     }
 
     if ($CompanyInfo -eq 'y') {
@@ -146,7 +146,7 @@ function New-AsBuiltConfig {
         Write-Host '---------------------------------------------' -ForegroundColor Cyan
         Write-Host ' <          Report Configuration           > ' -ForegroundColor Cyan
         Write-Host '---------------------------------------------' -ForegroundColor Cyan
-        $ReportConfigFolder = Read-Host -Prompt "Enter the full path of the folder to use for storing report JSON configuration files and custom style scripts [$env:USERPROFILE\AsBuiltReport]"
+        $ReportConfigFolder = Read-Host -Prompt "Enter the full path of the folder to use for storing report configuration files and custom style scripts [$env:USERPROFILE\AsBuiltReport]"
         if (($ReportConfigFolder -like $null) -or ($ReportConfigFolder -eq "")) {
             $ReportConfigFolder = $env:USERPROFILE + "\AsBuiltReport"
         }
@@ -182,9 +182,9 @@ function New-AsBuiltConfig {
                 foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
                     $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
                     if (Test-Path -Path "$($ReportConfigFolder)\$($AsBuiltReportModule.Name).json") {
-                        $OverwriteReportJSON = Read-Host -Prompt "A report JSON already exists in the specified folder for $($AsBuiltReportModule.Name). Would you like to overwrite it? (y/n)"
+                        $OverwriteReportJSON = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($AsBuiltReportModule.Name). Would you like to overwrite it? (y/n)"
                         while ("y", "n" -notcontains $OverwriteReportJSON) {
-                            $OverwriteReportJSON = Read-Host -Prompt "A report JSON already exists in the specified folder for $($AsBuiltReportModule.Name). Would you like to overwrite it? (y/n)"
+                            $OverwriteReportJSON = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($AsBuiltReportModule.Name). Would you like to overwrite it? (y/n)"
                         }
                         if ($OverwriteReportJSON -eq 'y') {
                             Try {
@@ -208,23 +208,23 @@ function New-AsBuiltConfig {
     Write-Host '----------------------------------------------' -ForegroundColor Cyan
     Write-Host ' <       As Built Report Configuration      > ' -ForegroundColor Cyan
     Write-Host '----------------------------------------------' -ForegroundColor Cyan
-    $SaveAsBuiltConfig = Read-Host -Prompt "Would you like to save the As Built configuration file? (y/n)"
+    $SaveAsBuiltConfig = Read-Host -Prompt "Would you like to save the As Built Report configuration file? (y/n)"
     while ("y", "n" -notcontains $SaveAsBuiltConfig) {
-        $SaveAsBuiltConfig = Read-Host -Prompt "Would you like to save the As Built configuration file? (y/n)"
+        $SaveAsBuiltConfig = Read-Host -Prompt "Would you like to save the As Built Report configuration file? (y/n)"
     }
 
     if ($SaveAsBuiltConfig -eq 'y') {
-        $AsBuiltName = Read-Host -Prompt "Enter a name for the As Built report configuration file [AsBuiltReport]"
+        $AsBuiltName = Read-Host -Prompt "Enter a name for the As Built Report configuration file [AsBuiltReport]"
         if (($AsBuiltName -like $null) -or ($AsBuiltName -eq "")) {
             $AsBuiltName = "AsBuiltReport"
         }
         if ($Config.UserFolder.Path) {
-            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built report configuration file [$($Config.UserFolder.Path)]"
+            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$($Config.UserFolder.Path)]"
             if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
                 $AsBuiltExportPath = $Config.UserFolder.Path
             }
         } else {
-            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built report configuration file [$env:USERPROFILE\AsBuiltReport]"
+            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$env:USERPROFILE\AsBuiltReport]"
             if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
                 $AsBuiltExportPath = "$env:USERPROFILE\AsBuiltReport"
                 $Config.UserFolder = @{

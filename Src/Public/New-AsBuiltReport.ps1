@@ -345,7 +345,7 @@ function New-AsBuiltReport {
         } else {
             $AsBuiltReport = Document $FileName {
 
-                Write-Host "Please wait whilst the $($Report.Replace("."," ")) as built report is being generated." -ForegroundColor Green
+                Write-Host "Please wait whilst the $($Report.Replace("."," ")) As Built Report is being generated." -ForegroundColor Green
 
                 # Set Document Style
                 if ($StyleFilePath) {
@@ -361,7 +361,7 @@ function New-AsBuiltReport {
         }
         Try {
             $Document = $AsBuiltReport | Export-Document -Path $OutputFolderPath -Format $Format -Options @{ TextWidth = 240 } -PassThru
-            Write-Output "$FileName has been saved to '$OutputFolderPath'."
+            Write-Output "$($Report.Replace("."," ")) As Built Report '$FileName' has been saved to '$OutputFolderPath'."
         } catch {
             $Err = $_
             Write-Error $Err
