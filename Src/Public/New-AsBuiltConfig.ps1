@@ -167,7 +167,7 @@ function New-AsBuiltConfig {
             Foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
                 $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
                 Try {
-                    New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder
+                    New-AsBuiltReportConfig -Report $AsBuiltReportName -FolderPath $ReportConfigFolder
                 } Catch {
                     Write-Error $_
                     Break
@@ -184,7 +184,7 @@ function New-AsBuiltConfig {
                         }
                         if ($OverwriteReportJSON -eq 'y') {
                             Try {
-                                New-AsBuiltReportConfig -Report $AsBuiltReportName -Path $ReportConfigFolder -Overwrite
+                                New-AsBuiltReportConfig -Report $AsBuiltReportName -FolderPath $ReportConfigFolder -Overwrite
                             } Catch {
                                 Write-Error $_
                                 Break

@@ -6,19 +6,19 @@ function New-AsBuiltReportConfig {
         Creates JSON configuration files for individual As Built Reports.
     .PARAMETER Report
         Specifies the type of report configuration to create.
-    .PARAMETER Path
-        Specifies the path to create the report JSON configuration file.
-    .PARAMETER Name
-        Specifies the name of the report JSON configuration file.
+    .PARAMETER FolderPath
+        Specifies the folder path to create the report JSON configuration file.
+    .PARAMETER Filename
+        Specifies the filename of the report JSON configuration file.
         If Name is not specified, a JSON configuration file will be created with a default name AsBuiltReport.<Vendor>.<Product>.json
     .PARAMETER Overwrite
         Specifies to overwrite any existing report JSON configuration file
     .EXAMPLE
         Creates a report configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder. 
-        New-AsBuiltReportConfig -Report VMware.vSphere -Path 'C:\Reports' -Name 'vSphere_Report_Config'
+        New-AsBuiltReportConfig -Report VMware.vSphere -FolderPath 'C:\Reports' -Filename 'vSphere_Report_Config'
     .EXAMPLE
         Creates a report configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file. 
-        New-AsBuiltReportConfig -Report Nutanix.PrismCentral -Path 'C:\Reports' -Overwrite
+        New-AsBuiltReportConfig -Report Nutanix.PrismCentral -FolderPath 'C:\Reports' -Overwrite
     #>
     [CmdletBinding()]
     param (
@@ -43,17 +43,19 @@ function New-AsBuiltReportConfig {
 
         [Parameter(
             Mandatory = $true,
-            HelpMessage = 'Please provide the path to save the JSON configuration file'
+            HelpMessage = 'Please provide the folder path to save the JSON configuration file'
         )]
         [ValidateNotNullOrEmpty()]
-        [String] $Path,
+        [Alias('Path')] 
+        [String] $FolderPath,
 
         [Parameter(
             Mandatory = $false,
-            HelpMessage = 'Please provide the name of the JSON configuration file'
+            HelpMessage = 'Please provide the filename of the JSON configuration file'
         )]
         [ValidateNotNullOrEmpty()]
-        [String] $Name,
+        [Alias('Name')]
+        [String] $Filename,
 
         [Parameter(
             Mandatory = $false,
@@ -64,32 +66,32 @@ function New-AsBuiltReportConfig {
     )
 
     # Test to ensure the path the user has specified does exist
-    if (!(Test-Path -Path $Path)) {
-        Write-Error "The Path $Path does not exist. Please create the folder and re-run New-AsBuiltReportConfig"
+    if (!(Test-Path -Path $FolderPath)) {
+        Write-Error "The Path $FolderPath does not exist. Please create the folder and re-run New-AsBuiltReportConfig"
         break
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
         $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
-        if ($Name) {
-            if (!(Test-Path -Path "$($Path)\$($Name).json")) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($Path)\$($Name).json"
-                Write-Output "$Name JSON configuration file created in $Path"
+        if ($Filename) {
+            if (!(Test-Path -Path "$($FolderPath)\$($Filename).json")) {
+                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json"
+                Write-Output "$Filename JSON configuration file created in $FolderPath"
             } elseif ($Overwrite) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($Path)\$($Name).json" -Force
-                Write-Output "$Name JSON configuration file created in $Path"
+                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json" -Force
+                Write-Output "$Filename JSON configuration file created in $FolderPath"
             } else {
-                Write-Error "$Name filename already exists in $Path"
+                Write-Error "$Filename filename already exists in $FolderPath"
             }
         } else {
-            if (!(Test-Path -Path "$($Path)\$($Module.Name).json")) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $Path
-                Write-Output "$($Module.Name) JSON configuration file created in $Path"
+            if (!(Test-Path -Path "$($FolderPath)\$($Module.Name).json")) {
+                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath
+                Write-Output "$($Module.Name) JSON configuration file created in $FolderPath"
             } elseif ($Overwrite) {
-                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $Path -Force
-                Write-Output "$($Module.Name) JSON configuration file created in $Path"
+                Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath -Force
+                Write-Output "$($Module.Name) JSON configuration file created in $FolderPath"
             } else {
-                Write-Error "$($Module.Name).json report configuration already exists in $Path"
+                Write-Error "$($Module.Name).json report configuration already exists in $FolderPath"
             }
         }
     } catch {

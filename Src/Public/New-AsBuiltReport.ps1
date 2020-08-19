@@ -1,9 +1,9 @@
 function New-AsBuiltReport {
     <#
     .SYNOPSIS  
-        Documents the configuration of IT infrastructure in Word/HTML/XML/Text formats using PScribo.
+        Documents the configuration of IT infrastructure in Word/HTML/Text formats using PScribo.
     .DESCRIPTION
-        Documents the configuration of IT infrastructure in Word/HTML/XML/Text formats using PScribo.
+        Documents the configuration of IT infrastructure in Word/HTML/Text formats using PScribo.
     .PARAMETER Report
         Specifies the type of report that will be generated.
     .PARAMETER Target
@@ -17,15 +17,17 @@ function New-AsBuiltReport {
         Specifies the password for the target system.
     .PARAMETER Format
         Specifies the output format of the report.
-        The supported output formats are WORD, HTML, XML & TEXT.
+        The supported output formats are WORD, HTML & TEXT.
         Multiple output formats may be specified, separated by a comma.
     .PARAMETER Orientation
         Sets the page orientation of the report to Portrait or Landscape.
         By default, page orientation will be set to Portrait.
-    .PARAMETER StylePath
-        Specifies the path to a custom style .ps1 script for the report to use.
-    .PARAMETER OutputPath
-        Specifies the path to save the report.
+    .PARAMETER StyleFilePath
+        Specifies the file path to a custom style .ps1 script for the report to use.
+    .PARAMETER OutputFolderPath
+        Specifies the folder path to save the report.
+    .PARAMETER Filename
+        Specifies a filename for the report.
     .PARAMETER Timestamp
         Specifies whether to append a timestamp string to the report filename.
         By default, the timestamp string is not added to the report filename.
@@ -34,43 +36,39 @@ function New-AsBuiltReport {
         Not all reports may provide this functionality.
     .PARAMETER SendEmail
         Sends report to specified recipients as email attachments.
-    .PARAMETER AsBuiltConfigPath
-        Enter the full path to the As Built Report configuration JSON file.
+    .PARAMETER AsBuiltConfigFilePath
+        Enter the full file path to the As Built Report configuration JSON file.
         If this parameter is not specified, the user will be prompted for this configuration information on first 
         run, with the option to save the configuration to a file.
-    .PARAMETER ReportConfigPath
-        Enter the full path to a report JSON configuration file
+    .PARAMETER ReportConfigFilePath
+        Enter the full file path to a report JSON configuration file
         If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
-        If this paramter is specified and the path to a JSON file is invalid, the script will terminate
+        If this paramter is specified and the path to a JSON file is invalid, the script will terminate.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -Report VMware.vSphere -EnableHealthCheck -OutputPath c:\scripts\
-
+        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -Report VMware.vSphere -EnableHealthCheck -OutputFolderPath c:\scripts\
         Creates a VMware vSphere As Built Report in HTML & Word formats. The document will highlight particular issues which exist within the environment.
         The report will be saved to c:\scripts.
     .EXAMPLE
         PS C:\>$Creds = Get-Credential
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Credential $Creds -Format Text -Report PureStorage.FlashArray -Timestamp -OutputPath c:\scripts\
-
+        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Credential $Creds -Format Text -Report PureStorage.FlashArray -Timestamp -OutputFolderPath c:\scripts\
         Creates a Pure Storage FlashArray As Built Report in Text format and appends a timestamp to the filename. 
         Stored credentials are used to connect to the system.
         The report will be saved to c:\scripts.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Cisco.UCSManager -StylePath c:\scripts\AsBuiltReport\Styles\ACME.ps1 -OutputPath c:\scripts\
-
+        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Cisco.UCSManager -StyleFilePath c:\scripts\AsBuiltReport\Styles\ACME.ps1 -OutputFolderPath c:\scripts\
         Creates a Cisco UCS As Built Report in default format (Word) with a customised style.
         The report will be saved to c:\scripts.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Nutanix.AOS -SendEmail -OutputPath c:\scripts\
-
-        Creates a Nutanix AOS As Built Report in default format (Word). Report will be attached and sent via email.
+        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Nutanix.PrismElement -SendEmail -OutputFolderPath c:\scripts\
+        Creates a Nutanix Prism Element As Built Report in default format (Word). Report will be attached and sent via email.
         The report will be saved to c:\scripts.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML -Report VMware.vSphere -AsBuiltConfigPath C:\scripts\asbuiltreport.json -OutputPath c:\scripts\
+        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML -Report VMware.vSphere -AsBuiltConfigFilePath C:\scripts\asbuiltreport.json -OutputFolderPath c:\scripts\
         
         Creates a VMware vSphere As Built Report in HTML format, using the configuration in the asbuiltreport.json file located in the C:\scripts\ folder.
         The report will be saved to c:\scripts.
     .NOTES
-        Version:        1.0.5
+        Version:        1.1.0
         Author(s):      Tim Carman / Matt Allford
         Twitter:        @tpcarman / @mattallford
         Github:         AsBuiltReport
@@ -151,7 +149,6 @@ function New-AsBuiltReport {
         [Array] $Format = 'Word',
 
         [Parameter(
-            Position = 5,
             Mandatory = $false,
             HelpMessage = 'Determines the document page orientation'
         )]
@@ -163,27 +160,40 @@ function New-AsBuiltReport {
             Mandatory = $true,
             HelpMessage = 'Please provide the path to the document output file'
         )]
-        [ValidateNotNullOrEmpty()] 
-        [String] $OutputPath,
+        [ValidateNotNullOrEmpty()]
+        [Alias('OutputPath')] 
+        [String] $OutputFolderPath,
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Please provide the path to the custom style script'
         )]
         [ValidateNotNullOrEmpty()] 
-        [String] $StylePath,
+        [Alias('StylePath')] 
+        [String] $StyleFilePath,
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Provide the file path to an existing report JSON Configuration file'
         )]
-        [string] $ReportConfigPath,
+        [ValidateNotNullOrEmpty()]
+        [Alias('ReportConfigPath')] 
+        [string] $ReportConfigFilePath,
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Provide the file path to an existing As Built JSON Configuration file'
         )]
-        [string] $AsBuiltConfigPath,
+        [ValidateNotNullOrEmpty()]
+        [Alias('AsBuiltConfigPath')] 
+        [string] $AsBuiltConfigFilePath,
+
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Specify the As Built Report filename'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [string] $Filename,
 
         [Parameter(
             Mandatory = $false,
@@ -213,17 +223,20 @@ function New-AsBuiltReport {
             $Credential = New-Object System.Management.Automation.PSCredential ($Username, $SecurePassword)
         }
 
-        if (!(Test-Path $OutputPath)) {
-            Write-Error "OutputPath $OutputPath is not a valid directory path"
+        if (!(Test-Path $OutputFolderPath)) {
+            Write-Error "OutputFolderPath '$OutputFolderPath' is not a valid folder path."
             break
         }
         #region Variable config
 
         # Import the AsBuiltReport JSON configuration file
         # If no path was specified, or the specified file doesn't exist, call New-AsBuiltConfig to walk the user through the menu prompt to create a config JSON
-        if ($AsBuiltConfigPath) {
-            if (Test-Path -Path $AsBuiltConfigPath) {
-                $Global:AsBuiltConfig = Get-Content -Path $AsBuiltConfigPath | ConvertFrom-Json
+        if ($AsBuiltConfigFilePath) {
+            if (Test-Path -Path $AsBuiltConfigFilePath) {
+                $Global:AsBuiltConfig = Get-Content -Path $AsBuiltConfigFilePath | ConvertFrom-Json
+            } else {
+                Write-Error "Could not find as built configuration in path '$AsBuiltConfigFilePath'."
+                break 
             }
         } else {
             $Global:AsBuiltConfig = New-AsBuiltConfig
@@ -234,35 +247,39 @@ function New-AsBuiltReport {
             $Global:ReportConfigPath = $ReportConfigPath
         }
 
-        # If Stylepath was specified, ensure the file provided in the path exists, otherwise exit with error
-        if ($StylePath) {
-            if (!(Test-Path -Path $StylePath)) {
-                Write-Error "Could not find a style script at $StylePath"
+        # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
+        if ($StyleFilePath) {
+            if (!(Test-Path -Path $StyleFilePath)) {
+                Write-Error "Could not find report style script in path '$StyleFilePath'."
                 break
             }
         }
 
         $ReportModule = "AsBuiltReport.$Report"
 
-        if ($ReportConfigPath) {
-            # If ReportConfigPath was specified, ensure the file provided in the path exists, otherwise exit with error
-            if (!(Test-Path -Path $ReportConfigPath)) {
-                Write-Error "Could not find a style script at $ReportConfigPath"
+        if ($ReportConfigFilePath) {
+            # If ReportConfigFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
+            if (!(Test-Path -Path $ReportConfigFilePath)) {
+                Write-Error "Could not find report configuration file in path '$ReportConfigFilePath'."
                 break
             } else {
                 #Import the Report Configuration in to a variable
-                $Global:ReportConfig = Get-Content -Path $ReportConfigPath | ConvertFrom-Json
+                Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
+                $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             }
         } else {
             # If a report config hasn't been provided, check for the existance of the default JSON in the paths the user specified in base config
             $ReportConfigPath = Join-Path -Path $AsBuiltConfig.UserFolder.Path -ChildPath "$ReportModule.json"
             
-            if (Test-Path -Path $ReportConfigPath) {
-                $Global:ReportConfig = Get-Content -Path $ReportConfigPath | ConvertFrom-Json
+            if (Test-Path -Path $ReportConfigFilePath) {
+                Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
+                $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             } else {
                 # Create the report JSON and save it in the UserFolder specified in the Base Config
-                New-AsBuiltReportConfig -Report $Report -Path $AsBuiltConfig.UserFolder.Path
-                $Global:ReportConfig = Get-Content -Path $ReportConfigPath | ConvertFrom-Json
+                Write-Verbose -Message "Generating new report configuration file to path '$ReportConfigFilePath'."
+                New-AsBuiltReportConfig -Report $Report -FolderPath $ReportModulePath
+                Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
+                $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             }#End if test-path
         }#End if ReportConfigPath
 
@@ -272,6 +289,10 @@ function New-AsBuiltReport {
         } else {
             $FileName = $ReportConfig.Report.Name
         }
+        if ($Timestamp) {
+            $FileName = $Filename + " - " + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss')
+        }
+        Write-Verbose -Message "Setting report filename to '$FileName'."
 
         # If the EnableHealthCheck parameter has been specified, set the global healthcheck variable so report scripts can reference the health checks
         if ($EnableHealthCheck) {
@@ -300,25 +321,36 @@ function New-AsBuiltReport {
         if ($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent) {
             $AsBuiltReport = Document $FileName -Verbose {
                 # Set Document Style
-                if ($StylePath) {
-                    .$StylePath
+                if ($StyleFilePath) {
+                    Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
+                    . $StyleFilePath
+                } else {
+                    Write-PScriboMessage "Executing report style script from path '$ReportModulePath\$ReportModuleName.Style.ps1'."
+                    . "$ReportModulePath\$ReportModuleName.Style.ps1"
                 }
-    
-                & "Invoke-$($ReportModule)" -Target $Target -Credential $Credential -StylePath $StylePath -Verbose
+                # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
+                & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose -StylePath $true
             }
         } else {
             $AsBuiltReport = Document $FileName {
+
+                Write-Host "Please wait whilst the $($Report.Replace("."," ")) as built report is being generated." -ForegroundColor Green
+
                 # Set Document Style
-                if ($StylePath) {
-                    .$StylePath
+                if ($StyleFilePath) {
+                    Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
+                    . $StyleFilePath
+                } else {
+                    Write-PScriboMessage "Executing report style script from path '$ReportModulePath\$ReportModuleName.Style.ps1'."
+                    . "$ReportModulePath\$ReportModuleName.Style.ps1"
                 }
-    
-                & "Invoke-$($ReportModule)" -Target $Target -Credential $Credential -StylePath $StylePath
+                # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
+                & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -StylePath $true
             }
         }
         Try {
-            $Document = $AsBuiltReport | Export-Document -Path $OutputPath -Format $Format -Options @{ TextWidth = 240 } -PassThru
-            Write-Output "$FileName has been saved to $OutputPath"
+            $Document = $AsBuiltReport | Export-Document -Path $OutputFolderPath -Format $Format -Options @{ TextWidth = 240 } -PassThru
+            Write-Output "$FileName has been saved to '$OutputFolderPath'."
         } catch {
             $Err = $_
             Write-Error $Err
