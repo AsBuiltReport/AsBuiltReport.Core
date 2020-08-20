@@ -1,7 +1,7 @@
 function New-AsBuiltConfig {
     <#
     .SYNOPSIS  
-        Creates As Built JSON configuration files.
+        Creates As Built Report configuration files.
     .DESCRIPTION
         New-AsBuiltConfig starts a menu-driven procedure in the powershell console and asks the user a series of questions
         Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the
@@ -9,7 +9,7 @@ function New-AsBuiltConfig {
         the automation of New-AsBuiltReport.
         
         New-AsBuiltConfig will automatically be called by New-AsBuiltReport if the -AsBuiltConfigFilePath parameter is not specified
-        If a user wants to generate a new As Built JSON configuration without running a new report, this cmdlet is exported
+        If a user wants to generate a new As Built Report configuration without running a new report, this cmdlet is exported
         in the AsBuiltReport powershell module and can be called as a standalone cmdlet.
     #>
 
@@ -62,7 +62,6 @@ function New-AsBuiltConfig {
         'Phone' = $CompanyPhone
         'Address' = $CompanyAddress
     }
-
     #endregion Company configuration
 
     #region Email configuration
@@ -141,7 +140,7 @@ function New-AsBuiltConfig {
     #endregion Email Configuration
 
     #region Report Configuration Folder
-    if (!($ReportConfigPath)) {
+    if ($Report -and !$ReportConfigFilePath) {
         Clear-Host
         Write-Host '---------------------------------------------' -ForegroundColor Cyan
         Write-Host ' <          Report Configuration           > ' -ForegroundColor Cyan
@@ -153,46 +152,45 @@ function New-AsBuiltConfig {
 
         #If the folder doesn't exist, create it
         if (!(Test-Path -Path $ReportConfigFolder)) {
-            New-Item -Path $ReportConfigFolder -ItemType Directory -Force
+            Try {
+                $Folder = New-Item -Path $ReportConfigFolder -ItemType Directory -Force
+            } Catch {
+                Write-Error $_
+                break
+            }
         }
 
-        #Add the path to the folder to the JSON configuration
+        #Add the path to the folder to the report configuration file
         $Config.UserFolder = @{
             'Path' = $ReportConfigFolder
         }
 
-        #Test to see if the Report Configuration folder is empty. If it is, generate all report JSON files.
-        #If the folder is not empty, do a foreach loop through each currently installed report module and check if the
-        #report json specific to that module exists. If it does, prompt the user to see if they want to overwrite the
-        #JSON. If it doesn't exist, generate the JSON
-
-        $AsBuiltReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
+        #Test to see if the Report Configuration folder is empty. If it is, generate report configuration file.
+        #If the folder is not empty, prompt the user to see if they want to overwrite the report
+        #configuration file.
+        $ReportModule = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
         if (!(Get-ChildItem -Path $ReportConfigFolder -Force)) {
-            Foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
-                $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
-                Try {
-                    New-AsBuiltReportConfig -Report $AsBuiltReportName -FolderPath $ReportConfigFolder
-                } Catch {
-                    Write-Error $_
-                    Break
-                }
+            Try {
+                Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportConfigFolder)\$($ReportModule.Name).json'."
+                New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
+            } Catch {
+                Write-Error $_
+                Break
             }
         } else {
             try {
-                foreach ($AsBuiltReportModule in $AsBuiltReportModules) {
-                    $AsBuiltReportName = $AsBuiltReportModule.Name.Replace("AsBuiltReport.", "")
-                    if (Test-Path -Path "$($ReportConfigFolder)\$($AsBuiltReportModule.Name).json") {
-                        $OverwriteReportJSON = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($AsBuiltReportModule.Name). Would you like to overwrite it? (y/n)"
-                        while ("y", "n" -notcontains $OverwriteReportJSON) {
-                            $OverwriteReportJSON = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($AsBuiltReportModule.Name). Would you like to overwrite it? (y/n)"
-                        }
-                        if ($OverwriteReportJSON -eq 'y') {
-                            Try {
-                                New-AsBuiltReportConfig -Report $AsBuiltReportName -FolderPath $ReportConfigFolder -Overwrite
-                            } Catch {
-                                Write-Error $_
-                                Break
-                            }
+                if (Test-Path -Path "$($ReportConfigFolder)\$($ReportModule.Name).json") {
+                    $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
+                    while ("y", "n" -notcontains $OverwriteReportConfig) {
+                        $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
+                    }
+                    if ($OverwriteReportConfig -eq 'y') {
+                        Try {
+                            Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportConfigFolder)\$($ReportModule.Name).json'. Overwriting existing file."
+                            New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder -Force
+                        } Catch {
+                            Write-Error $_
+                            Break
                         }
                     }
                 }
@@ -223,17 +221,32 @@ function New-AsBuiltConfig {
             if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
                 $AsBuiltExportPath = $Config.UserFolder.Path
             }
+		} elseif ($ReportConfigFilePath) {
+			$ReportConfigFolderPath = Split-Path -Path $ReportConfigFilePath
+			$AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$ReportConfigFolderPath]"
+			if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                $AsBuiltExportPath = $ReportConfigFolderPath
+            }
         } else {
             $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$env:USERPROFILE\AsBuiltReport]"
             if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
                 $AsBuiltExportPath = "$env:USERPROFILE\AsBuiltReport"
-                $Config.UserFolder = @{
-                    'Path' = $AsBuiltExportPath
-                }
-            }
+            }          
         }
+		if (!(Test-Path -Path $AsBuiltExportPath)) {
+			Write-Verbose -Message "Creating As Built Report configuration folder '$AsBuiltExportPath'."
+			Try {
+				$Folder = New-Item -Path $AsBuiltExportPath -ItemType Directory -Force
+			} Catch {
+				Write-Error $_
+				break
+			}
+		}
+		$Config.UserFolder = @{
+			'Path' = $AsBuiltExportPath
+		}
+        Write-Verbose -Message "Saving As Built Report configuration file '$($AsBuiltName).json' to path '$AsBuiltExportPath'."
         $AsBuiltConfigPath = Join-Path -Path $AsBuiltExportPath -ChildPath "$AsBuiltName.json"
-        Write-Verbose -Message "Saving As Built Report configuration file '$($AsBuiltName).json' to '$AsBuiltConfigPath'"
         $Config | ConvertTo-Json | Out-File $AsBuiltConfigPath
     } else {
         Write-Verbose -Message "As Built Report configuration file not saved."
@@ -252,6 +265,4 @@ function New-AsBuiltConfig {
     foreach ($x in $Config.Email.Keys) {
         Write-Verbose -Message "Config.Email.$x = $($Config.Email[$x])"
     }
-
-    
 }#End New-AsBuiltConfig Function

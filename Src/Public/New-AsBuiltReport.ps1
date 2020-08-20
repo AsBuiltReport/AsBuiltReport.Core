@@ -236,16 +236,6 @@ function New-AsBuiltReport {
                 $Global:AsBuiltConfig = Get-Content -Path $AsBuiltConfigFilePath | ConvertFrom-Json
                 # Verbose Output for As Built Report configuration
                 Write-Verbose -Message "Loading As Built Report configuration from '$AsBuiltConfigFilePath'."
-                <#
-                Write-Verbose -Message "AsBuiltConfig.Report.Author = $($AsBuiltConfig.Report.Author)"
-                Write-Verbose -Message "AsBuiltConfig.UserFolder.Path = $($AsBuiltConfig.UserFolder.Path)"
-                foreach ($x in $AsBuiltConfig.Company.PSObject.Properties) {
-                    Write-Verbose -Message "AsBuiltConfig.Company.$($x.name) = $($x.value)"
-                }
-                foreach ($x in $AsBuiltConfig.Email.PSObject.Properties) {
-                    Write-Verbose -Message "AsBuiltConfig.Email.$($x.name) = $($x.value)"
-                }
-                #>
             } else {
                 Write-Error "Could not find As Built Report configuration in path '$AsBuiltConfigFilePath'."
                 break 
@@ -255,7 +245,7 @@ function New-AsBuiltReport {
             $Global:AsBuiltConfig = New-AsBuiltConfig
         }
 
-        # Set ReportConfigPath as Global scope for use in New-AsBuiltConfig
+        # Set ReportConfigFilePath as Global scope for use in New-AsBuiltConfig
         if ($ReportConfigFilePath) {
             $Global:ReportConfigFilePath = $ReportConfigFilePath
         }
@@ -269,6 +259,7 @@ function New-AsBuiltReport {
         }
 
         # Report Module Information
+        $Global:Report = $Report
         $ReportModuleName = "AsBuiltReport.$Report"
         $ReportModulePath = (Get-Module -Name $ReportModuleName -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1).ModuleBase
 
@@ -293,7 +284,7 @@ function New-AsBuiltReport {
                 Write-Error "Report configuration file not found in module path '$ReportModulePath'."
                 break
             }#End if test-path
-        }#End if ReportConfigPath
+        }#End if ReportConfigFilePath
 
         # If Filename parameter is not specified, set filename to the report name
         if (!$Filename) {
@@ -394,9 +385,10 @@ function New-AsBuiltReport {
         #region Globals cleanup
         Remove-Variable -Name AsBuiltConfig -Scope Global
         Remove-Variable -Name ReportConfig -Scope Global
+        Remove-Variable -Name Report -Scope Global
         Remove-Variable -Name Orientation -Scope Global
-        if ($ReportConfigPath) {
-            Remove-Variable -Name ReportConfigPath
+        if ($ReportConfigFilePath) {
+            Remove-Variable -Name ReportConfigFilePath
         }
         if ($Healthcheck) {
             Remove-Variable -Name Healthcheck -Scope Global

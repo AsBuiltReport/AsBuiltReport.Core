@@ -11,7 +11,7 @@ function New-AsBuiltReportConfig {
     .PARAMETER Filename
         Specifies the filename of the report JSON configuration file.
         If Name is not specified, a JSON configuration file will be created with a default name AsBuiltReport.<Vendor>.<Product>.json
-    .PARAMETER Overwrite
+    .PARAMETER Force
         Specifies to overwrite any existing report JSON configuration file
     .EXAMPLE
         Creates a report configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder. 
