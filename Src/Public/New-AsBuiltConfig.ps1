@@ -165,28 +165,23 @@ function New-AsBuiltConfig {
             'Path' = $ReportConfigFolder
         }
 
-        #Test to see if the Report Configuration folder is empty. If it is, generate report configuration file.
-        #If the folder is not empty, prompt the user to see if they want to overwrite the report
-        #configuration file.
+        # Test to see if the report configuration file exists. If it doesn't exist, generate the report configuration file.
+        # If the report configuration file exists, prompt the user to overwrite the report configuration file.
         $ReportModule = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
-        if (!(Get-ChildItem -Path $ReportConfigFolder -Force)) {
-            Try {
-                Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportConfigFolder)\$($ReportModule.Name).json'."
-                New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
-            } Catch {
-                Write-Error $_
-                Break
-            }
+        $ReportModulePath = "$($ReportConfigFolder)\$($ReportModule.Name).json"
+        if (!(Get-ChildItem -Path $ReportModulePath)) {
+            Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportModulePath)'."
+            New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
         } else {
             try {
-                if (Test-Path -Path "$($ReportConfigFolder)\$($ReportModule.Name).json") {
+                if (Test-Path -Path $ReportModulePath) {
                     $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
                     while ("y", "n" -notcontains $OverwriteReportConfig) {
                         $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
                     }
                     if ($OverwriteReportConfig -eq 'y') {
                         Try {
-                            Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportConfigFolder)\$($ReportModule.Name).json'. Overwriting existing file."
+                            Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportModulePath)'. Overwriting existing file."
                             New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder -Force
                         } Catch {
                             Write-Error $_
