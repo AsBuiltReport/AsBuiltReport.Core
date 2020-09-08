@@ -336,7 +336,7 @@ function New-AsBuiltReport {
         } else {
             $AsBuiltReport = Document $FileName {
 
-                Write-Host "Please wait whilst the $($Report.Replace("."," ")) As Built Report is being generated." -ForegroundColor Green
+                Write-Host "Please wait while the $($Report.Replace("."," ")) As Built Report is being generated." -ForegroundColor Green
 
                 # Set Document Style
                 if ($StyleFilePath) {
