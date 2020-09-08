@@ -39,15 +39,15 @@ This report is compatible with the following PowerShell versions;
 |:----------------------:|:------------------:|:------------------:|
 |   :white_check_mark:   | :white_check_mark: | :white_check_mark: |
 
-## :wrench: Pre-requisites
+## :wrench: System Requirements
 
 The following module will be automatically installed by following the [module installation](https://github.com/AsBuiltReport/AsBuiltReport.Core#package-module-installation) procedure.
 
-This module may also be installed individually.
+This module may also be manually installed.
 
 | Module Name        | Minimum Required Version |                          PS Gallery                           |                                   GitHub                                    |
 |--------------------|:------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
-| PScribo            |          0.9.0           |      [Link](https://www.powershellgallery.com/packages/PScribo)       |         [Link](https://github.com/iainbrighton/PScribo/tree/master)
+| PScribo            |          0.9.1           |      [Link](https://www.powershellgallery.com/packages/PScribo)       |         [Link](https://github.com/iainbrighton/PScribo/tree/master)
 
 To find a list of available report modules, run the following PowerShell command;
 
@@ -66,7 +66,7 @@ install-module AsBuiltReport.Core
 ```
 
 ### **GitHub**
-If you are unable to use the PowerShell Gallery, you can still install the module manually. Ensure you repeat the following steps for the [pre-requistes](https://github.com/AsBuiltReport/AsBuiltReport.Core#wrench-pre-requisites) also.
+If you are unable to use the PowerShell Gallery, you can still install the module manually. Ensure you repeat the following steps for the [system requirements](https://github.com/AsBuiltReport/AsBuiltReport.Core#wrench-system-requirements) also.
 
 1. Download the [latest release](https://github.com/AsBuiltReport/AsBuiltReport.Core/releases/latest) zip from GitHub
 2. Extract the zip file
@@ -99,15 +99,17 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
     Specifies the password for the target system.
 .PARAMETER Format
     Specifies the output format of the report.
-    The supported output formats are WORD, HTML, XML & TEXT.
+    The supported output formats are WORD, HTML & TEXT.
     Multiple output formats may be specified, separated by a comma.
 .PARAMETER Orientation
     Sets the page orientation of the report to Portrait or Landscape.
     By default, page orientation will be set to Portrait.
-.PARAMETER StylePath
-    Specifies the path to a custom style .ps1 script for the report to use.
-.PARAMETER OutputPath
-    Specifies the path to save the report.
+.PARAMETER StyleFilePath
+    Specifies the file path to a custom style .ps1 script for the report to use.
+.PARAMETER OutputFolderPath
+    Specifies the folder path to save the report.
+.PARAMETER Filename
+    Specifies a filename for the report.
 .PARAMETER Timestamp
     Specifies whether to append a timestamp string to the report filename.
     By default, the timestamp string is not added to the report filename.
@@ -116,12 +118,12 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
     Not all reports may provide this functionality.
 .PARAMETER SendEmail
     Sends report to specified recipients as email attachments.
-.PARAMETER AsBuiltConfigPath
+.PARAMETER AsBuiltConfigFilePath
     Enter the full path to the As Built Report configuration JSON file.
     If this parameter is not specified, the user will be prompted for this configuration information on first 
     run, with the option to save the configuration to a file.
-.PARAMETER ReportConfigPath
-    Enter the full path to a report JSON configuration file
+.PARAMETER ReportConfigFilePath
+    Enter the full path to a report JSON configuration file.
     If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
     If this paramter is specified and the path to a JSON file is invalid, the script will terminate
 ```
@@ -133,9 +135,9 @@ Get-Help New-AsBuiltReport -Full
 ```
 
 ### **New-AsBuiltConfig**
-`New-AsBuiltConfig` starts a menu-driven procedure in the powershell console and asks the user a series of questions. Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the `-AsBuiltConfigPath` parameter using `New-AsBuiltReport`, to save having to answer these questions again and also to allow the automation of `New-AsBuiltReport`.
+`New-AsBuiltConfig` starts a menu-driven procedure in the powershell console and asks the user a series of questions. Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the `-AsBuiltConfigFilePath` parameter using `New-AsBuiltReport`, to save having to answer these questions again and also to allow the automation of `New-AsBuiltReport`.
         
-`New-AsBuiltConfig` will automatically be called by `New-AsBuiltReport` if the `-AsBuiltConfigPath` parameter is not specified. If a user wants to generate a new As Built JSON configuration without running a new report, this cmdlet can be called as a standalone cmdlet.
+`New-AsBuiltConfig` will automatically be called by `New-AsBuiltReport` if the `-AsBuiltConfigFilePath` parameter is not specified. If a user wants to generate a new As Built JSON configuration without running a new report, this cmdlet can be called as a standalone cmdlet.
 
 ### **New-AsBuiltReportConfig**
 
@@ -144,19 +146,19 @@ The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files 
 ```powershell
 .PARAMETER Report
     Specifies the type of report configuration to create.
-.PARAMETER Path
-    Specifies the path to create the report JSON configuration file.
-.PARAMETER Name
-    Specifies the name of the report JSON configuration file.
+.PARAMETER FolderPath
+    Specifies the folder path to create the report JSON configuration file.
+.PARAMETER Filename
+    Specifies the filename of the report JSON configuration file.
     If Name is not specified, a JSON configuration file will be created with a default name AsBuiltReport.<Vendor>.<Product>.json
-.PARAMETER Overwrite
-        Specifies to overwrite any existing report JSON configuration file
+.PARAMETER Force
+    Specifies to overwrite any existing report JSON configuration file
 .EXAMPLE
     Creates a report JSON configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder. 
-    New-AsBuiltReportConfig -Report VMware.vSphere -Path 'C:\Reports' -Name 'vSphere_Report_Config'
+    New-AsBuiltReportConfig -Report VMware.vSphere -FolderPath 'C:\Reports' -Filename 'vSphere_Report_Config'
 .EXAMPLE
     Creates a report JSON configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file. 
-    New-AsBuiltReportConfig -Report Nutanix.PrismCentral -Path 'C:\Reports' -Overwrite
+    New-AsBuiltReportConfig -Report Nutanix.PrismCentral -FolderPath 'C:\Reports' -Force
 ```
 
 ```powershell
@@ -169,20 +171,23 @@ Here are some examples to get you going.
 ```powershell
 # The following creates a VMware vSphere As Built report in HTML & Word formats.
 # The document will highlight particular issues which exist within the environment by including the Healthchecks switch.
-PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputPath 'H:\Documents\'
+PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'H:\Documents\'
 
 # The following creates a VMware vSphere As Built report in HTML & Word formats, while displaying Verbose messages to the console
-PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -OutputPath 'H:\Documents\' -Verbose
+PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -OutputFolderPath 'H:\Documents\' -Verbose
 
 # The following creates a Pure Storage FlashArray As Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
 PS C:\>$Creds = Get-Credential
-PS C:\>New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputPath 'H:\Documents\'
+PS C:\>New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputFolderPath 'H:\Documents\'
 
-# The following creates a Cisco UCS As Built report in default format (Word) with a customised style.
-PS C:\>New-AsBuiltReport -Report Cisco.UCSManager -Target 192.168.1.100 -Username admin -Password admin -StylePath 'C:\scripts\ACME.ps1' -OutputPath 'H:\Documents\'
+# The following creates a Cisco UCS Manager As Built report in default format (Word) with a customised style.
+PS C:\>New-AsBuiltReport -Report Cisco.UCSManager -Target 192.168.1.100 -Username admin -Password admin -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
 
 # The following creates a VMware NSX-V As Built report in HTML format, using the configuration in the asbuilt.json file located in the C:\scripts\ folder.
-PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigPath 'C:\scripts\asbuilt.json' -OutputPath 'H:\Documents\'
+PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\'
+
+# The following creates a Nutanix Prism Element As Built report in HTML format, with a custom filename.
+PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
 ```
 
 ## :pencil: Notes

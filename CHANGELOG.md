@@ -1,5 +1,24 @@
 # :arrows_counterclockwise: AsBuiltReport.Core Changelog
 
+## [1.1.0] - 2020-08-16
+### Changed 
+- Updated `New-AsBuiltReport` parameter names to provide clarity of input requirements. Aliases used to prevent breaking changes.
+    - `OutputPath` now an alias for `OutputFolderPath`
+    - `StylePath` now an alias for `StyleFilePath`
+    - `ReportConfigPath` now an alias for `ReportConfigFilePath`
+    - `AsBuiltConfigPath` now an alias for `AsBuiltConfigFilePath`
+- Updated `New-AsBuiltReportConfig` parameter names to provide clarity of input requirements. Aliases used to prevent breaking changes.
+    - `Path` now an alias for `FolderPath`
+    - `Name` now an alias for `Filename`
+    - `Overwrite` now an alias for `Force`
+- Updated `RequiredModules` for PScribo 0.9.1
+- Custom style scripts are now executed from `New-AsBuiltReport` to allow use of new PScribo features
+
+### Added
+- Added `Filename` parameter to `New-AsBuiltReport`
+- Added error check for incorrect `AsBuiltConfigFilePath`
+- Improvements to verbose logging
+
 ## [1.0.5] - 2020-07-16
 ### Changed
 - Updated `RequiredModules` for PScribo 0.9.0
