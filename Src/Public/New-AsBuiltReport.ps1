@@ -43,7 +43,7 @@ function New-AsBuiltReport {
     .PARAMETER ReportConfigFilePath
         Enter the full file path to a report JSON configuration file
         If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
-        If this paramter is specified and the path to a JSON file is invalid, the script will terminate.
+        If this parameter is specified and the path to a JSON file is invalid, the script will terminate.
     .EXAMPLE
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -Report VMware.vSphere -EnableHealthCheck -OutputFolderPath c:\scripts\
         Creates a VMware vSphere As Built Report in HTML & Word formats. The document will highlight particular issues which exist within the environment.
@@ -64,7 +64,6 @@ function New-AsBuiltReport {
         The report will be saved to c:\scripts.
     .EXAMPLE
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML -Report VMware.vSphere -AsBuiltConfigFilePath C:\scripts\asbuiltreport.json -OutputFolderPath c:\scripts\
-        
         Creates a VMware vSphere As Built Report in HTML format, using the configuration in the asbuiltreport.json file located in the C:\scripts\ folder.
         The report will be saved to c:\scripts.
     .NOTES
@@ -115,7 +114,7 @@ function New-AsBuiltReport {
         [Parameter(
             Position = 2,
             Mandatory = $true,
-            HelpMessage = 'Please provide credentails to connect to the system',
+            HelpMessage = 'Please provide credentials to connect to the system',
             ParameterSetName = 'Credential'
         )]
         [ValidateNotNullOrEmpty()]

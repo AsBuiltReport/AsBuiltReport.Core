@@ -10,7 +10,7 @@ function New-AsBuiltReportConfig {
         Specifies the folder path to create the report JSON configuration file.
     .PARAMETER Filename
         Specifies the filename of the report JSON configuration file.
-        If Name is not specified, a JSON configuration file will be created with a default name AsBuiltReport.<Vendor>.<Product>.json
+        If filename is not specified, a JSON configuration file will be created with a default filename AsBuiltReport.<Vendor>.<Product>.json
     .PARAMETER Force
         Specifies to overwrite any existing report JSON configuration file
     .EXAMPLE
@@ -18,7 +18,7 @@ function New-AsBuiltReportConfig {
         New-AsBuiltReportConfig -Report VMware.vSphere -FolderPath 'C:\Reports' -Filename 'vSphere_Report_Config'
     .EXAMPLE
         Creates a report configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file. 
-        New-AsBuiltReportConfig -Report Nutanix.PrismCentral -FolderPath 'C:\Reports' -Overwrite
+        New-AsBuiltReportConfig -Report Nutanix.PrismCentral -FolderPath 'C:\Reports' -Force
     #>
     [CmdletBinding()]
     param (
