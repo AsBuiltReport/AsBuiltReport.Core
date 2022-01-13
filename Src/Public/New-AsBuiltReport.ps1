@@ -137,12 +137,13 @@ function New-AsBuiltReport {
         [String] $Username,
 
         [Parameter(
+            Position = 3,
             Mandatory = $true,
-            HelpMessage = 'Please provide an API token to connect to the target system',
-            ParameterSetName = 'APIToken'
+            HelpMessage = 'Please provide the password to connect to the target system',
+            ParameterSetName = 'UsernameAndPassword'
         )]
         [ValidateNotNullOrEmpty()]
-        [String] $Token,
+        [String] $Password,
 
         [Parameter(
             Position = 4,
@@ -153,7 +154,14 @@ function New-AsBuiltReport {
         [ValidateSet('Word', 'HTML', 'Text')]
         [Array] $Format = 'Word',
 
-
+        [Parameter(
+            Mandatory = $true,
+            HelpMessage = 'Please provide an API token to connect to the target system',
+            ParameterSetName = 'APIToken'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [String] $Token,
+        
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Determines the document page orientation'
