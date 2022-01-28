@@ -1,5 +1,10 @@
 # :arrows_counterclockwise: AsBuiltReport.Core Changelog
 
+## Unreleased
+### Added
+* Added new `Token` parameter to `New-AsBuiltReport` cmdlet and a subsequent parameter set to allow authentication to be provided by an API token
+    - Modified section of code that calls individual reports to check whether the authentication mechanism is Credential or API Token
+
 ## [1.1.0] - 2020-08-16
 ### Changed 
 - Updated `New-AsBuiltReport` parameter names to provide clarity of input requirements. Aliases used to prevent breaking changes.

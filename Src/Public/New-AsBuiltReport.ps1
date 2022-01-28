@@ -15,6 +15,8 @@ function New-AsBuiltReport {
         Specifies the username for the target system.
     .PARAMETER Password
         Specifies the password for the target system.
+    .PARAMETER Token
+        Specifies an API token to authenticate to the target system
     .PARAMETER Format
         Specifies the output format of the report.
         The supported output formats are WORD, HTML & TEXT.
@@ -53,6 +55,11 @@ function New-AsBuiltReport {
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Credential $Creds -Format Text -Report PureStorage.FlashArray -Timestamp -OutputFolderPath c:\scripts\
         Creates a Pure Storage FlashArray As Built Report in Text format and appends a timestamp to the filename. 
         Stored credentials are used to connect to the system.
+        The report will be saved to c:\scripts.
+    .EXAMPLE
+        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Token "123456789abcdefg" -Format HTML -Report Rubrik.CDM -OutputFolderPath c:\scripts\
+        Creates a Rubrik CDM As Built Report in HTML format. 
+        An API token is used to connect to the system.
         The report will be saved to c:\scripts.
     .EXAMPLE
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Cisco.UCSManager -StyleFilePath c:\scripts\AsBuiltReport\Styles\ACME.ps1 -OutputFolderPath c:\scripts\
@@ -147,6 +154,14 @@ function New-AsBuiltReport {
         [ValidateSet('Word', 'HTML', 'Text')]
         [Array] $Format = 'Word',
 
+        [Parameter(
+            Mandatory = $true,
+            HelpMessage = 'Please provide an API token to connect to the target system',
+            ParameterSetName = 'APIToken'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [String] $Token,
+        
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Determines the document page orientation'
@@ -330,7 +345,13 @@ function New-AsBuiltReport {
                     . "$ReportModulePath\$ReportModuleName.Style.ps1"
                 }
                 # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
-                & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose -StylePath $true
+                # If Credential has been passed or previously created via Username/Password
+                if ($Credential) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose -StylePath $true
+                }
+                elseif ($Token) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose -StylePath $true
+                }
             }
         } else {
             $AsBuiltReport = Document $FileName {
@@ -346,7 +367,13 @@ function New-AsBuiltReport {
                     . "$ReportModulePath\$ReportModuleName.Style.ps1"
                 }
                 # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
-                & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -StylePath $true
+                # If Credential has been passed or previously created via Username/Password
+                if ($Credential) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -StylePath $true
+                }
+                elseif ($Token) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -StylePath $true
+                }
             }
         }
         Try {
