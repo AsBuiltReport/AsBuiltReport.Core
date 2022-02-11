@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://www.asbuiltreport.com/" alt="AsBuiltReport"></a> 
+    <a href="https://www.asbuiltreport.com/" alt="AsBuiltReport"></a>
             <img src='https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport/master/AsBuiltReport.png' width="8%" height="8%" /></a>
 </p>
 <p align="center">
@@ -35,9 +35,9 @@ The following simple list of instructions will get you started with the AsBuiltR
 ### **PowerShell**
 This report is compatible with the following PowerShell versions;
 
-| Windows PowerShell 5.1 |  PowerShell Core   |    PowerShell 7    |
-|:----------------------:|:------------------:|:------------------:|
-|   :white_check_mark:   | :white_check_mark: | :white_check_mark: |
+| Windows PowerShell 5.1 | PowerShell 7 |
+|:----------------------:|:------------------:|
+|   :white_check_mark:   | :white_check_mark: |
 
 ## :wrench: System Requirements
 
@@ -71,7 +71,7 @@ If you are unable to use the PowerShell Gallery, you can still install the modul
 1. Download the [latest release](https://github.com/AsBuiltReport/AsBuiltReport.Core/releases/latest) zip from GitHub
 2. Extract the zip file
 3. Copy the folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`. By default this could be `C:\Program Files\WindowsPowerShell\Modules` or `C:\Users\<user>\Documents\WindowsPowerShell\Modules`
-4. Open a PowerShell terminal window and unblock the downloaded files with 
+4. Open a PowerShell terminal window and unblock the downloaded files with
     ```powershell
     $path = (Get-Module -Name AsBuiltReport.Core -ListAvailable).ModuleBase; Unblock-File -Path $path\*.psd1; Unblock-File -Path $path\Src\Public\*.ps1
     ```
@@ -97,6 +97,10 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
     Specifies the username for the target system.
 .PARAMETER Password
     Specifies the password for the target system.
+.PARAMETER Token
+    Specifies an API token to authenticate to the target system.
+.PARAMETER MFA
+    Use multifactor authentication to authenticate to the target system.
 .PARAMETER Format
     Specifies the output format of the report.
     The supported output formats are WORD, HTML & TEXT.
@@ -120,7 +124,7 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
     Sends report to specified recipients as email attachments.
 .PARAMETER AsBuiltConfigFilePath
     Enter the full path to the As Built Report configuration JSON file.
-    If this parameter is not specified, the user will be prompted for this configuration information on first 
+    If this parameter is not specified, the user will be prompted for this configuration information on first
     run, with the option to save the configuration to a file.
 .PARAMETER ReportConfigFilePath
     Enter the full path to a report JSON configuration file.
@@ -136,7 +140,7 @@ Get-Help New-AsBuiltReport -Full
 
 ### **New-AsBuiltConfig**
 `New-AsBuiltConfig` starts a menu-driven procedure in the powershell console and asks the user a series of questions. Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the `-AsBuiltConfigFilePath` parameter using `New-AsBuiltReport`, to save having to answer these questions again and also to allow the automation of `New-AsBuiltReport`.
-        
+
 `New-AsBuiltConfig` will automatically be called by `New-AsBuiltReport` if the `-AsBuiltConfigFilePath` parameter is not specified. If a user wants to generate a new As Built JSON configuration without running a new report, this cmdlet can be called as a standalone cmdlet.
 
 ### **New-AsBuiltReportConfig**
@@ -154,10 +158,10 @@ The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files 
 .PARAMETER Force
     Specifies to overwrite any existing report JSON configuration file
 .EXAMPLE
-    Creates a report JSON configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder. 
+    Creates a report JSON configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder.
     New-AsBuiltReportConfig -Report VMware.vSphere -FolderPath 'C:\Reports' -Filename 'vSphere_Report_Config'
 .EXAMPLE
-    Creates a report JSON configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file. 
+    Creates a report JSON configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file.
     New-AsBuiltReportConfig -Report Nutanix.PrismCentral -FolderPath 'C:\Reports' -Force
 ```
 
@@ -193,10 +197,10 @@ PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username adm
 ## :pencil: Notes
 - Table Of Contents (TOC) may be missing in Word formatted report
 
-    When opening the DOCX report, MS Word prompts the following 
-    
+    When opening the DOCX report, MS Word prompts the following
+
     `"This document contains fields that may refer to other files. Do you want to update the fields in this document?"`
-    
+
     `Yes / No`
 
     Clicking `No` will prevent the TOC fields being updated and leaving the TOC empty.

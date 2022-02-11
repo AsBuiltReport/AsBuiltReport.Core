@@ -1,6 +1,6 @@
 function New-AsBuiltReport {
     <#
-    .SYNOPSIS  
+    .SYNOPSIS
         Documents the configuration of IT infrastructure in Word/HTML/Text formats using PScribo.
     .DESCRIPTION
         Documents the configuration of IT infrastructure in Word/HTML/Text formats using PScribo.
@@ -15,6 +15,10 @@ function New-AsBuiltReport {
         Specifies the username for the target system.
     .PARAMETER Password
         Specifies the password for the target system.
+    .PARAMETER Token
+        Specifies an API token to authenticate to the target system.
+    .PARAMETER MFA
+        Use multifactor authentication to authenticate to the target system.
     .PARAMETER Format
         Specifies the output format of the report.
         The supported output formats are WORD, HTML & TEXT.
@@ -38,12 +42,12 @@ function New-AsBuiltReport {
         Sends report to specified recipients as email attachments.
     .PARAMETER AsBuiltConfigFilePath
         Enter the full file path to the As Built Report configuration JSON file.
-        If this parameter is not specified, the user will be prompted for this configuration information on first 
+        If this parameter is not specified, the user will be prompted for this configuration information on first
         run, with the option to save the configuration to a file.
     .PARAMETER ReportConfigFilePath
         Enter the full file path to a report JSON configuration file
         If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
-        If this paramter is specified and the path to a JSON file is invalid, the script will terminate.
+        If this parameter is specified and the path to a JSON file is invalid, the script will terminate.
     .EXAMPLE
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -Report VMware.vSphere -EnableHealthCheck -OutputFolderPath c:\scripts\
         Creates a VMware vSphere As Built Report in HTML & Word formats. The document will highlight particular issues which exist within the environment.
@@ -51,8 +55,13 @@ function New-AsBuiltReport {
     .EXAMPLE
         PS C:\>$Creds = Get-Credential
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Credential $Creds -Format Text -Report PureStorage.FlashArray -Timestamp -OutputFolderPath c:\scripts\
-        Creates a Pure Storage FlashArray As Built Report in Text format and appends a timestamp to the filename. 
+        Creates a Pure Storage FlashArray As Built Report in Text format and appends a timestamp to the filename.
         Stored credentials are used to connect to the system.
+        The report will be saved to c:\scripts.
+    .EXAMPLE
+        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Token "123456789abcdefg" -Format HTML -Report Rubrik.CDM -OutputFolderPath c:\scripts\
+        Creates a Rubrik CDM As Built Report in HTML format.
+        An API token is used to connect to the system.
         The report will be saved to c:\scripts.
     .EXAMPLE
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Cisco.UCSManager -StyleFilePath c:\scripts\AsBuiltReport\Styles\ACME.ps1 -OutputFolderPath c:\scripts\
@@ -64,16 +73,15 @@ function New-AsBuiltReport {
         The report will be saved to c:\scripts.
     .EXAMPLE
         PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML -Report VMware.vSphere -AsBuiltConfigFilePath C:\scripts\asbuiltreport.json -OutputFolderPath c:\scripts\
-        
         Creates a VMware vSphere As Built Report in HTML format, using the configuration in the asbuiltreport.json file located in the C:\scripts\ folder.
         The report will be saved to c:\scripts.
     .NOTES
-        Version:        1.1.0
+        Version:        1.2.0
         Author(s):      Tim Carman / Matt Allford
         Twitter:        @tpcarman / @mattallford
         Github:         AsBuiltReport
         Credits:        Iain Brighton (@iainbrighton) - PScribo module
-                        
+
     .LINK
         https://github.com/AsBuiltReport
         https://github.com/iainbrighton/PScribo
@@ -102,7 +110,7 @@ function New-AsBuiltReport {
                     throw "Invalid report type specified! Please use one of the following [$($ValidReports -Join ', ')]"
                 }
             })]
-        [string] $Report,
+        [String] $Report,
 
         [Parameter(
             Position = 1,
@@ -115,7 +123,7 @@ function New-AsBuiltReport {
         [Parameter(
             Position = 2,
             Mandatory = $true,
-            HelpMessage = 'Please provide credentails to connect to the system',
+            HelpMessage = 'Please provide credentials to connect to the system',
             ParameterSetName = 'Credential'
         )]
         [ValidateNotNullOrEmpty()]
@@ -140,6 +148,23 @@ function New-AsBuiltReport {
         [String] $Password,
 
         [Parameter(
+            Position = 3,
+            Mandatory = $true,
+            HelpMessage = 'Please provide an API token to connect to the target system',
+            ParameterSetName = 'APIToken'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [String] $Token,
+
+        [Parameter(
+            Position = 3,
+            Mandatory = $true,
+            ParameterSetName = 'MFA'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [Switch] $MFA,
+
+        [Parameter(
             Position = 4,
             Mandatory = $false,
             HelpMessage = 'Please provide the document output format'
@@ -161,15 +186,15 @@ function New-AsBuiltReport {
             HelpMessage = 'Please provide the path to the document output file'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('OutputPath')] 
+        [Alias('OutputPath')]
         [String] $OutputFolderPath,
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Please provide the path to the custom style script'
         )]
-        [ValidateNotNullOrEmpty()] 
-        [Alias('StylePath')] 
+        [ValidateNotNullOrEmpty()]
+        [Alias('StylePath')]
         [String] $StyleFilePath,
 
         [Parameter(
@@ -177,30 +202,30 @@ function New-AsBuiltReport {
             HelpMessage = 'Provide the file path to an existing report JSON Configuration file'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('ReportConfigPath')] 
-        [string] $ReportConfigFilePath,
+        [Alias('ReportConfigPath')]
+        [String] $ReportConfigFilePath,
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Provide the file path to an existing As Built JSON Configuration file'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('AsBuiltConfigPath')] 
-        [string] $AsBuiltConfigFilePath,
+        [Alias('AsBuiltConfigPath')]
+        [String] $AsBuiltConfigFilePath,
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Specify the As Built Report filename'
         )]
         [ValidateNotNullOrEmpty()]
-        [string] $Filename,
+        [String] $Filename,
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Specify whether to append a timestamp to the document filename'
         )]
         [Switch] $Timestamp = $false,
-        
+
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Specify whether to highlight any configuration issues within the document'
@@ -238,7 +263,7 @@ function New-AsBuiltReport {
                 Write-Verbose -Message "Loading As Built Report configuration from '$AsBuiltConfigFilePath'."
             } else {
                 Write-Error "Could not find As Built Report configuration in path '$AsBuiltConfigFilePath'."
-                break 
+                break
             }
         } else {
             Write-Verbose -Message "Generating new As Built Report configuration"
@@ -290,7 +315,7 @@ function New-AsBuiltReport {
         if (!$Filename) {
             $FileName = $ReportConfig.Report.Name
         }
-        # If Timestamp parameter is specified, add the timestamp to the report filename 
+        # If Timestamp parameter is specified, add the timestamp to the report filename
         if ($Timestamp) {
             $FileName = $Filename + " - " + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss')
         }
@@ -303,7 +328,7 @@ function New-AsBuiltReport {
 
         # Set Global scope for Orientation parameter
         $Global:Orientation = $Orientation
-        
+
         #endregion Variable config
 
         #region Email Server Authentication
@@ -331,7 +356,16 @@ function New-AsBuiltReport {
                     . "$ReportModulePath\$ReportModuleName.Style.ps1"
                 }
                 # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
-                & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose -StylePath $true
+                # If Credential has been passed or previously created via Username/Password
+                if ($Credential) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose -StylePath $true
+                }
+                elseif ($Token) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose -StylePath $true
+                }
+                elseif ($MFA) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -MFA -Verbose -StylePath $true
+                }
             }
         } else {
             $AsBuiltReport = Document $FileName {
@@ -347,7 +381,16 @@ function New-AsBuiltReport {
                     . "$ReportModulePath\$ReportModuleName.Style.ps1"
                 }
                 # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
-                & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -StylePath $true
+                # If Credential has been passed or previously created via Username/Password
+                if ($Credential) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -StylePath $true
+                }
+                elseif ($Token) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -StylePath $true
+                }
+                elseif ($MFA) {
+                    & "Invoke-$($ReportModuleName)" -Target $Target -MFA -StylePath $true
+                }
             }
         }
         Try {

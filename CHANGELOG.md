@@ -1,7 +1,13 @@
 # :arrows_counterclockwise: AsBuiltReport.Core Changelog
 
+## [1.2.0] - 2022-02-11
+### Added
+* Added new `Token` and `MFA` parameters and subsequent parameter sets to `New-AsBuiltReport` cmdlet to allow alternative authentication methods
+
+### Changed
+* Updated GitHub Action release workflow to send automated tweets on each release
 ## [1.1.0] - 2020-08-16
-### Changed 
+### Changed
 - Updated `New-AsBuiltReport` parameter names to provide clarity of input requirements. Aliases used to prevent breaking changes.
     - `OutputPath` now an alias for `OutputFolderPath`
     - `StylePath` now an alias for `StyleFilePath`

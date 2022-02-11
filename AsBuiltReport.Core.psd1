@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.1.0'
+    ModuleVersion = '1.2.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = 'Desktop'
@@ -54,7 +54,7 @@
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules = @(
         @{
-            ModuleName = 'PScribo'; 
+            ModuleName = 'PScribo';
             ModuleVersion = '0.9.1'
         }
     )
