@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.1.1'
+    ModuleVersion = '1.2.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = 'Desktop'
