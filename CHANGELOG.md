@@ -1,4 +1,4 @@
-# :arrows_counterclockwise: AsBuiltReport.Core Changelog
+# :arrows_clockwise: AsBuiltReport.Core Changelog
 
 ## [1.2.0] - 2022-02-11
 ### Added
