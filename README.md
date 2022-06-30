@@ -51,7 +51,7 @@ This module may also be manually installed.
 
 | Module Name        | Minimum Required Version |                          PS Gallery                           |                                   GitHub                                    |
 |--------------------|:------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
-| PScribo            |          0.9.1           |      [Link](https://www.powershellgallery.com/packages/PScribo)       |         [Link](https://github.com/iainbrighton/PScribo/tree/master)
+| PScribo            |          0.10.0           |      [Link](https://www.powershellgallery.com/packages/PScribo)       |         [Link](https://github.com/iainbrighton/PScribo/tree/master)
 
 To find a list of available report modules, run the following PowerShell command;
 
