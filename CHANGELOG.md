@@ -1,5 +1,9 @@
 # :arrows_clockwise: AsBuiltReport.Core Changelog
 
+## [1.2.1] - 2022-06-30
+### Changed
+- Updated `RequiredModules` for PScribo 0.10.0
+
 ## [1.2.0] - 2022-02-11
 ### Added
 * Added new `Token` and `MFA` parameters and subsequent parameter sets to `New-AsBuiltReport` cmdlet to allow alternative authentication methods
