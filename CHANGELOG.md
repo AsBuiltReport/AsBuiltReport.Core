@@ -3,6 +3,7 @@
 ## [1.2.1] - 2022-06-30
 ### Changed
 - Updated `RequiredModules` for PScribo 0.10.0
+- Updated PSScriptAnalyzer settings
 
 ## [1.2.0] - 2022-02-11
 ### Added
