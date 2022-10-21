@@ -224,10 +224,10 @@ $Credentials = Get-Credential
 New-AsBuiltReport -Report 'PureStorage.FlashArray' -Target '192.168.1.100' -Credential $Credentials -Format Text -Timestamp -OutputFolderPath 'H:\Documents\'
 
 # The following creates a Cisco UCS Manager As Built report in default format (Word) with a customised style.
-PS C:\>New-AsBuiltReport -Report 'Cisco.UCSManager' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
+New-AsBuiltReport -Report 'Cisco.UCSManager' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
 
 # The following creates a Nutanix Prism Element As Built report in HTML format, with a custom filename.
-PS C:\>New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
+New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
 ```
 
 ## :pencil: Notes
