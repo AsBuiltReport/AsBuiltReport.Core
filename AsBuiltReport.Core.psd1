@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.2.1'
+    ModuleVersion = '1.3.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = 'Desktop'
@@ -34,7 +34,7 @@
     Description = 'A PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems.'
 
     # Minimum version of the Windows PowerShell engine required by this module
-    PowerShellVersion = '5.1'
+    # PowerShellVersion = '5.1'
 
     # Name of the Windows PowerShell host required by this module
     # PowerShellHostName = ''

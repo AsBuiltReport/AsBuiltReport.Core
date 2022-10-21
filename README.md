@@ -45,9 +45,9 @@ This report is compatible with the following PowerShell versions;
 
 ## :wrench: System Requirements
 
-The following module will be automatically installed by following the [module installation](https://github.com/AsBuiltReport/AsBuiltReport.Core#package-module-installation) procedure.
+The following PowerShell module will be automatically installed by following the [module installation](https://github.com/AsBuiltReport/AsBuiltReport.Core#package-module-installation) procedure.
 
-This module may also be manually installed.
+This PowerShell module may also be manually installed via GitHub.
 
 | Module Name        | Minimum Required Version |                          PS Gallery                           |                                   GitHub                                    |
 |--------------------|:------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
@@ -63,19 +63,53 @@ The pre-requisites for each report type will be documented within its own `READM
 
 ## :package: Module Installation
 
-### **PowerShell**
-Open a PowerShell terminal window and install the required module as follows;
+### PowerShell
+#### Online Installation
+
+For an online installation, install the `AsBuiltReport.Core` module using the [PowerShell Gallery](https://www.powershellgallery.com/packages?q=Asbuiltreport.Core);
+
 ```powershell
-install-module AsBuiltReport.Core
+# Install AsBuiltReport module
+Install-Module -Name 'AsBuiltReport.Core' -Repository 'PSGallery' -Scope 'CurrentUser'
 ```
 
+#### Offline Installation
+
+For an offline installation, perform the following steps from a machine with internet connectivity;
+
+Save the required `AsBuiltReport.Core` module to a specified folder.
+
+```powershell
+# Save AsBuiltReport.Core module
+Save-Module -Name 'AsBuiltReport.Core' -Repository 'PSGallery' -Path '<Folder Path>'
+```
+
+Copy the downloaded `AsBuiltReport.Core` module folder to a location that can be made accessible to the offline system.
+e.g. USB Flash Drive, Internal File Share etc.
+
+On the offline system, open a PowerShell console window and run the following command to determine the PowerShell module path.
+
+**Windows**
+
+```powershell title=""
+$env:PSModulePath -Split ';'
+```
+
+**macOS & Linux**
+
+```powershell title=""
+$env:PSModulePath -Split ':'
+```
+
+Copy the downloaded `AsBuiltReport.Core` module folder to a folder specified in the `$env:PSModulePath` output.
+
 ### **GitHub**
-If you are unable to use the PowerShell Gallery, you can still install the module manually. Ensure you repeat the following steps for the [system requirements](https://github.com/AsBuiltReport/AsBuiltReport.Core#wrench-system-requirements) also.
+If you are unable to use the PowerShell Gallery, you can still install the `AsBuiltReport.Core` module manually. Ensure you repeat the following steps for the [system requirements](https://github.com/AsBuiltReport/AsBuiltReport.Core#wrench-system-requirements) also.
 
 1. Download the [latest release](https://github.com/AsBuiltReport/AsBuiltReport.Core/releases/latest) zip from GitHub
 2. Extract the zip file
-3. Copy the folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`. By default this could be `C:\Program Files\WindowsPowerShell\Modules` or `C:\Users\<user>\Documents\WindowsPowerShell\Modules`
-4. Open a PowerShell terminal window and unblock the downloaded files with
+3. Copy the folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`.
+4. For Windows users only, open a PowerShell terminal window and unblock the downloaded files with
     ```powershell
     $path = (Get-Module -Name AsBuiltReport.Core -ListAvailable).ModuleBase; Unblock-File -Path $path\*.psd1; Unblock-File -Path $path\Src\Public\*.ps1
     ```
@@ -162,11 +196,13 @@ The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files 
 .PARAMETER Force
     Specifies to overwrite any existing report JSON configuration file
 .EXAMPLE
-    Creates a report JSON configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder.
     New-AsBuiltReportConfig -Report VMware.vSphere -FolderPath 'C:\Reports' -Filename 'vSphere_Report_Config'
+
+    Creates a VMware vSphere report configuration file named 'vSphere_Report_Config.json' in the 'C:\Reports' folder.
 .EXAMPLE
-    Creates a report JSON configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file.
-    New-AsBuiltReportConfig -Report Nutanix.PrismCentral -FolderPath 'C:\Reports' -Force
+    New-AsBuiltReportConfig -Report Nutanix.PrismElement -FolderPath '/Users/Tim/Reports' -Force
+
+    Creates a Nutanix Prism Element report configuration file name 'AsBuiltReport.Nutanix.PrismElement.json' in '/Users/Tim/Reports' folder and overwrites the existing file.
 ```
 
 ```powershell
@@ -177,36 +213,34 @@ Get-Help New-AsBuiltReportConfig -Full
 Here are some examples to get you going.
 
 ```powershell
-# The following creates a VMware vSphere As Built report in HTML & Word formats.
-# The document will highlight particular issues which exist within the environment by including the Healthchecks switch.
-PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'H:\Documents\'
+# Generate a VMware vSphere As Built report in HTML & Word formats. Perform a health check to highlight particular issues which exist within the Vmware vSphere environment. Save the report to the 'H:\Documents\' folder.
+New-AsBuiltReport -Report 'VMware.vSphere' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'H:\Documents\'
 
-# The following creates a VMware vSphere As Built report in HTML & Word formats, while displaying Verbose messages to the console
-PS C:\>New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -OutputFolderPath 'H:\Documents\' -Verbose
+# Generate a Nutanix Prism Element As Built Report using specified username and password credentials. Specify the report configuration file to be used. Export report to Text, HTML & DOCX formats. Use the default report style. Save the report to the '/Users/Tim/Documents' folder. Display verbose messages to the console.
+New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target 'prism.nutanix.local' -Username 'demo' -Password 'demo' -Format Text,Html,Word -OutputFolderPath '/Users/Tim/Documents' -ReportConfigFilePath '/Users/Tim/AsBuiltReport/AsBuiltReport.Nutanix.PrismElement.json' -Verbose
 
-# The following creates a Pure Storage FlashArray As Built report in Text format and appends a timestamp to the filename. It also uses stored credentials to connect to the system.
-PS C:\>$Creds = Get-Credential
-PS C:\>New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputFolderPath 'H:\Documents\'
+# Generate a Pure Storage FlashArray As Built Report in Text format and append a timestamp to the filename. Use stored credentials for authentication. Use the default Pure Storage report style. Save the reports to the 'H:\Documents' folder.
+$Credentials = Get-Credential
+New-AsBuiltReport -Report 'PureStorage.FlashArray' -Target '192.168.1.100' -Credential $Credentials -Format Text -Timestamp -OutputFolderPath 'H:\Documents\'
 
 # The following creates a Cisco UCS Manager As Built report in default format (Word) with a customised style.
-PS C:\>New-AsBuiltReport -Report Cisco.UCSManager -Target 192.168.1.100 -Username admin -Password admin -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
-
-# The following creates a VMware NSX-V As Built report in HTML format, using the configuration in the asbuilt.json file located in the C:\scripts\ folder.
-PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\'
+PS C:\>New-AsBuiltReport -Report 'Cisco.UCSManager' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
 
 # The following creates a Nutanix Prism Element As Built report in HTML format, with a custom filename.
-PS C:\>New-AsBuiltReport -Report VMware.NSXv -Target 192.168.1.100 -Username admin -Password admin -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
+PS C:\>New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
 ```
 
 ## :pencil: Notes
 - Table Of Contents (TOC) may be missing in Word formatted report
 
-    When opening the DOCX report, MS Word prompts the following
+    When opening a Microsoft Word (DOCX) report for the first time, you will be prompted with the following warning;
 
     `"This document contains fields that may refer to other files. Do you want to update the fields in this document?"`
 
     `Yes / No`
 
-    Clicking `No` will prevent the TOC fields being updated and leaving the TOC empty.
+    Clicking No will prevent the TOC fields from being updated, leaving the Table of Contents empty.
 
-    Always reply `Yes` to this message when prompted by MS Word.
+    Always reply Yes to this message when prompted by Microsoft Word to ensure the Table of Contents is updated.
+
+    Save the document to prevent future prompts when opening the document.

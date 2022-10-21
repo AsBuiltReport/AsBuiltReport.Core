@@ -1,9 +1,17 @@
 # :arrows_clockwise: AsBuiltReport.Core Changelog
 
-## [1.2.1] - 2022-06-30
+## [1.3.0] - 2022-10-22
+
+### Added
+- Added two sample style scripts
 ### Changed
 - Updated `RequiredModules` for PScribo 0.10.0
+- Updated installation instructions in `README.md`
+- Updated `CONTRIBUTING.md`
 - Updated PSScriptAnalyzer settings
+- Updated Pull Request and Bug Report templates
+- Updated comment based help
+- Improved functionality for PowerShell 7
 
 ## [1.2.0] - 2022-02-11
 ### Added

@@ -49,42 +49,42 @@ function New-AsBuiltReport {
         If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
         If this parameter is specified and the path to a JSON file is invalid, the script will terminate.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -Report VMware.vSphere -EnableHealthCheck -OutputFolderPath c:\scripts\
+        New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'c:\scripts\'
+
         Creates a VMware vSphere As Built Report in HTML & Word formats. The document will highlight particular issues which exist within the environment.
         The report will be saved to c:\scripts.
     .EXAMPLE
-        PS C:\>$Creds = Get-Credential
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Credential $Creds -Format Text -Report PureStorage.FlashArray -Timestamp -OutputFolderPath c:\scripts\
+        $Creds = Get-Credential
+        New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputFolderPath 'c:\scripts\'
+
         Creates a Pure Storage FlashArray As Built Report in Text format and appends a timestamp to the filename.
         Stored credentials are used to connect to the system.
         The report will be saved to c:\scripts.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Token "123456789abcdefg" -Format HTML -Report Rubrik.CDM -OutputFolderPath c:\scripts\
+        New-AsBuiltReport -Report Rubrik.CDM -Target 192.168.1.100 -Token '123456789abcdefg' -Format HTML -OutputFolderPath 'c:\scripts\'
+
         Creates a Rubrik CDM As Built Report in HTML format.
         An API token is used to connect to the system.
         The report will be saved to c:\scripts.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Cisco.UCSManager -StyleFilePath c:\scripts\AsBuiltReport\Styles\ACME.ps1 -OutputFolderPath c:\scripts\
-        Creates a Cisco UCS As Built Report in default format (Word) with a customised style.
-        The report will be saved to c:\scripts.
+        New-AsBuiltReport -Report Cisco.UCSManager -Target '192.168.1.100' -Username admin -Password admin -StyleFilePath '/Users/Tim/AsBuiltReport/Styles/ACME.ps1' -OutputFolderPath '/Users/Tim/scripts'
+
+        Creates a Cisco UCS Manager As Built Report in default format (Word), using a custom style.
+        The report will be saved to '/Users/Tim/scripts'.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Report Nutanix.PrismElement -SendEmail -OutputFolderPath c:\scripts\
+        New-AsBuiltReport -Report Nutanix.PrismElement -Target 192.168.1.100 -Username admin -Password admin -SendEmail -OutputFolderPath c:\scripts\
+
         Creates a Nutanix Prism Element As Built Report in default format (Word). Report will be attached and sent via email.
         The report will be saved to c:\scripts.
     .EXAMPLE
-        PS C:\>New-AsBuiltReport -Target 192.168.1.100 -Username admin -Password admin -Format HTML -Report VMware.vSphere -AsBuiltConfigFilePath C:\scripts\asbuiltreport.json -OutputFolderPath c:\scripts\
+        New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML-AsBuiltConfigFilePath C:\scripts\asbuiltreport.json -OutputFolderPath c:\scripts\
+
         Creates a VMware vSphere As Built Report in HTML format, using the configuration in the asbuiltreport.json file located in the C:\scripts\ folder.
         The report will be saved to c:\scripts.
-    .NOTES
-        Version:        1.2.0
-        Author(s):      Tim Carman / Matt Allford
-        Twitter:        @tpcarman / @mattallford
-        Github:         AsBuiltReport
-        Credits:        Iain Brighton (@iainbrighton) - PScribo module
-
     .LINK
-        https://github.com/AsBuiltReport
-        https://github.com/iainbrighton/PScribo
+        https://github.com/AsBuiltReport/AsBuiltReport.Core
+    .LINK
+        https://www.asbuiltreport.com/user-guide/new-asbuiltreport/
     #>
 
     #region Script Parameters
@@ -107,7 +107,7 @@ function New-AsBuiltReport {
                 if ($ValidReports -contains $_) {
                     $true
                 } else {
-                    throw "Invalid report type specified! Please use one of the following [$($ValidReports -Join ', ')]"
+                    throw "Invalid report type specified. Please use one of the following [$($ValidReports -Join ', ')]"
                 }
             })]
         [String] $Report,
@@ -240,6 +240,8 @@ function New-AsBuiltReport {
     )
     #endregion Script Parameters
 
+    $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
+
     try {
 
         # If Username and Password parameters used, convert specified Password to secure string and store in $Credential
@@ -248,7 +250,7 @@ function New-AsBuiltReport {
             $Credential = New-Object System.Management.Automation.PSCredential ($Username, $SecurePassword)
         }
 
-        if (!(Test-Path $OutputFolderPath)) {
+        if (-not (Test-Path $OutputFolderPath)) {
             Write-Error "OutputFolderPath '$OutputFolderPath' is not a valid folder path."
             break
         }
@@ -277,7 +279,7 @@ function New-AsBuiltReport {
 
         # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
         if ($StyleFilePath) {
-            if (!(Test-Path -Path $StyleFilePath)) {
+            if (-not (Test-Path -Path $StyleFilePath)) {
                 Write-Error "Could not find report style script in path '$StyleFilePath'."
                 break
             }
@@ -290,7 +292,7 @@ function New-AsBuiltReport {
 
         if ($ReportConfigFilePath) {
             # If ReportConfigFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
-            if (!(Test-Path -Path $ReportConfigFilePath)) {
+            if (-not (Test-Path -Path $ReportConfigFilePath)) {
                 Write-Error "Could not find $ReportModuleName report configuration file in path '$ReportConfigFilePath'."
                 break
             } else {
@@ -300,7 +302,7 @@ function New-AsBuiltReport {
             }
         } else {
             # If a report config hasn't been provided, check for the existance of the default JSON in the paths the user specified in base config
-            $ReportConfigFilePath =  "$ReportModulePath\$ReportModuleName.json"
+            $ReportConfigFilePath =  $ReportModulePath + $DirectorySeparatorChar + "$($ReportModuleName).json"
 
             if (Test-Path -Path $ReportConfigFilePath) {
                 Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
@@ -312,7 +314,7 @@ function New-AsBuiltReport {
         }#End if ReportConfigFilePath
 
         # If Filename parameter is not specified, set filename to the report name
-        if (!$Filename) {
+        if (-not $Filename) {
             $FileName = $ReportConfig.Report.Name
         }
         # If Timestamp parameter is specified, add the timestamp to the report filename
@@ -352,8 +354,9 @@ function New-AsBuiltReport {
                     Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
                     . $StyleFilePath
                 } else {
-                    Write-PScriboMessage "Executing report style script from path '$ReportModulePath\$ReportModuleName.Style.ps1'."
-                    . "$ReportModulePath\$ReportModuleName.Style.ps1"
+                    $StyleFilePath = $ReportModulePath + $DirectorySeparatorChar + $($ReportModuleName) + ".Style.ps1"
+                    Write-PScriboMessage "Executing report style script from path '$($StyleFilePath)'."
+                    . $StyleFilePath
                 }
                 # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
                 # If Credential has been passed or previously created via Username/Password
@@ -377,8 +380,9 @@ function New-AsBuiltReport {
                     Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
                     . $StyleFilePath
                 } else {
-                    Write-PScriboMessage "Executing report style script from path '$ReportModulePath\$ReportModuleName.Style.ps1'."
-                    . "$ReportModulePath\$ReportModuleName.Style.ps1"
+                    $StyleFilePath = $ReportModulePath + $DirectorySeparatorChar + $($ReportModuleName) + ".Style.ps1"
+                    Write-PScriboMessage "Executing report style script from path '$($StyleFilePath)'."
+                    . $StyleFilePath
                 }
                 # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
                 # If Credential has been passed or previously created via Username/Password

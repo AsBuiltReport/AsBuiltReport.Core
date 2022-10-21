@@ -1,16 +1,20 @@
 function New-AsBuiltConfig {
     <#
-    .SYNOPSIS  
+    .SYNOPSIS
         Creates As Built Report configuration files.
     .DESCRIPTION
         New-AsBuiltConfig starts a menu-driven procedure in the powershell console and asks the user a series of questions
         Answers to these questions are optionally saved in a JSON configuration file which can then be referenced using the
         -AsBuiltConfigFilePath parameter using New-AsBuiltReport, to save having to answer these questions again and also to allow
         the automation of New-AsBuiltReport.
-        
+
         New-AsBuiltConfig will automatically be called by New-AsBuiltReport if the -AsBuiltConfigFilePath parameter is not specified
         If a user wants to generate a new As Built Report configuration without running a new report, this cmdlet is exported
         in the AsBuiltReport powershell module and can be called as a standalone cmdlet.
+    .LINK
+        https://github.com/AsBuiltReport/AsBuiltReport.Core
+    .LINK
+        https://www.asbuiltreport.com/user-guide/new-asbuiltconfig/
     #>
 
     [CmdletBinding()]
@@ -18,15 +22,16 @@ function New-AsBuiltConfig {
 
     #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
     $global:Config = @{ }
+    $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
 
     #region Report configuration
     Clear-Host
     Write-Host '---------------------------------------------' -ForegroundColor Cyan
     Write-Host ' <        As Built Report Information      > ' -ForegroundColor Cyan
     Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    $ReportAuthor = Read-Host -Prompt "Enter the name of the Author for this As Built Report [$env:USERNAME]"
+    $ReportAuthor = Read-Host -Prompt "Enter the name of the Author for this As Built Report [$([System.Environment]::Username)]"
     if (($ReportAuthor -like $null) -or ($ReportAuthor -eq "")) {
-        $ReportAuthor = $env:USERNAME
+        $ReportAuthor = $([System.Environment]::Username)
     }
 
     $Config.Report = @{
@@ -69,7 +74,7 @@ function New-AsBuiltConfig {
     Write-Host '---------------------------------------------' -ForegroundColor Cyan
     Write-Host ' <            Email Configuration          > ' -ForegroundColor Cyan
     Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    if (!($SendEmail)) {
+    if (-not ($SendEmail)) {
         $ConfigureMailSettings = Read-Host -Prompt "Would you like to enter SMTP configuration? (y/n)"
         while ("y", "n" -notcontains $ConfigureMailSettings) {
             $ConfigureMailSettings = Read-Host -Prompt "Would you like to enter SMTP configuration? (y/n)"
@@ -78,7 +83,7 @@ function New-AsBuiltConfig {
     if (($SendEmail) -or ($ConfigureMailSettings -eq "y")) {
         $MailServer = Read-Host -Prompt "Enter the mail server FQDN / IP address"
         while (($MailServer -eq $null) -or ($MailServer -eq "")) {
-            $MailServer = Read-Host -Prompt "Enter the mail server FQDN / IP Address" 
+            $MailServer = Read-Host -Prompt "Enter the mail server FQDN / IP Address"
         }
         if (($MailServer -eq 'smtp.office365.com') -or ($MailServer -eq 'smtp.gmail.com')) {
             $MailServerPort = Read-Host -Prompt "Enter the mail server port number [587]"
@@ -90,7 +95,7 @@ function New-AsBuiltConfig {
             if (($MailServerPort -eq $null) -or ($MailServerPort -eq "")) {
                 $MailServerPort = '25'
             }
-        }        
+        }
         $MailServerUseSSL = Read-Host -Prompt "Use SSL for mail server connection? (true/false)"
         while ("true", "false" -notcontains $MailServerUseSSL) {
             $MailServerUseSSL = Read-Host -Prompt "Use SSL for mail server connection? (true/false)"
@@ -111,7 +116,7 @@ function New-AsBuiltConfig {
 
         $MailFrom = Read-Host -Prompt "Enter the mail sender address"
         while (($MailFrom -eq $null) -or ($MailFrom -eq "")) {
-            $MailFrom = Read-Host -Prompt "Enter the mail sender address" 
+            $MailFrom = Read-Host -Prompt "Enter the mail sender address"
         }
         $MailRecipients = @()
         do {
@@ -119,7 +124,7 @@ function New-AsBuiltConfig {
             $MailRecipients += $MailTo
             $AnotherRecipient = @()
             while ("y", "n" -notcontains $AnotherRecipient) {
-                $AnotherRecipient = Read-Host -Prompt "Do you want to enter another recipient? (y/n)" 
+                $AnotherRecipient = Read-Host -Prompt "Do you want to enter another recipient? (y/n)"
             }
         }until($AnotherRecipient -eq "n")
         $MailBody = Read-Host -Prompt "Enter the email message body content"
@@ -140,18 +145,18 @@ function New-AsBuiltConfig {
     #endregion Email Configuration
 
     #region Report Configuration Folder
-    if ($Report -and !$ReportConfigFilePath) {
+    if ($Report -and (-not $ReportConfigFilePath)) {
         Clear-Host
         Write-Host '---------------------------------------------' -ForegroundColor Cyan
         Write-Host ' <          Report Configuration           > ' -ForegroundColor Cyan
         Write-Host '---------------------------------------------' -ForegroundColor Cyan
-        $ReportConfigFolder = Read-Host -Prompt "Enter the full path of the folder to use for storing report configuration files and custom style scripts [$env:USERPROFILE\AsBuiltReport]"
+        $ReportConfigFolder = Read-Host -Prompt "Enter the full path of the folder to use for storing report configuration files and custom style scripts [$($Home + $DirectorySeparatorChar)AsBuiltReport]"
         if (($ReportConfigFolder -like $null) -or ($ReportConfigFolder -eq "")) {
-            $ReportConfigFolder = $env:USERPROFILE + "\AsBuiltReport"
+            $ReportConfigFolder = $Home + $DirectorySeparatorChar + "AsBuiltReport"
         }
 
         #If the folder doesn't exist, create it
-        if (!(Test-Path -Path $ReportConfigFolder)) {
+        if (-not (Test-Path -Path $ReportConfigFolder)) {
             Try {
                 $Folder = New-Item -Path $ReportConfigFolder -ItemType Directory -Force
             } Catch {
@@ -168,20 +173,21 @@ function New-AsBuiltConfig {
         # Test to see if the report configuration file exists. If it doesn't exist, generate the report configuration file.
         # If the report configuration file exists, prompt the user to overwrite the report configuration file.
         $ReportModule = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
-        $ReportModulePath = "$($ReportConfigFolder)\$($ReportModule.Name).json"
-        if (!(Get-ChildItem -Path $ReportModulePath)) {
-            Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportModulePath)'."
+        $SourcePath = $($ReportModule.ModuleBase) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
+        $DestinationPath = $($ReportConfigFolder) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
+        if (-not (Get-ChildItem -Path $DestinationPath)) {
+            Write-Verbose -Message "Copying '$($SourcePath)' to '$($DestinationPath)'."
             New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
         } else {
             try {
-                if (Test-Path -Path $ReportModulePath) {
+                if (Test-Path -Path $DestinationPath) {
                     $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
                     while ("y", "n" -notcontains $OverwriteReportConfig) {
                         $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
                     }
                     if ($OverwriteReportConfig -eq 'y') {
                         Try {
-                            Write-Verbose -Message "Copying '$($ReportModule.ModuleBase)\$($ReportModule.Name).json' to '$($ReportModulePath)'. Overwriting existing file."
+                            Write-Verbose -Message "Copying '$($SourcePath)' to '$($DestinationPath)'. Overwriting existing file."
                             New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder -Force
                         } Catch {
                             Write-Error $_
@@ -223,12 +229,12 @@ function New-AsBuiltConfig {
                 $AsBuiltExportPath = $ReportConfigFolderPath
             }
         } else {
-            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$env:USERPROFILE\AsBuiltReport]"
+            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$($Home + $DirectorySeparatorChar)AsBuiltReport]"
             if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
-                $AsBuiltExportPath = "$env:USERPROFILE\AsBuiltReport"
-            }          
+                $AsBuiltExportPath = $Home + $DirectorySeparatorChar + "AsBuiltReport"
+            }
         }
-		if (!(Test-Path -Path $AsBuiltExportPath)) {
+		if (-not (Test-Path -Path $AsBuiltExportPath)) {
 			Write-Verbose -Message "Creating As Built Report configuration folder '$AsBuiltExportPath'."
 			Try {
 				$Folder = New-Item -Path $AsBuiltExportPath -ItemType Directory -Force

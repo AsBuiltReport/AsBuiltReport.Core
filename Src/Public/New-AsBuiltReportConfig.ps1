@@ -1,6 +1,6 @@
 function New-AsBuiltReportConfig {
     <#
-    .SYNOPSIS  
+    .SYNOPSIS
         Creates JSON configuration files for individual As Built Reports.
     .DESCRIPTION
         Creates JSON configuration files for individual As Built Reports.
@@ -14,11 +14,17 @@ function New-AsBuiltReportConfig {
     .PARAMETER Force
         Specifies to overwrite any existing report JSON configuration file
     .EXAMPLE
-        Creates a report configuration file for VMware vSphere, named 'vSphere_Report_Config' in 'C:\Reports' folder. 
         New-AsBuiltReportConfig -Report VMware.vSphere -FolderPath 'C:\Reports' -Filename 'vSphere_Report_Config'
+
+        Creates a VMware vSphere report configuration file named 'vSphere_Report_Config.json' in the 'C:\Reports' folder.
     .EXAMPLE
-        Creates a report configuration file for Nutanix Prism Central, named 'AsBuiltReport.Nutanix.PrismCentral' in 'C:\Reports' folder, overwriting any existing file. 
-        New-AsBuiltReportConfig -Report Nutanix.PrismCentral -FolderPath 'C:\Reports' -Force
+        New-AsBuiltReportConfig -Report Nutanix.PrismElement -FolderPath '/Users/Tim/Reports' -Force
+
+        Creates a Nutanix Prism Element report configuration file name 'AsBuiltReport.Nutanix.PrismElement.json' in '/Users/Tim/Reports' folder and overwrites the existing file.
+    .LINK
+        https://github.com/AsBuiltReport/AsBuiltReport.Core
+    .LINK
+        https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
     #>
     [CmdletBinding()]
     param (
@@ -36,7 +42,7 @@ function New-AsBuiltReportConfig {
                 if ($ValidReports -contains $_) {
                     $true
                 } else {
-                    throw "Invalid report type specified! Please use one of the following [$($ValidReports -Join ', ')]"
+                    throw "Invalid report type specified. Please use one of the following [$($ValidReports -Join ', ')]"
                 }
             })]
         [String] $Report,
@@ -46,7 +52,7 @@ function New-AsBuiltReportConfig {
             HelpMessage = 'Please provide the folder path to save the JSON configuration file'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('Path')] 
+        [Alias('Path')]
         [String] $FolderPath,
 
         [Parameter(
@@ -66,39 +72,44 @@ function New-AsBuiltReportConfig {
         [Switch] $Force
     )
 
+    $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
+
     # Test to ensure the path the user has specified does exist
-    if (!(Test-Path -Path $FolderPath)) {
-        Write-Error "The Path '$FolderPath' does not exist. Please create the folder and run New-AsBuiltReportConfig again."
+    if (-not (Test-Path -Path $($FolderPath))) {
+        Write-Error "The folder '$($FolderPath)' does not exist. Please create the folder and run New-AsBuiltReportConfig again."
         break
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
         $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
-        if (Test-Path -Path "$($Module.ModuleBase)\$($Module.Name).json") {
-            Write-Verbose -Message "Processing report configuration file from module $($Module), version $($Module.Version)."
+        $SourcePath = $($Module.ModuleBase) + $($DirectorySeparatorChar) + $($Module.Name) + ".json"
+        if (Test-Path -Path $($SourcePath)) {
+            Write-Verbose -Message "Processing $($Module.Name) report configuration file from module $($Module), version $($Module.Version)."
             if ($Filename) {
-                if (!(Test-Path -Path "$($FolderPath)\$($Filename).json")) {
-                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to '$($FolderPath)\$($Filename).json'."
-                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json"
-                    Write-Output "Report configuration file '$($Filename).json' created in '$FolderPath'."
+                $DestinationPath = $($FolderPath) + $($DirectorySeparatorChar) + $($Filename) + ".json"
+                if (-not (Test-Path -Path $($DestinationPath))) {
+                    Write-Verbose -Message "Copying report configuration file '$($SourcePath)' to '$($DestinationPath)'."
+                    Copy-Item -Path $($SourcePath) -Destination "$($DestinationPath)"
+                    Write-Output "$($Module.Name) report configuration file '$($Filename).json' created in '$($FolderPath)'."
                 } elseif ($Force) {
-                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to '$($FolderPath)\$($Filename).json'. Overwriting existing file."
-                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination "$($FolderPath)\$($Filename).json" -Force
-                    Write-Output "Report configuration file '$($Filename).json' created in '$FolderPath'."
+                    Write-Verbose -Message "Copying report configuration file '$($SourcePath)' to '$($DestinationPath)'. Overwriting existing file."
+                    Copy-Item -Path $($SourcePath) -Destination $($DestinationPath) -Force
+                    Write-Output "$($Module.Name) report configuration file '$($Filename).json' created in '$($FolderPath)'."
                 } else {
-                    Write-Error "Report configuration file '$($Filename).json' already exists in '$FolderPath'. Use 'Force' parameter to overwrite existing file."
+                    Write-Error "$($Module.Name) report configuration file '$($Filename).json' already exists in '$($FolderPath)'. Use 'Force' parameter to overwrite existing file."
                 }
             } else {
-                if (!(Test-Path -Path "$($FolderPath)\$($Module.Name).json")) {
-                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to destination folder '$FolderPath'."
-                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath
-                    Write-Output "Report configuration file '$($Module.Name).json' created in '$FolderPath'."
+                $DestinationPath = $($FolderPath) + $($DirectorySeparatorChar) + $($Module.Name) + ".json"
+                if (-not (Test-Path -Path $($DestinationPath))) {
+                    Write-Verbose -Message "Copying $($Module.Name) report configuration file '$($SourcePath)' to '$($DestinationPath)'."
+                    Copy-Item -Path $($SourcePath) -Destination $($DestinationPath)
+                    Write-Output "$($Module.Name) report configuration file '$($Module.Name).json' created in '$($FolderPath)'."
                 } elseif ($Force) {
-                    Write-Verbose -Message "Copying report configuration file '$($Module.ModuleBase)\$($Module.Name).json' to destination folder '$FolderPath'. Overwriting existing file."
-                    Copy-Item -Path "$($Module.ModuleBase)\$($Module.Name).json" -Destination $FolderPath -Force
-                    Write-Output "Report configuration file '$($Module.Name).json' created in '$FolderPath'."
+                    Write-Verbose -Message "Copying report configuration file '$($SourcePath)' to '$($DestinationPath)'. Overwriting existing file."
+                    Copy-Item -Path $($SourcePath) -Destination $($DestinationPath) -Force
+                    Write-Output "$($Module.Name) report configuration file '$($Module.Name).json' created in '$($FolderPath)'."
                 } else {
-                    Write-Error "Report configuration file '$($Module.Name).json' already exists in '$FolderPath'. Use 'Force' parameter to overwrite existing file."
+                    Write-Error "$($Module.Name) report configuration file '$($Module.Name).json' already exists in '$($FolderPath)'. Use 'Force' parameter to overwrite existing file."
                 }
             }
         } else {
