@@ -37,7 +37,7 @@ The following simple list of instructions will get you started with the AsBuiltR
 
 ## :floppy_disk: Supported Versions
 ### **PowerShell**
-This report is compatible with the following PowerShell versions;
+This module is compatible with the following PowerShell versions;
 
 | Windows PowerShell 5.1 | PowerShell 7 |
 |:----------------------:|:------------------:|
