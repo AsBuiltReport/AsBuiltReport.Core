@@ -47,7 +47,7 @@ This report is compatible with the following PowerShell versions;
 
 The following PowerShell module will be automatically installed by following the [module installation](https://github.com/AsBuiltReport/AsBuiltReport.Core#package-module-installation) procedure.
 
-This PowerShell module may also be manually installed via GitHub.
+This PowerShell module may also be manually installed via the PowerShell Gallery or GitHub.
 
 | Module Name        | Minimum Required Version |                          PS Gallery                           |                                   GitHub                                    |
 |--------------------|:------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
