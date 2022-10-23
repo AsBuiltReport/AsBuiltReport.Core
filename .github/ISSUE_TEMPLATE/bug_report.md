@@ -21,11 +21,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **System (please provide the following information about the system from which you are trying to generate a report):**
- - OS: [e.g. Windows 10]
- - Windows PowerShell version [Provide output from the following command: `$PSVersionTable.PSVersion`]
- - Vendor PowerShell Module name and version [e.g. VMware PowerCLI 11.2]
- - AsBuiltReport.Core module version [e.g. 1.0.0]
- - AsBuiltReport module name and version [e.g. AsBuiltReport.VMware.vSphere 1.0.0]
+ - Operating System: [e.g. Windows 10, macOS 12, Ubuntu 20.04]
+ - PowerShell version [Provide output from the following command: `$PSVersionTable`]
+ - AsBuiltReport.Core module version [Provide output from the following command: `Get-Module -ListAvailable AsBuiltReport.Core`]
 
 **Additional context**
 Add any other context about the problem here.

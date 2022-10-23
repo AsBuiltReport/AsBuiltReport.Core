@@ -1,4 +1,17 @@
-# :arrows_counterclockwise: AsBuiltReport.Core Changelog
+# :arrows_clockwise: AsBuiltReport.Core Changelog
+
+## [1.3.0] - 2022-10-22
+
+### Added
+- Added two sample style scripts
+### Changed
+- Updated `RequiredModules` for PScribo 0.10.0
+- Updated installation instructions in `README.md`
+- Updated contributing guide in `CONTRIBUTING.md`
+- Updated PSScriptAnalyzer settings
+- Updated GitHub issue templates
+- Updated comment based help for AsBuiltReport cmdlets
+- Improved command functionality for macOS and Linux users
 
 ## [1.2.0] - 2022-02-11
 ### Added

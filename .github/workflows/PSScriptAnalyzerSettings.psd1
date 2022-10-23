@@ -3,6 +3,8 @@
         'PSUseToExportFieldsInManifest',
         'PSReviewUnusedParameter',
         'PSUseDeclaredVarsMoreThanAssignments',
-        'PSAvoidGlobalVars'
+        'PSAvoidGlobalVars',
+        'PSAvoidUsingConvertToSecureStringWithPlainText',
+        'PSAvoidUsingUsernameAndPasswordParams'
     )
 }
