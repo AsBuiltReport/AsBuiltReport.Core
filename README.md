@@ -230,8 +230,8 @@ New-AsBuiltReport -Report 'Cisco.UCSManager' -Target '192.168.1.100' -Username '
 New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
 ```
 
-## :pencil: Notes
-- Table Of Contents (TOC) may be missing in Word formatted report
+## :x: Known Issues
+- **Table Of Contents (TOC) is missing in Word formatted report**
 
     When opening a Microsoft Word (DOCX) report for the first time, you will be prompted with the following warning;
 
@@ -244,3 +244,7 @@ New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target '192.168.1.100' -Userna
     Always reply Yes to this message when prompted by Microsoft Word to ensure the Table of Contents is updated.
 
     Save the document to prevent future prompts when opening the document.
+
+- **Images are missing from reports generated using Linux or macOS**
+
+    Unfortunately due to [breaking changes](https://learn.microsoft.com/en-gb/dotnet/core/compatibility/core-libraries/6.0/system-drawing-common-windows-only) in .NET 6, images are no longer supported for reports generated using Linux or macOS.

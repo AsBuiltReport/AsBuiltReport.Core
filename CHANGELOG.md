@@ -7,11 +7,11 @@
 ### Changed
 - Updated `RequiredModules` for PScribo 0.10.0
 - Updated installation instructions in `README.md`
-- Updated `CONTRIBUTING.md`
+- Updated contributing guide in `CONTRIBUTING.md`
 - Updated PSScriptAnalyzer settings
-- Updated Pull Request and Bug Report templates
-- Updated comment based help
-- Improved functionality for PowerShell 7
+- Updated GitHub issue templates
+- Updated comment based help for AsBuiltReport cmdlets
+- Improved command functionality for macOS and Linux users
 
 ## [1.2.0] - 2022-02-11
 ### Added

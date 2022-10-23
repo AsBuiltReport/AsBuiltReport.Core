@@ -157,7 +157,7 @@ Use [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) to check 
 - Maintain a change log as per [these guidelines](https://keepachangelog.com/en/1.0.0/). The change log should be named `CHANGELOG.md`.
 
 ❌ DO NOT
-<!-- - Do not include code within report scripts to install or import PowerShell modules. Dependencies should be documented under the `System Requirements` and `Module Installation` sections of the `README`. -->
+- Do not include code within report scripts to install or import PowerShell modules. Dependencies should either be documented under the `System Requirements` and `Module Installation` sections of the `README`, or added to the `RequiredModules` section within the report module manifest.
 - Do not include functions within report scripts. Individual script files should be created as a private function and be stored in the `\Src\Private` folder.
 
 ### License

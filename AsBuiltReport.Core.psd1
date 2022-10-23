@@ -28,7 +28,7 @@
     # CompanyName = ''
 
     # Copyright statement for this module
-    Copyright = '(c) 2020 Tim Carman. All rights reserved.'
+    Copyright = '(c) 2022 Tim Carman. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description = 'A PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems.'
