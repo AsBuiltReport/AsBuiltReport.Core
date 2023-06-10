@@ -374,7 +374,8 @@ function New-AsBuiltReport {
             $AsBuiltReport = Document $FileName {
 
                 Write-Host "Please wait while the $($Report.Replace("."," ")) As Built Report is being generated." -ForegroundColor Green
-
+                if ($MFA) {
+                    Write-Host "MFA is enabled, please check for MFA authentication windows to complete your report" -ForegroundColor Yellow}
                 # Set Document Style
                 if ($StyleFilePath) {
                     Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
