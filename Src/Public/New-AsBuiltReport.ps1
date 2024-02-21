@@ -288,6 +288,7 @@ function New-AsBuiltReport {
         # Report Module Information
         $Global:Report = $Report
         $ReportModuleName = "AsBuiltReport.$Report"
+        $CoreModulePath = (Get-Module -Name 'AsBuiltReport.Core' -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1).ModuleBase
         $ReportModulePath = (Get-Module -Name $ReportModuleName -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1).ModuleBase
 
         if ($ReportConfigFilePath) {
@@ -345,6 +346,22 @@ function New-AsBuiltReport {
         }
         #endregion Email Server Authentication
 
+        # Check installed module version
+        Try {
+            $InstalledVersion = Get-Module -ListAvailable -Name AsBuiltReport.Core -ErrorAction SilentlyContinue | Sort-Object -Property Version -Descending | Select-Object -First 1 -ExpandProperty Version
+
+            if ($InstalledVersion) {
+                Write-PScriboMessage -Plugin "Module" -IsWarning "AsBuiltReport.Core $($InstalledVersion.ToString()) is currently installed."
+                $LatestVersion = Find-Module -Name AsBuiltReport.Core -Repository PSGallery -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Version
+                if ($LatestVersion -gt $InstalledVersion) {
+                    Write-PScriboMessage -Plugin "Module" -IsWarning "AsBuiltReport.Core $($LatestVersion.ToString()) is available."
+                    Write-PScriboMessage -Plugin "Module" -IsWarning "Run 'Update-Module -Name AsBuiltReport.Core -Force' to install the latest version."
+                }
+            }
+        } Catch {
+                Write-PscriboMessage -Plugin "Module" -IsWarning $_.Exception.Message
+        }
+
         #region Generate PScribo document
         # if Verbose has been passed
         if ($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent) {
@@ -354,47 +371,45 @@ function New-AsBuiltReport {
                     Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
                     . $StyleFilePath
                 } else {
-                    $StyleFilePath = $ReportModulePath + $DirectorySeparatorChar + $($ReportModuleName) + ".Style.ps1"
+                    $StyleFilePath = $CoreModulePath + $DirectorySeparatorChar + 'AsBuiltReport.Core.Style.ps1'
                     Write-PScriboMessage "Executing report style script from path '$($StyleFilePath)'."
                     . $StyleFilePath
                 }
-                # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
                 # If Credential has been passed or previously created via Username/Password
                 if ($Credential) {
-                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose -StylePath $true
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose
                 }
                 elseif ($Token) {
-                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose -StylePath $true
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose
                 }
                 elseif ($MFA) {
-                    & "Invoke-$($ReportModuleName)" -Target $Target -MFA -Verbose -StylePath $true
+                    & "Invoke-$($ReportModuleName)" -Target $Target -MFA -Verbose
                 }
             }
         } else {
             $AsBuiltReport = Document $FileName {
-
                 Write-Host "Please wait while the $($Report.Replace("."," ")) As Built Report is being generated." -ForegroundColor Green
                 if ($MFA) {
-                    Write-Host "MFA is enabled, please check for MFA authentication windows to complete your report" -ForegroundColor Yellow}
+                    Write-Host "MFA is enabled, please check for MFA authentication windows to generate your report." -ForegroundColor Yellow
+                }
                 # Set Document Style
                 if ($StyleFilePath) {
                     Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
                     . $StyleFilePath
                 } else {
-                    $StyleFilePath = $ReportModulePath + $DirectorySeparatorChar + $($ReportModuleName) + ".Style.ps1"
+                    $StyleFilePath = $CoreModulePath + $DirectorySeparatorChar + 'AsBuiltReport.Core.Style.ps1'
                     Write-PScriboMessage "Executing report style script from path '$($StyleFilePath)'."
                     . $StyleFilePath
                 }
-                # StylePath parameter is legacy, to allow older reports to be generated without issues. It will be removed at a later date.
                 # If Credential has been passed or previously created via Username/Password
                 if ($Credential) {
-                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -StylePath $true
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential
                 }
                 elseif ($Token) {
-                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -StylePath $true
+                    & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token
                 }
                 elseif ($MFA) {
-                    & "Invoke-$($ReportModuleName)" -Target $Target -MFA -StylePath $true
+                    & "Invoke-$($ReportModuleName)" -Target $Target -MFA
                 }
             }
         }
