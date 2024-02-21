@@ -62,14 +62,14 @@ if ($ReportConfig.Report.ShowHeaderFooter) {
 
 # Set position of report titles and information based on page orientation
 if (!($ReportConfig.Report.ShowCoverPageImage)) {
-    $LineCount = 5
+    $LineCount = 7
 }
 if ($Orientation -eq 'Portrait') {
     BlankLine -Count 11
-    $LineCount = 32 + $LineCount
+    $LineCount = 22 + $LineCount
 } else {
     BlankLine -Count 7
-    $LineCount = 15 + $LineCount
+    $LineCount = 9 + $LineCount
 }
 
 # Cover Page Image
