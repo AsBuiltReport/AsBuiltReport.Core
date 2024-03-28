@@ -366,6 +366,7 @@ function New-AsBuiltReport {
         # if Verbose has been passed
         if ($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent) {
             $AsBuiltReport = Document $FileName -Verbose {
+                Write-PScriboMessage "Please wait while the $($Report.Replace("."," ")) As Built Report is being generated."
                 # Set Document Style
                 if ($StyleFilePath) {
                     Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
@@ -383,6 +384,7 @@ function New-AsBuiltReport {
                     & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose
                 }
                 elseif ($MFA) {
+                    Write-PScriboMessage -Plugin "MFA" -IsWarning "MFA is enabled, please check for MFA authentication windows to generate your report."
                     & "Invoke-$($ReportModuleName)" -Target $Target -MFA -Verbose
                 }
             }

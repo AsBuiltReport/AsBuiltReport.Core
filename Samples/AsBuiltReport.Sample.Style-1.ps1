@@ -14,7 +14,12 @@ Style -Name 'Heading 1' -Size 16 -Color 'F30E0D'
 Style -Name 'Heading 2' -Size 14 -Color '223F8C'
 Style -Name 'Heading 3' -Size 12 -Color 'FDDA00'
 Style -Name 'Heading 4' -Size 11 -Color '6BADE6'
+Style -Name 'NO TOC Heading 4' -Size 11 -Color '6BADE6'
 Style -Name 'Heading 5' -Size 10 -Color '6BADE6'
+Style -Name 'NO TOC Heading 5' -Size 10 -Color '6BADE6'
+Style -Name 'Heading 6' -Size 9 -Color '6BADE6'
+Style -Name 'NO TOC Heading 6' -Size 9 -Color '6BADE6'
+Style -Name 'NO TOC Heading 7' -Size 9 -Color '6BADE6' -Italic
 Style -Name 'Normal' -Size 10 -Color '000000' -Default
 # Header & Footer Styles
 Style -Name 'Header' -Size 10 -Color '000000' -Align Center
