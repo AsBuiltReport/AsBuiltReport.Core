@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://www.asbuiltreport.com/" alt="AsBuiltReport"></a>
-            <img src='https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport/master/AsBuiltReport.png' width="8%" height="8%" /></a>
+            <img src='https://avatars.githubusercontent.com/u/42958564' width="8%" height="8%" /></a>
 </p>
 <p align="center">
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PowerShell Gallery Version">
@@ -39,8 +39,8 @@ The following simple list of instructions will get you started with the AsBuiltR
 ### **PowerShell**
 This module is compatible with the following PowerShell versions;
 
-| Windows PowerShell 5.1 | PowerShell 7 |
-|:----------------------:|:------------------:|
+| Windows PowerShell 5.1 |    PowerShell 7    |
+| :--------------------: | :----------------: |
 |   :white_check_mark:   | :white_check_mark: |
 
 ## :wrench: System Requirements
@@ -49,9 +49,9 @@ The following PowerShell module will be automatically installed by following the
 
 This PowerShell module may also be manually installed via the PowerShell Gallery or GitHub.
 
-| Module Name        | Minimum Required Version |                          PS Gallery                           |                                   GitHub                                    |
-|--------------------|:------------------------:|:---------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
-| PScribo            |          0.10.0           |      [Link](https://www.powershellgallery.com/packages/PScribo)       |         [Link](https://github.com/iainbrighton/PScribo/tree/master)
+| Module Name | Minimum Required Version |                         PS Gallery                         |                           GitHub                            |
+| ----------- | :----------------------: | :--------------------------------------------------------: | :---------------------------------------------------------: |
+| PScribo     |          0.10.0          | [Link](https://www.powershellgallery.com/packages/PScribo) | [Link](https://github.com/iainbrighton/PScribo/tree/master) |
 
 To find a list of available report modules, run the following PowerShell command;
 
@@ -121,7 +121,7 @@ _Note: You are not limited to installing the module to those example paths, you 
 
 ### **New-AsBuiltReport**
 
-The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of as built report to generate is specified by using the `Report` parameter. The report parameter relies on additional report modules being installed alongside the `AsBuiltReport.Core` module. The `Target` parameter specifies one or more systems on which to connect and run the report. User credentials to the system are specifed using the `Credential`, or the `Username` and `Password` parameters. One or more document formats, such as `HTML`, `Word` or `Text` can be specified using the `Format` parameter. Additional parameters are outlined below.
+The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of as built report to generate is specified by using the `Report` parameter. The report parameter relies on additional report modules being installed alongside the `AsBuiltReport.Core` module. The `Target` parameter specifies one or more systems on which to connect and run the report. User credentials to the system are specified using the `Credential`, or the `Username` and `Password` parameters. One or more document formats, such as `HTML`, `Word` or `Text` can be specified using the `Format` parameter. Additional parameters are outlined below.
 
 ```powershell
 .PARAMETER Report
@@ -166,8 +166,8 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
     run, with the option to save the configuration to a file.
 .PARAMETER ReportConfigFilePath
     Enter the full path to a report JSON configuration file.
-    If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
-    If this paramter is specified and the path to a JSON file is invalid, the script will terminate
+    If this parameter is not specified, a default report configuration JSON is copied to the specified user folder.
+    If this parameter is specified and the path to a JSON file is invalid, the script will terminate
 ```
 
 For a full list of common parameters and examples you can view the `New-AsBuiltReport` cmdlet help with the following command;
@@ -223,7 +223,7 @@ New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target 'prism.nutanix.local' -
 $Credentials = Get-Credential
 New-AsBuiltReport -Report 'PureStorage.FlashArray' -Target '192.168.1.100' -Credential $Credentials -Format Text -Timestamp -OutputFolderPath 'H:\Documents\'
 
-# The following creates a Cisco UCS Manager As Built report in default format (Word) with a customised style.
+# The following creates a Cisco UCS Manager As Built report in default format (Word) with a customized style.
 New-AsBuiltReport -Report 'Cisco.UCSManager' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
 
 # The following creates a Nutanix Prism Element As Built report in HTML format, with a custom filename.

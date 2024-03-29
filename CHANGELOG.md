@@ -1,5 +1,30 @@
 # :arrows_clockwise: AsBuiltReport.Core Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.4.0] - 2024-03-29
+
+### Added
+
+- Add AsBuiltReport default style script to resolve [#44](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/44)
+- Add Core module version check and verbose reporting
+
+### Changed
+
+- Improve bug and feature request templates
+- Increase actions/checkout to v4
+- Update MIT License copyright year
+- Code cleanup to remove outdated code and comments
+- Update heading styles in sample style scripts
+
+### Fixed
+
+- Fix ReadMe AsBuiltReport logo URL
+- Fix [#45](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/45)
+
 ## [1.3.0] - 2022-10-22
 
 ### Added
