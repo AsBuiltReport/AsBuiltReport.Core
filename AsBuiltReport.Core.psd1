@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.4.0'
+    ModuleVersion = '1.4.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = 'Desktop'
@@ -110,7 +110,7 @@
             ProjectUri = 'https://github.com/AsBuiltReport/AsBuiltReport.Core'
 
             # A URL to an icon representing this module.
-            IconUri = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport/master/AsBuiltReport.png'
+            IconUri = 'https://github.com/AsBuiltReport.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/CHANGELOG.md'
