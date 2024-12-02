@@ -277,6 +277,11 @@ function New-AsBuiltReport {
             $Global:ReportConfigFilePath = $ReportConfigFilePath
         }
 
+        # Set $OutputFolderPath as Global scope
+        if ($OutputFolderPath) {
+            $Global:OutputFolderPath = $OutputFolderPath
+        }
+
         # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
         if ($StyleFilePath) {
             if (-not (Test-Path -Path $StyleFilePath)) {

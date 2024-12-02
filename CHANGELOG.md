@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2024-12-02
+
+### Changed
+* Update GitHub release workflow to add post to Bluesky social platform
+
+### Fixed
+- Set `$OutputFolderPath` variable as Global variable (Fix [#53](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/53))
+
 ## [1.4.0] - 2024-03-29
 
 ### Added
