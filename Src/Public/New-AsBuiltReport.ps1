@@ -140,7 +140,7 @@ function New-AsBuiltReport {
 
         [Parameter(
             Position = 3,
-            Mandatory = $true,
+            Mandatory = $false,
             HelpMessage = 'Please provide the password to connect to the target system',
             ParameterSetName = 'UsernameAndPassword'
         )]
@@ -245,8 +245,14 @@ function New-AsBuiltReport {
     try {
 
         # If Username and Password parameters used, convert specified Password to secure string and store in $Credential
-        if (($Username -and $Password)) {
-            $SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force
+        if ($Username) {
+            if (-not $Password) {
+                # If the Password parameter is not provided, prompt for it securely
+                $SecurePassword = Read-Host "Password for user $Username" -AsSecureString
+            } else {
+                # If the Password parameter is provided, convert it to secure string
+                $SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force
+            }
             $Credential = New-Object System.Management.Automation.PSCredential ($Username, $SecurePassword)
         }
 

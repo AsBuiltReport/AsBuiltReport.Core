@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.4.1'
+    ModuleVersion = '1.4.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = 'Desktop'
@@ -28,7 +28,7 @@
     # CompanyName = ''
 
     # Copyright statement for this module
-    Copyright = '(c) 2024 Tim Carman. All rights reserved.'
+    Copyright = '(c) 2025 Tim Carman. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description = 'A PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems.'
