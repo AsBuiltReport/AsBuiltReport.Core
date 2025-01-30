@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix password shown in plain text (Fix [#55](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/55))
+- Prevent execution from Windows PowerShell ISE (Fix [#52](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/52))
 
 ## [1.4.1] - 2024-12-02
 

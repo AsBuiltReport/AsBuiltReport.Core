@@ -244,6 +244,11 @@ function New-AsBuiltReport {
 
     try {
 
+        if ($psISE) {
+            Write-Error -Message "AsBuiltReport cannot be run from Windows PowerShell ISE. Please use a PowerShell command window instead."
+            break
+        }
+
         # If Username and Password parameters used, convert specified Password to secure string and store in $Credential
         if ($Username) {
             if (-not $Password) {
