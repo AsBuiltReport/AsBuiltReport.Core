@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.4.2.1'
+    ModuleVersion = '1.4.3'
 
     # Supported PSEditions
     # CompatiblePSEditions = 'Desktop'
@@ -55,7 +55,7 @@
     RequiredModules = @(
         @{
             ModuleName = 'PScribo';
-            ModuleVersion = '0.10.0'
+            ModuleVersion = '0.11.1'
         }
     )
 
