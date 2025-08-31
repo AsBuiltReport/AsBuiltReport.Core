@@ -23,6 +23,9 @@ function New-AsBuiltReport {
         Specifies the output format of the report.
         The supported output formats are WORD, HTML & TEXT.
         Multiple output formats may be specified, separated by a comma.
+    .PARAMETER Language
+        Specifies the language for the report.
+        By default, the language will be set to en-US.
     .PARAMETER Orientation
         Sets the page orientation of the report to Portrait or Landscape.
         By default, page orientation will be set to Portrait.
@@ -173,6 +176,14 @@ function New-AsBuiltReport {
         [ValidateSet('Word', 'HTML', 'Text')]
         [Array] $Format = 'Word',
 
+                [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Please specify the language for the report (default is en-US)'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [ValidateSet('en-US', 'en-GB', 'fr-FR', 'de-DE', 'es-ES', 'it-IT', 'ja-JP', 'zh-CN')]
+        [String] $Language = 'en-US',
+
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Determines the document page orientation'
@@ -240,20 +251,19 @@ function New-AsBuiltReport {
     )
     #endregion Script Parameters
 
-    $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
+    Initialize-ReportLocalization -RootPath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReport'
 
     try {
 
         if ($psISE) {
-            Write-Error -Message "AsBuiltReport cannot be run from Windows PowerShell ISE. Please use a PowerShell command window instead."
-            break
+            Write-Error -Message $translate.PwshISE -ErrorAction Stop
         }
 
         # If Username and Password parameters used, convert specified Password to secure string and store in $Credential
         if ($Username) {
             if (-not $Password) {
                 # If the Password parameter is not provided, prompt for it securely
-                $SecurePassword = Read-Host "Password for user $Username" -AsSecureString
+                $SecurePassword = Read-Host ($translate.password -f $Username) -AsSecureString
             } else {
                 # If the Password parameter is provided, convert it to secure string
                 $SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force
@@ -262,8 +272,7 @@ function New-AsBuiltReport {
         }
 
         if (-not (Test-Path $OutputFolderPath)) {
-            Write-Error "OutputFolderPath '$OutputFolderPath' is not a valid folder path."
-            break
+            Write-Error ($translate.OutputFolderPath -f $OutputFolderPath) -ErrorAction Stop
         }
         #region Variable config
 
@@ -273,13 +282,12 @@ function New-AsBuiltReport {
             if (Test-Path -Path $AsBuiltConfigFilePath) {
                 $Global:AsBuiltConfig = Get-Content -Path $AsBuiltConfigFilePath | ConvertFrom-Json
                 # Verbose Output for As Built Report configuration
-                Write-Verbose -Message "Loading As Built Report configuration from '$AsBuiltConfigFilePath'."
+                Write-PScriboMessage -Plugin "Module" -Message ($translate.LoadConfig -f $AsBuiltConfigFilePath)
             } else {
-                Write-Error "Could not find As Built Report configuration in path '$AsBuiltConfigFilePath'."
-                break
+                Write-Error -Message ($translate.NoConfigFound -f $AsBuiltConfigFilePath) -ErrorAction Stop
             }
         } else {
-            Write-Verbose -Message "Generating new As Built Report configuration"
+            Write-PScriboMessage -Plugin "Document" -Message $translate.GeneratingReport
             $Global:AsBuiltConfig = New-AsBuiltConfig
         }
 
@@ -296,8 +304,7 @@ function New-AsBuiltReport {
         # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
         if ($StyleFilePath) {
             if (-not (Test-Path -Path $StyleFilePath)) {
-                Write-Error "Could not find report style script in path '$StyleFilePath'."
-                break
+                Write-Error ($translate.StyleScriptNotFound -f $StyleFilePath) -ErrorAction Stop
             }
         }
 
@@ -310,25 +317,22 @@ function New-AsBuiltReport {
         if ($ReportConfigFilePath) {
             # If ReportConfigFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
             if (-not (Test-Path -Path $ReportConfigFilePath)) {
-                Write-Error "Could not find $ReportModuleName report configuration file in path '$ReportConfigFilePath'."
-                break
+                Write-Error -Message ($translate.ReportModuleNotFound -f $ReportModuleName, $ReportConfigFilePath) -ErrorAction Stop
             } else {
-                #Import the Report Configuration in to a variable
-                Write-Verbose -Message "Loading $ReportModuleName report configuration file from path '$ReportConfigFilePath'."
+                # Import the Report Configuration in to a variable
+                Write-PScriboMessage -Plugin "Document" -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             }
         } else {
             # If a report config hasn't been provided, check for the existance of the default JSON in the paths the user specified in base config
             $ReportConfigFilePath =  $ReportModulePath + $DirectorySeparatorChar + "$($ReportModuleName).json"
-
             if (Test-Path -Path $ReportConfigFilePath) {
-                Write-Verbose -Message "Loading report configuration file from path '$ReportConfigFilePath'."
+                Write-PScriboMessage -Plugin "Document" -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             } else {
-                Write-Error "Report configuration file not found in module path '$ReportModulePath'."
-                break
-            }#End if test-path
-        }#End if ReportConfigFilePath
+                Write-Error -Message ($translate.ReportConfigNotFound -f $ReportModulePath) -ErrorAction Stop
+            }
+        }
 
         # If Filename parameter is not specified, set filename to the report name
         if (-not $Filename) {
@@ -338,7 +342,7 @@ function New-AsBuiltReport {
         if ($Timestamp) {
             $FileName = $Filename + " - " + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss')
         }
-        Write-Verbose -Message "Setting report filename to '$FileName'."
+        Write-PScriboMessage -Plugin "Document" -Message ($translate.SetReportFileName -f $FileName)
 
         # If the EnableHealthCheck parameter has been specified, set the global healthcheck variable so report scripts can reference the health checks
         if ($EnableHealthCheck) {
@@ -354,10 +358,8 @@ function New-AsBuiltReport {
         # If Email Server Authentication is required, prompt user for credentials
         if ($SendEmail -and $AsBuiltConfig.Email.Credentials) {
             Clear-Host
-            Write-Host '---------------------------------------------' -ForegroundColor Cyan
-            Write-Host '  <        Email Server Credentials       >  ' -ForegroundColor Cyan
-            Write-Host '---------------------------------------------' -ForegroundColor Cyan
-            $MailCredentials = Get-Credential -Message "Please enter the credentials for $($AsBuiltConfig.Email.Server)"
+            Draw-AsciiBox -Lines @($translate.EmailBannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+            $MailCredentials = Get-Credential -Message ($translate.EmailCredentials -f $AsBuiltConfig.Email.Server)
             Clear-Host
         }
         #endregion Email Server Authentication
@@ -367,29 +369,29 @@ function New-AsBuiltReport {
             $InstalledVersion = Get-Module -ListAvailable -Name AsBuiltReport.Core -ErrorAction SilentlyContinue | Sort-Object -Property Version -Descending | Select-Object -First 1 -ExpandProperty Version
 
             if ($InstalledVersion) {
-                Write-PScriboMessage -Plugin "Module" -IsWarning "AsBuiltReport.Core $($InstalledVersion.ToString()) is currently installed."
+                Write-PScriboMessage -Plugin "Module" -Message ($translate.InstalledModule -f $($InstalledVersion.ToString()))
                 $LatestVersion = Find-Module -Name AsBuiltReport.Core -Repository PSGallery -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Version
                 if ($LatestVersion -gt $InstalledVersion) {
-                    Write-PScriboMessage -Plugin "Module" -IsWarning "AsBuiltReport.Core $($LatestVersion.ToString()) is available."
-                    Write-PScriboMessage -Plugin "Module" -IsWarning "Run 'Update-Module -Name AsBuiltReport.Core -Force' to install the latest version."
+                    Write-PScriboMessage -Plugin "Module" -Message ($translate.AvailableModule -f $($LatestVersion.ToString()))
+                    Write-PScriboMessage -Plugin "Module" -Message $translate.UpdateModule
                 }
             }
         } Catch {
-                Write-PscriboMessage -Plugin "Module" -IsWarning $_.Exception.Message
+            Write-PscriboMessage -Plugin "Module" -IsWarning $_.Exception.Message
         }
 
         #region Generate PScribo document
         # if Verbose has been passed
         if ($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent) {
             $AsBuiltReport = Document $FileName -Verbose {
-                Write-PScriboMessage "Please wait while the $($Report.Replace("."," ")) As Built Report is being generated."
+                Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportGenerating -f $($Report.Replace(".", " ")))
                 # Set Document Style
                 if ($StyleFilePath) {
-                    Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
+                    Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
                     . $StyleFilePath
                 } else {
                     $StyleFilePath = $CoreModulePath + $DirectorySeparatorChar + 'AsBuiltReport.Core.Style.ps1'
-                    Write-PScriboMessage "Executing report style script from path '$($StyleFilePath)'."
+                    Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
                     . $StyleFilePath
                 }
                 # If Credential has been passed or previously created via Username/Password
@@ -400,23 +402,23 @@ function New-AsBuiltReport {
                     & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose
                 }
                 elseif ($MFA) {
-                    Write-PScriboMessage -Plugin "MFA" -IsWarning "MFA is enabled, please check for MFA authentication windows to generate your report."
+                    Write-PScriboMessage -Plugin "Module" -Message $translate.MfaEnabled
                     & "Invoke-$($ReportModuleName)" -Target $Target -MFA -Verbose
                 }
             }
         } else {
             $AsBuiltReport = Document $FileName {
-                Write-Host "Please wait while the $($Report.Replace("."," ")) As Built Report is being generated." -ForegroundColor Green
+                Write-Host ($translate.ReportGenerating -f $($Report.Replace(".", " "))) -ForegroundColor Green
                 if ($MFA) {
-                    Write-Host "MFA is enabled, please check for MFA authentication windows to generate your report." -ForegroundColor Yellow
+                    Write-PScriboMessage -Plugin "Module" -Message $translate.MfaEnabled
                 }
                 # Set Document Style
                 if ($StyleFilePath) {
-                    Write-PScriboMessage "Executing report style script from path '$StyleFilePath'."
+                    Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
                     . $StyleFilePath
                 } else {
                     $StyleFilePath = $CoreModulePath + $DirectorySeparatorChar + 'AsBuiltReport.Core.Style.ps1'
-                    Write-PScriboMessage "Executing report style script from path '$($StyleFilePath)'."
+                    Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
                     . $StyleFilePath
                 }
                 # If Credential has been passed or previously created via Username/Password
@@ -433,7 +435,7 @@ function New-AsBuiltReport {
         }
         Try {
             $Document = $AsBuiltReport | Export-Document -Path $OutputFolderPath -Format $Format -Options @{ TextWidth = 240 } -PassThru
-            Write-Output "$($Report.Replace("."," ")) As Built Report '$FileName' has been saved to '$OutputFolderPath'."
+            Write-Output ($translate.OutputFolder -f $($Report.Replace(".", " ")), $FileName, $OutputFolderPath)
         } catch {
             $Err = $_
             Write-Error $Err

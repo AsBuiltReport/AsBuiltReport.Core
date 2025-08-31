@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-    <a href='https://ko-fi.com/B0B7DDGZ7' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+    <a href='https://ko-fi.com/B0B7DDGZ7' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://ko-fi.com/img/githubbutton_sm.svg' border='0' alt='Want to keep alive this project? Support me on Ko-fi' /></a>
 </p>
 
 # AsBuiltReport.Core
@@ -143,6 +143,9 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
     Specifies the output format of the report.
     The supported output formats are WORD, HTML & TEXT.
     Multiple output formats may be specified, separated by a comma.
+.PARAMETER Language
+    Specifies the language for the report.
+    By default, the language will be set to en-US.
 .PARAMETER Orientation
     Sets the page orientation of the report to Portrait or Landscape.
     By default, page orientation will be set to Portrait.

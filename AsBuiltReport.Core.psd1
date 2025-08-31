@@ -122,7 +122,7 @@
             # RequireLicenseAcceptance = $false
 
             # External dependent modules of this module
-            # ExternalModuleDependencies = @()
+            # ExternalModuleDependencies = @('PScribo')
 
         } # End of PSData hashtable
 

@@ -20,250 +20,368 @@ function New-AsBuiltConfig {
     [CmdletBinding()]
     param()
 
-    #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
-    $global:Config = @{ }
-    $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
+    begin {
+        #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
+        $global:Config = @{ }
 
-    #region Report configuration
-    Clear-Host
-    Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    Write-Host ' <        As Built Report Information      > ' -ForegroundColor Cyan
-    Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    $ReportAuthor = Read-Host -Prompt "Enter the name of the Author for this As Built Report [$([System.Environment]::Username)]"
-    if (($ReportAuthor -like $null) -or ($ReportAuthor -eq "")) {
-        $ReportAuthor = $([System.Environment]::Username)
+        Initialize-ReportLocalization -RootPath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
+
     }
 
-    $Config.Report = @{
-        'Author' = $ReportAuthor
-    }
-    #endregion Report configuration
-
-    #region Company configuration
-    Clear-Host
-    Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    Write-Host ' <           Company Information           > ' -ForegroundColor Cyan
-    Write-Host '---------------------------------------------' -ForegroundColor Cyan
-
-    $CompanyInfo = Read-Host -Prompt "Would you like to enter Company information for the As Built Report? (y/n)"
-    while ("y", "n" -notcontains $CompanyInfo) {
-        $CompanyInfo = Read-Host -Prompt "Would you like to enter Company information for the As Built Report? (y/n)"
-    }
-
-    if ($CompanyInfo -eq 'y') {
-        $CompanyFullName = Read-Host -Prompt "Enter the Full Company Name"
-        $CompanyShortName = Read-Host -Prompt "Enter the Company Short Name"
-        $CompanyContact = Read-Host -Prompt "Enter the Company Contact"
-        $CompanyEmail = Read-Host -Prompt "Enter the Company Email Address"
-        $CompanyPhone = Read-Host -Prompt "Enter the Company Phone"
-        $CompanyAddress = Read-Host -Prompt "Enter the Company Address"
-    }
-
-    $Config.Company = @{
-        'FullName' = $CompanyFullName
-        'ShortName' = $CompanyShortName
-        'Contact' = $CompanyContact
-        'Email' = $CompanyEmail
-        'Phone' = $CompanyPhone
-        'Address' = $CompanyAddress
-    }
-    #endregion Company configuration
-
-    #region Email configuration
-    Clear-Host
-    Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    Write-Host ' <            Email Configuration          > ' -ForegroundColor Cyan
-    Write-Host '---------------------------------------------' -ForegroundColor Cyan
-    if (-not ($SendEmail)) {
-        $ConfigureMailSettings = Read-Host -Prompt "Would you like to enter SMTP configuration? (y/n)"
-        while ("y", "n" -notcontains $ConfigureMailSettings) {
-            $ConfigureMailSettings = Read-Host -Prompt "Would you like to enter SMTP configuration? (y/n)"
-        }
-    }
-    if (($SendEmail) -or ($ConfigureMailSettings -eq "y")) {
-        $MailServer = Read-Host -Prompt "Enter the mail server FQDN / IP address"
-        while (($MailServer -eq $null) -or ($MailServer -eq "")) {
-            $MailServer = Read-Host -Prompt "Enter the mail server FQDN / IP Address"
-        }
-        if (($MailServer -eq 'smtp.office365.com') -or ($MailServer -eq 'smtp.gmail.com')) {
-            $MailServerPort = Read-Host -Prompt "Enter the mail server port number [587]"
-            if (($MailServerPort -eq $null) -or ($MailServerPort -eq "")) {
-                $MailServerPort = '587'
-            }
-        } else {
-            $MailServerPort = Read-Host -Prompt "Enter the mail server port number [25]"
-            if (($MailServerPort -eq $null) -or ($MailServerPort -eq "")) {
-                $MailServerPort = '25'
-            }
-        }
-        $MailServerUseSSL = Read-Host -Prompt "Use SSL for mail server connection? (true/false)"
-        while ("true", "false" -notcontains $MailServerUseSSL) {
-            $MailServerUseSSL = Read-Host -Prompt "Use SSL for mail server connection? (true/false)"
-        }
-        $MailServerUseSSL = Switch ($MailServerUseSSL) {
-            "true" { $true }
-            "false" { $false }
-        }
-
-        $MailCredentials = Read-Host -Prompt "Require mail server authentication? (true/false)"
-        while ("true", "false" -notcontains $MailCredentials) {
-            $MailCredentials = Read-Host -Prompt "Require mail server authentication? (true/false)"
-        }
-        $MailCredentials = Switch ($MailCredentials) {
-            "true" { $true }
-            "false" { $false }
-        }
-
-        $MailFrom = Read-Host -Prompt "Enter the mail sender address"
-        while (($MailFrom -eq $null) -or ($MailFrom -eq "")) {
-            $MailFrom = Read-Host -Prompt "Enter the mail sender address"
-        }
-        $MailRecipients = @()
-        do {
-            $MailTo = Read-Host -Prompt "Enter the mail server recipient address"
-            $MailRecipients += $MailTo
-            $AnotherRecipient = @()
-            while ("y", "n" -notcontains $AnotherRecipient) {
-                $AnotherRecipient = Read-Host -Prompt "Do you want to enter another recipient? (y/n)"
-            }
-        }until($AnotherRecipient -eq "n")
-        $MailBody = Read-Host -Prompt "Enter the email message body content"
-        if (($MailBody -eq $null) -or ($MailBody -eq "")) {
-            $MailBody = "As Built Report attached"
-        }
-    }
-
-    $Config.Email = @{
-        'Server' = $MailServer
-        'Port' = $MailServerPort
-        'UseSSL' = $MailServerUseSSL
-        'Credentials' = $MailCredentials
-        'From' = $MailFrom
-        'To' = $MailRecipients
-        'Body' = $MailBody
-    }
-    #endregion Email Configuration
-
-    #region Report Configuration Folder
-    if ($Report -and (-not $ReportConfigFilePath)) {
+    process {
+        #region Report configuration
         Clear-Host
-        Write-Host '---------------------------------------------' -ForegroundColor Cyan
-        Write-Host ' <          Report Configuration           > ' -ForegroundColor Cyan
-        Write-Host '---------------------------------------------' -ForegroundColor Cyan
-        $ReportConfigFolder = Read-Host -Prompt "Enter the full path of the folder to use for storing report configuration files and custom style scripts [$($Home + $DirectorySeparatorChar)AsBuiltReport]"
-        if (($ReportConfigFolder -like $null) -or ($ReportConfigFolder -eq "")) {
-            $ReportConfigFolder = $Home + $DirectorySeparatorChar + "AsBuiltReport"
+        # Show As Built Report configuration banner
+        Draw-AsciiBox -Lines @($translate.ReportInfo.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+
+        $ReportAuthor = Read-Host -Prompt ($translate.ReportInfo.ReportAuthor -f [System.Environment]::Username)
+        if (($ReportAuthor -like $null) -or ($ReportAuthor -eq "")) {
+            $ReportAuthor = $([System.Environment]::Username)
         }
 
-        #If the folder doesn't exist, create it
-        if (-not (Test-Path -Path $ReportConfigFolder)) {
-            Try {
-                $Folder = New-Item -Path $ReportConfigFolder -ItemType Directory -Force
-            } Catch {
-                Write-Error $_
-                break
-            }
+        $Config.Report = @{
+            'Author' = $ReportAuthor
+        }
+        #endregion Report configuration
+
+        #region Company configuration
+        Clear-Host
+        # Show Company configuration banner
+        Draw-AsciiBox -Lines @($translate.CompanyConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+
+        $CompanyInfo = Read-Host -Prompt $translate.CompanyConfig.CompanyInfo
+        while ("y", "n" -notcontains $CompanyInfo) {
+            $CompanyInfo = Read-Host -Prompt $translate.CompanyConfig.CompanyInfo
         }
 
-        #Add the path to the folder to the report configuration file
-        $Config.UserFolder = @{
-            'Path' = $ReportConfigFolder
-        }
+        if ($CompanyInfo -eq 'y') {
+            $CompanyFullName = Read-Host -Prompt $translate.CompanyConfig.CompanyFullName
+            $CompanyShortName = Read-Host -Prompt $translate.CompanyConfig.CompanyShortName
+            $CompanyContact = Read-Host -Prompt $translate.CompanyConfig.CompanyContact
+            do {
+                $CompanyEmail = Read-Host -Prompt $translate.CompanyConfig.CompanyEmail
 
-        # Test to see if the report configuration file exists. If it doesn't exist, generate the report configuration file.
-        # If the report configuration file exists, prompt the user to overwrite the report configuration file.
-        $ReportModule = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
-        $SourcePath = $($ReportModule.ModuleBase) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
-        $DestinationPath = $($ReportConfigFolder) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
-        if (-not (Get-ChildItem -Path $DestinationPath)) {
-            Write-Verbose -Message "Copying '$($SourcePath)' to '$($DestinationPath)'."
-            New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
-        } else {
-            try {
-                if (Test-Path -Path $DestinationPath) {
-                    $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
-                    while ("y", "n" -notcontains $OverwriteReportConfig) {
-                        $OverwriteReportConfig = Read-Host -Prompt "A report configuration file already exists in the specified folder for $($ReportModule.Name). Would you like to overwrite it? (y/n)"
-                    }
-                    if ($OverwriteReportConfig -eq 'y') {
-                        Try {
-                            Write-Verbose -Message "Copying '$($SourcePath)' to '$($DestinationPath)'. Overwriting existing file."
-                            New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder -Force
-                        } Catch {
-                            Write-Error $_
-                            Break
-                        }
+                if (($null -eq $CompanyEmail) -or ($CompanyEmail -eq "")) {
+                    # Allow blank/empty - no validation needed
+                    $isValid = $true
+                } else {
+                    # Validate email format if text is entered
+                    try {
+                        $null = [System.Net.Mail.MailAddress]$CompanyEmail
+                        $isValid = $true
+                    } catch {
+                        Write-Host ($translate.EmailConfig.InvalidEmail -f $CompanyEmail) -ForegroundColor Red
+                        $isValid = $false
                     }
                 }
-            } catch {
-                Write-Error $_
+            } while (-not $isValid)
+            $CompanyPhone = Read-Host -Prompt $translate.CompanyConfig.CompanyPhone
+            $CompanyAddress = Read-Host -Prompt $translate.CompanyConfig.CompanyAddress
+        }
+
+        $Config.Company = @{
+            'FullName' = $CompanyFullName
+            'ShortName' = $CompanyShortName
+            'Contact' = $CompanyContact
+            'Email' = $CompanyEmail
+            'Phone' = $CompanyPhone
+            'Address' = $CompanyAddress
+        }
+        #endregion Company configuration
+
+        #region Email configuration
+        Clear-Host
+        # Show Email configuration banner
+        Draw-AsciiBox -Lines @($translate.EmailConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        if (-not ($SendEmail)) {
+            $ConfigureMailSettings = Read-Host -Prompt $translate.EmailConfig.ConfigureMailSettings
+            while ("y", "n" -notcontains $ConfigureMailSettings) {
+                $ConfigureMailSettings = Read-Host -Prompt $translate.EmailConfig.ConfigureMailSettings
             }
         }
-    }
-    #endregion Report Configuration Folder
+        if (($SendEmail) -or ($ConfigureMailSettings -eq "y")) {
+            do {
+                $MailServer = Read-Host -Prompt $translate.EmailConfig.MailServer
 
-    #region Save configuration
-    Clear-Host
-    Write-Host '----------------------------------------------' -ForegroundColor Cyan
-    Write-Host ' <       As Built Report Configuration      > ' -ForegroundColor Cyan
-    Write-Host '----------------------------------------------' -ForegroundColor Cyan
-    $SaveAsBuiltConfig = Read-Host -Prompt "Would you like to save the As Built Report configuration file? (y/n)"
-    while ("y", "n" -notcontains $SaveAsBuiltConfig) {
-        $SaveAsBuiltConfig = Read-Host -Prompt "Would you like to save the As Built Report configuration file? (y/n)"
-    }
+                if (($null -eq $MailServer) -or ($MailServer -eq "")) {
+                    Write-Host $translate.EmailConfig.EmptyMailServerAddress -ForegroundColor Red
+                    $isValid = $false
+                } else {
+                    # Check if it's a valid IPv4 address (strict validation)
+                    $ipParts = $MailServer.Split('.')
+                    $isValidIPv4 = $false
 
-    if ($SaveAsBuiltConfig -eq 'y') {
-        $AsBuiltName = Read-Host -Prompt "Enter a name for the As Built Report configuration file [AsBuiltReport]"
-        if (($AsBuiltName -like $null) -or ($AsBuiltName -eq "")) {
-            $AsBuiltName = "AsBuiltReport"
+                    if ($ipParts.Count -eq 4) {
+                        $isValidIPv4 = $true
+                        foreach ($part in $ipParts) {
+                            $num = 0
+                            if (-not [int]::TryParse($part, [ref]$num) -or $num -lt 0 -or $num -gt 255) {
+                                $isValidIPv4 = $false
+                                break
+                            }
+                        }
+                    }
+
+                    # Check if it's a valid IPv6 address
+                    $isValidIPv6 = $false
+                    if (-not $isValidIPv4) {
+                        try {
+                            $parsedIP = [System.Net.IPAddress]::Parse($MailServer)
+                            $isValidIPv6 = $parsedIP.AddressFamily -eq 'InterNetworkV6'
+                        } catch {
+                            $isValidIPv6 = $false
+                        }
+                    }
+
+                    # Check if it's a valid FQDN - but exclude things that look like incomplete IPs
+                    $isValidFQDN = $false
+                    if (-not $isValidIPv4 -and -not $isValidIPv6) {
+                        # Exclude strings that are all numeric with dots (incomplete IPs)
+                        $looksLikeIP = $MailServer -match '^[\d\.]+$'
+
+                        if (-not $looksLikeIP) {
+                            $fqdnPattern = '^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)+$'
+                            $isValidFQDN = $MailServer -match $fqdnPattern
+                        }
+                    }
+
+                    if ($isValidIPv4 -or $isValidIPv6 -or $isValidFQDN) {
+                        $isValid = $true
+                    } else {
+                        Write-Host ($translate.EmailConfig.InvalidMailServer -f $MailServer) -ForegroundColor Red
+                        $isValid = $false
+                    }
+                }
+            } while (-not $isValid)
+
+            if (($MailServer -eq 'smtp.office365.com') -or ($MailServer -eq 'smtp.gmail.com')) {
+                do {
+                    $MailServerPort = Read-Host -Prompt $translate.EmailConfig.MailServerPort587
+                    $portNumber = 0  # Initialize the variable
+
+                    if (($null -eq $MailServerPort) -or ($MailServerPort -eq "")) {
+                        $MailServerPort = '587'
+                        $isValid = $true
+                    } elseif ([int]::TryParse($MailServerPort, [ref]$portNumber) -and $portNumber -ge 1 -and $portNumber -le 65535) {
+                        $isValid = $true
+                    } else {
+                        Write-Host $translate.EmailConfig.InvalidMailServerPort587 -ForegroundColor Red
+                        $isValid = $false
+                    }
+                } while (-not $isValid)
+            } else {
+                do {
+                    $MailServerPort = Read-Host -Prompt $translate.EmailConfig.MailServerPort25
+                    $portNumber = 0  # Initialize the variable
+
+                    if (($null -eq $MailServerPort) -or ($MailServerPort -eq "")) {
+                        $MailServerPort = '25'
+                        $isValid = $true
+                    } elseif ([int]::TryParse($MailServerPort, [ref]$portNumber) -and $portNumber -ge 1 -and $portNumber -le 65535) {
+                        $isValid = $true
+                    } else {
+                        Write-Host $translate.EmailConfig.InvalidMailServerPort25 -ForegroundColor Red
+                        $isValid = $false
+                    }
+                } while (-not $isValid)
+            }
+
+            $MailServerUseSSL = Read-Host -Prompt $translate.EmailConfig.MailServerUseSSL
+            while ("y", "n" -notcontains $MailServerUseSSL) {
+                $MailServerUseSSL = Read-Host -Prompt $translate.EmailConfig.MailServerUseSSL
+            }
+            $MailServerUseSSL = switch ($MailServerUseSSL) {
+                "y" { $true }
+                "n" { $false }
+            }
+
+            $MailCredentials = Read-Host -Prompt $translate.EmailConfig.MailCredentials
+            while ("y", "n" -notcontains $MailCredentials) {
+                $MailCredentials = Read-Host -Prompt $translate.EmailConfig.MailCredentials
+            }
+            $MailCredentials = switch ($MailCredentials) {
+                "y" { $true }
+                "n" { $false }
+            }
+
+            do {
+                $MailFrom = Read-Host -Prompt $translate.EmailConfig.MailFrom
+                if (($null -eq $MailFrom) -or ($MailFrom -eq "")) {
+                    Write-Host $translate.EmailConfig.EmptyEmail -ForegroundColor Red
+                    $isValid = $false
+                } else {
+                    try {
+                        $null = [System.Net.Mail.MailAddress]$MailFrom
+                        $isValid = $true
+                    } catch {
+                        $isValid = $false
+                        Write-Host ($translate.EmailConfig.InvalidEmail -f $MailFrom) -ForegroundColor Red
+                    }
+                }
+            } while (-not $isValid)
+
+            $MailRecipients = @()
+            do {
+                do {
+                    $MailTo = Read-Host -Prompt $translate.EmailConfig.MailTo
+
+                    if (($null -eq $MailTo) -or ($MailTo -eq "")) {
+                        Write-Host $translate.EmailConfig.EmptyEmail -ForegroundColor Red
+                        $isValid = $false
+                    } else {
+                        try {
+                            $null = [System.Net.Mail.MailAddress]$MailTo
+                            $isValidEmail = $true
+                        } catch {
+                            $isValidEmail = $false
+                            Write-Host ($translate.EmailConfig.InvalidEmail -f $MailTo) -ForegroundColor Red
+                        }
+                    }
+                } while (-not $isValidEmail)
+
+                $MailRecipients += $MailTo
+                $AnotherRecipient = @()
+                while ("y", "n" -notcontains $AnotherRecipient) {
+                    $AnotherRecipient = Read-Host -Prompt $translate.EmailConfig.AnotherRecipient
+                }
+            } until($AnotherRecipient -eq "n")
+            $MailBody = Read-Host -Prompt $translate.EmailConfig.MailBodyPrompt
+            if (($null -eq $MailBody) -or ($MailBody -eq "")) {
+                $MailBody = $translate.EmailConfig.MailBody
+            }
         }
-        if ($Config.UserFolder.Path) {
-            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$($Config.UserFolder.Path)]"
-            if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
-                $AsBuiltExportPath = $Config.UserFolder.Path
+
+        $Config.Email = @{
+            'Server' = $MailServer
+            'Port' = $MailServerPort
+            'UseSSL' = $MailServerUseSSL
+            'Credentials' = $MailCredentials
+            'From' = $MailFrom
+            'To' = $MailRecipients
+            'Body' = $MailBody
+        }
+        #endregion Email Configuration
+
+        #region Report Configuration Folder
+        if ($Report -and (-not $ReportConfigFilePath)) {
+            Clear-Host
+            # Show Rerport configuration banner
+            Draw-AsciiBox -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+            $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $Home + $DirectorySeparatorChar + "AsBuiltReport")
+            if (($ReportConfigFolder -like $null) -or ($ReportConfigFolder -eq "")) {
+                $ReportConfigFolder = $Home + $DirectorySeparatorChar + "AsBuiltReport"
             }
-		} elseif ($ReportConfigFilePath) {
-			$ReportConfigFolderPath = Split-Path -Path $ReportConfigFilePath
-			$AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$ReportConfigFolderPath]"
-			if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
-                $AsBuiltExportPath = $ReportConfigFolderPath
+
+            #If the folder doesn't exist, create it
+            if (-not (Test-Path -Path $ReportConfigFolder)) {
+                try {
+                    $Folder = New-Item -Path $ReportConfigFolder -ItemType Directory -Force
+                } catch {
+                    Write-Error $_
+                    break
+                }
             }
+
+            # Add the path to the folder to the report configuration file
+            $Config.UserFolder = @{
+                'Path' = $ReportConfigFolder
+            }
+
+            # Test to see if the report configuration file exists. If it doesn't exist, generate the report configuration file.
+            # If the report configuration file exists, prompt the user to overwrite the report configuration file.
+            $ReportModule = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
+            $SourcePath = $($ReportModule.ModuleBase) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
+            $DestinationPath = $($ReportConfigFolder) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
+            if (-not (Get-ChildItem -Path $DestinationPath)) {
+                Write-Verbose -Message ($translate.CopyFile -f $SourcePath, $DestinationPath)
+                New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
+            } else {
+                try {
+                    if (Test-Path -Path $DestinationPath) {
+                        $OverwriteReportConfig = Read-Host -Prompt ($translate.ReportConfig.OverwriteReportConfig -f $ReportModule.Name)
+                        while ("y", "n" -notcontains $OverwriteReportConfig) {
+                            $OverwriteReportConfig = Read-Host -Prompt ($translate.ReportConfig.OverwriteReportConfig -f $ReportModule.Name)
+                        }
+                        if ($OverwriteReportConfig -eq 'y') {
+                            try {
+                                Write-Verbose -Message ($translate.ReportConfig.OverwriteFile -f $SourcePath, $DestinationPath)
+                                New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder -Force
+                            } catch {
+                                Write-Error $_
+                                break
+                            }
+                        }
+                    }
+                } catch {
+                    Write-Error $_
+                }
+            }
+        }
+        #endregion Report Configuration Folder
+
+        #region Save configuration
+        Clear-Host
+        Draw-AsciiBox -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        $SaveAsBuiltConfig = Read-Host -Prompt $translate.ReportConfig.SaveAsBuiltConfig
+        while ("y", "n" -notcontains $SaveAsBuiltConfig) {
+            $SaveAsBuiltConfig = Read-Host -Prompt $translate.ReportConfig.SaveAsBuiltConfig
+        }
+
+        if ($SaveAsBuiltConfig -eq 'y') {
+            $AsBuiltName = Read-Host -Prompt $translate.ReportConfig.AsBuiltName
+            if (($AsBuiltName -like $null) -or ($AsBuiltName -eq "")) {
+                $AsBuiltName = "AsBuiltReport"
+            }
+            if ($Config.UserFolder.Path) {
+                $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $Config.UserFolder.Path)
+                if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                    $AsBuiltExportPath = $Config.UserFolder.Path
+                }
+            } elseif ($ReportConfigFilePath) {
+                $ReportConfigFolderPath = Split-Path -Path $ReportConfigFilePath
+                $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $ReportConfigFolderPath)
+                if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                    $AsBuiltExportPath = $ReportConfigFolderPath
+                }
+            } else {
+                $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $($Home + $DirectorySeparatorChar + 'AsBuiltReport'))
+                if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                    $AsBuiltExportPath = $Home + $DirectorySeparatorChar + "AsBuiltReport"
+                }
+            }
+            if (-not (Test-Path -Path $AsBuiltExportPath)) {
+                Write-Verbose -Message ($translate.ReportConfig.ConfigFolder -f $AsBuiltExportPath)
+                try {
+                    $Folder = New-Item -Path $AsBuiltExportPath -ItemType Directory -Force
+                } catch {
+                    Write-Error $_
+                    break
+                }
+            }
+            $Config.UserFolder = @{
+                'Path' = $AsBuiltExportPath
+            }
+            Write-Verbose -Message ($translate.ReportConfig.SaveConfig -f $AsBuiltName, $AsBuiltExportPath)
+            $AsBuiltConfigPath = Join-Path -Path $AsBuiltExportPath -ChildPath "$AsBuiltName.json"
+            $Config | ConvertTo-Json | Out-File $AsBuiltConfigPath
         } else {
-            $AsBuiltExportPath = Read-Host -Prompt "Enter the path to save the As Built Report configuration file [$($Home + $DirectorySeparatorChar)AsBuiltReport]"
-            if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
-                $AsBuiltExportPath = $Home + $DirectorySeparatorChar + "AsBuiltReport"
-            }
+            Write-Verbose -Message $translate.ReportConfig.NotSaved
         }
-		if (-not (Test-Path -Path $AsBuiltExportPath)) {
-			Write-Verbose -Message "Creating As Built Report configuration folder '$AsBuiltExportPath'."
-			Try {
-				$Folder = New-Item -Path $AsBuiltExportPath -ItemType Directory -Force
-			} Catch {
-				Write-Error $_
-				break
-			}
-		}
-		$Config.UserFolder = @{
-			'Path' = $AsBuiltExportPath
-		}
-        Write-Verbose -Message "Saving As Built Report configuration file '$($AsBuiltName).json' to path '$AsBuiltExportPath'."
-        $AsBuiltConfigPath = Join-Path -Path $AsBuiltExportPath -ChildPath "$AsBuiltName.json"
-        $Config | ConvertTo-Json | Out-File $AsBuiltConfigPath
-    } else {
-        Write-Verbose -Message "As Built Report configuration file not saved."
-    }
-    #endregion Save configuration
+        #endregion Save configuration
 
-    # Print output to screen so that it can be captured to $Global:AsBuiltConfig variable in New-AsBuiltReport
-    $Config
+        # Print output to screen so that it can be captured to $Global:AsBuiltConfig variable in New-AsBuiltReport
+        $Config
 
-    # Verbose Output
-    Write-Verbose -Message "Config.Report.Author = $ReportAuthor"
-    Write-Verbose -Message "Config.UserFolder.Path = $ReportConfigFolder"
-    foreach ($x in $Config.Company.Keys) {
-        Write-Verbose -Message "Config.Company.$x = $($Config.Company[$x])"
+        # Verbose Output
+        Write-Verbose -Message "Config.Report.Author = $ReportAuthor"
+        Write-Verbose -Message "Config.UserFolder.Path = $ReportConfigFolder"
+        foreach ($x in $Config.Company.Keys) {
+            Write-Verbose -Message "Config.Company.$x = $($Config.Company[$x])"
+        }
+        foreach ($x in $Config.Email.Keys) {
+            Write-Verbose -Message "Config.Email.$x = $($Config.Email[$x])"
+        }
     }
-    foreach ($x in $Config.Email.Keys) {
-        Write-Verbose -Message "Config.Email.$x = $($Config.Email[$x])"
-    }
+
+    end {}
 }#End New-AsBuiltConfig Function
