@@ -1,8 +1,8 @@
-function Initialize-ReportLocalization {
+function Initialize-SessionLocalization {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
-        [string]$RootPath,
+        [string]$ScriptRoot,
 
         [Parameter(Mandatory = $true)]
         [string]$LanguageFile
@@ -22,7 +22,7 @@ function Initialize-ReportLocalization {
     $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
 
     # Setup all paths required for script to run
-    $script:RootPath = $RootPath
+    $script:RootPath = $ScriptRoot
     $script:LangPath = Join-Path $RootPath 'Language'
 
     # Get fallback chain for current culture

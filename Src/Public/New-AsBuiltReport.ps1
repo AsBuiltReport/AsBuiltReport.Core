@@ -251,7 +251,7 @@ function New-AsBuiltReport {
     )
     #endregion Script Parameters
 
-    Initialize-ReportLocalization -RootPath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReport'
+    Initialize-SessionLocalization -ScriptRoot (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReport'
 
     try {
 

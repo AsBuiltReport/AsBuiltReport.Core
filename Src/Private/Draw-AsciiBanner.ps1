@@ -1,4 +1,4 @@
-function Draw-AsciiBox {
+function Draw-AsciiBanner {
     param(
         [string[]]$Lines,
         [string]$TextColor,

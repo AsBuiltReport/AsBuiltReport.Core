@@ -72,7 +72,7 @@ function New-AsBuiltReportConfig {
         [Switch] $Force
     )
 
-    Initialize-ReportLocalization -RootPath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReportConfig'
+    Initialize-SessionLocalization -ScriptRoot (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReportConfig'
 
     # Test to ensure the path the user has specified does exist
     if (-not (Test-Path -Path $($FolderPath))) {

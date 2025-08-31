@@ -24,7 +24,7 @@ function New-AsBuiltConfig {
         #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
         $global:Config = @{ }
 
-        Initialize-ReportLocalization -RootPath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
+        Initialize-SessionLocalization -ScriptRoot (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
 
     }
 
@@ -32,7 +32,7 @@ function New-AsBuiltConfig {
         #region Report configuration
         Clear-Host
         # Show As Built Report configuration banner
-        Draw-AsciiBox -Lines @($translate.ReportInfo.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.ReportInfo.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
 
         $ReportAuthor = Read-Host -Prompt ($translate.ReportInfo.ReportAuthor -f [System.Environment]::Username)
         if (($ReportAuthor -like $null) -or ($ReportAuthor -eq "")) {
@@ -47,7 +47,7 @@ function New-AsBuiltConfig {
         #region Company configuration
         Clear-Host
         # Show Company configuration banner
-        Draw-AsciiBox -Lines @($translate.CompanyConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.CompanyConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
 
         $CompanyInfo = Read-Host -Prompt $translate.CompanyConfig.CompanyInfo
         while ("y", "n" -notcontains $CompanyInfo) {
@@ -92,7 +92,7 @@ function New-AsBuiltConfig {
         #region Email configuration
         Clear-Host
         # Show Email configuration banner
-        Draw-AsciiBox -Lines @($translate.EmailConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.EmailConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
         if (-not ($SendEmail)) {
             $ConfigureMailSettings = Read-Host -Prompt $translate.EmailConfig.ConfigureMailSettings
             while ("y", "n" -notcontains $ConfigureMailSettings) {
@@ -266,7 +266,7 @@ function New-AsBuiltConfig {
         if ($Report -and (-not $ReportConfigFilePath)) {
             Clear-Host
             # Show Rerport configuration banner
-            Draw-AsciiBox -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+            Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
             $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $Home + $DirectorySeparatorChar + "AsBuiltReport")
             if (($ReportConfigFolder -like $null) -or ($ReportConfigFolder -eq "")) {
                 $ReportConfigFolder = $Home + $DirectorySeparatorChar + "AsBuiltReport"
@@ -321,7 +321,7 @@ function New-AsBuiltConfig {
 
         #region Save configuration
         Clear-Host
-        Draw-AsciiBox -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
         $SaveAsBuiltConfig = Read-Host -Prompt $translate.ReportConfig.SaveAsBuiltConfig
         while ("y", "n" -notcontains $SaveAsBuiltConfig) {
             $SaveAsBuiltConfig = Read-Host -Prompt $translate.ReportConfig.SaveAsBuiltConfig

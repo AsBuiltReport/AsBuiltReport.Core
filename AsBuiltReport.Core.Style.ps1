@@ -1,5 +1,5 @@
 # AsBuiltReport Default Document Style
-Initialize-ReportLocalization -RootPath $PSScriptRoot -LanguageFile 'DefaultStyle'
+Initialize-SessionLocalization -ScriptRoot $PSScriptRoot -LanguageFile 'DefaultStyle'
 
 # Configure document options
 DocumentOption -EnableSectionNumbering -PageSize A4 -DefaultFont 'Segoe Ui' -MarginLeftAndRight 71 -MarginTopAndBottom 71 -Orientation $Orientation
