@@ -22,10 +22,10 @@ CompanyConfig = ConvertFrom-StringData @'
 # Configuration de la messagerie électronique
 EmailConfig = ConvertFrom-StringData @'
     BannerTitle = Configuration de la messagerie électronique
-    ConfigureMailSettings = Souhaitez-vous entrer dans la configuration SMTP ? (y/n)
+    ConfigureMailSettings = Souhaitez-vous configurer le SMTP ? (y/n)
     MailServer = Entrez le FQDN / l'adresse IP du serveur de messagerie
     EmptyMailServerAddress = L'adresse du serveur de messagerie ne peut pas être vide. Veuillez saisir un nom de domaine complet (FQDN) ou une adresse IP valide.
-    InvalidMailServer = {0} n'est pas un nom de domaine complet (FQDN) ni une adresse IP valides. Veuillez saisir un nom de domaine complet (FQDN) ou une adresse IP de serveur de messagerie valides.
+    InvalidMailServer = {0} n'est pas un nom de domaine complet (FQDN) ni une adresse IP valide. Veuillez saisir un nom de domaine complet (FQDN) ou une adresse IP de serveur de messagerie valide.
     MailServerPort587 = Entrez le numéro de port du serveur de messagerie [587]
     InvalidMailServerPort587 = Numéro de port non valide. Veuillez saisir un numéro compris entre 1 et 65535, ou appuyez sur Entrée pour la valeur par défaut. [587].
     MailServerPort25 = Entrez le numéro de port du serveur de messagerie [25]
