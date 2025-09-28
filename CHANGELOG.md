@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `Initialize-LocalizedData` function to handle localization for both Core and Report modules
     - `Resolve-Culture` function with comprehensive culture fallback chains for 135+ culture variants
     - Localized user prompts and messages in `New-AsBuiltConfig` function. Initial support for English, Spanish & French.
-    - `ReportLanguage` parameter to `New-AsBuiltReport` function with dynamic validation based on available languages in report modules
+    - `ReportLanguage` parameter added to `New-AsBuiltReport` function with dynamic validation based on available languages in individual report modules
     - Support for setting default language in report JSON configuration files using the `Report.Language` property
 - Improve error handling with comprehensive try-catch blocks and meaningful error messages
 
