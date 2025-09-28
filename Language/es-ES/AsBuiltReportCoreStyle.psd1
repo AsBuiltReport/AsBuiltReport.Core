@@ -7,5 +7,5 @@ ConvertFrom-StringData @'
     Author = Autor:
     Date = Fecha:
     Version = Versión:
-    TOC = Tabla de contenido
+    TOC = Tabla de Contenido
 '@

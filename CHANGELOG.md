@@ -8,11 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.5.0] - Unreleased
 
 ### Added
-- Add multilingual support for core module
+- Multilingual support for AsBuiltReport Core module
+    - `Initialize-LocalizedData` function to handle localization for both Core and Report modules
+    - `Resolve-Culture` function with comprehensive culture fallback chains for 135+ culture variants
+    - Localized user prompts and messages in `New-AsBuiltConfig` function. Initial support for English, Spanish & French.
+    - `ReportLanguage` parameter to `New-AsBuiltReport` function with dynamic validation based on available languages in report modules
+    - Support for setting default language in report JSON configuration files using the `Report.Language` property
+- Improve error handling with comprehensive try-catch blocks and meaningful error messages
 
 ### Changed
-- UI enhancements
-- Improve error handling
+- Core module functions (`New-AsBuiltConfig`, `New-AsBuiltReport`, `New-AsBuiltReportConfig`) now default to user's OS language instead of hardcoded English
+- Report modules default to 'en-US' when no language is specified
+- Updated parameter validation to use ValidateScript blocks for dynamic language detection
+- Enhanced error messages to include specific language and module information
+- Improved progress messaging during report generation
+- Updated all y/n prompts in `New-AsBuiltConfig` to show defaults and handle empty input
 
 ## [1.4.3] - 2025-03-08
 
@@ -134,7 +144,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2019-03-26
 ### Added
-- `AsBuiltReport.Core` module created to provide core as built report functionality
+- `AsBuiltReport.Core` module created to provide core AsBuiltReport functionality
 
 ### Changed
 - `AsBuiltReport` module simply becomes a manifest to install required core and report modules
@@ -148,7 +158,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.0] - 2019-03-16
 ### Added
-- `New-AsbuiltConfig` cmdlet to generate a base As Built Report JSON configuration file
+- `New-AsbuiltConfig` cmdlet to generate a base AsBuiltReport JSON configuration file
 - `New-AsBuiltReport` cmdlet to generate a report JSON configuration file
 - Username and Password parameters on `New-AsBuiltReport`
 - Support for setting the document orientation for the output report
@@ -169,5 +179,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New As-Built JSON configuration structure
   - new `AsBuiltConfigPath` parameter
   - allows unique configuration files to be created and saved
-  - if `AsBuiltConfigPath` parameter is not specified, user is prompted for As Built report configuration information
+  - if `AsBuiltConfigPath` parameter is not specified, user is prompted for AsBuiltReport configuration information
   - `New-AsBuiltConfig.ps1` & `Config.json` files are no longer required

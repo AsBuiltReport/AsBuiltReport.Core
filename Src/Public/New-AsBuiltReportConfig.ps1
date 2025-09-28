@@ -72,7 +72,7 @@ function New-AsBuiltReportConfig {
         [Switch] $Force
     )
 
-    Initialize-SessionLocalization -ScriptRoot (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReportConfig'
+    Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReportConfig'
 
     # Test to ensure the path the user has specified does exist
     if (-not (Test-Path -Path $($FolderPath))) {
@@ -81,11 +81,11 @@ function New-AsBuiltReportConfig {
     # Find the root folder where the module is located for the report that has been specified
     try {
         $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
-        $SourcePath = $($Module.ModuleBase) + $($DirectorySeparatorChar) + $($Module.Name) + ".json"
+        $SourcePath = Join-Path -Path $($Module.ModuleBase) -ChildPath "$($Module.Name).json"
         if (Test-Path -Path $($SourcePath)) {
             Write-Verbose -Message ($translate.ProcessConfig -f $Module.Name, $Module, $Module.Version)
             if ($Filename) {
-                $DestinationPath = $($FolderPath) + $($DirectorySeparatorChar) + $($Filename) + ".json"
+                $DestinationPath = Join-Path -Path $($FolderPath) -ChildPath "$($Filename).json"
                 if (-not (Test-Path -Path $($DestinationPath))) {
                     Write-Verbose -Message ($translate.CopyConfig -f $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination "$($DestinationPath)"
@@ -98,7 +98,7 @@ function New-AsBuiltReportConfig {
                     Write-Error -Message ($translate.ForceOverwrite -f $Module.Name, $Filename, $FolderPath)
                 }
             } else {
-                $DestinationPath = $($FolderPath) + $($DirectorySeparatorChar) + $($Module.Name) + ".json"
+                $DestinationPath = Join-Path -Path $($FolderPath) -ChildPath "$($Module.Name).json"
                 if (-not (Test-Path -Path $($DestinationPath))) {
                     Write-Verbose -Message ($translate.CopyModuleConfig -f $Module.Name, $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination $($DestinationPath)

@@ -1,5 +1,17 @@
 # AsBuiltReport Default Document Style
-Initialize-SessionLocalization -ScriptRoot $PSScriptRoot -LanguageFile 'DefaultStyle'
+try {
+    # Try to initialize localized data for style elements
+    if ($PSScriptRoot) {
+        Initialize-LocalizedData -ModuleBasePath $PSScriptRoot -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core'
+    } else {
+        # Fallback if $PSScriptRoot is not available
+        $StyleModulePath = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
+        Initialize-LocalizedData -ModuleBasePath $StyleModulePath -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core'
+    }
+} catch {
+    # If localization fails, continue with default style (don't break report generation)
+    Write-Warning "Could not load style localization: $($_.Exception.Message)"
+}
 
 # Configure document options
 DocumentOption -EnableSectionNumbering -PageSize A4 -DefaultFont 'Segoe Ui' -MarginLeftAndRight 71 -MarginTopAndBottom 71 -Orientation $Orientation

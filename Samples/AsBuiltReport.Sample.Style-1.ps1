@@ -1,5 +1,5 @@
 # Sample Document Style 1
-
+# This sample document style can be used as a template for creating custom document styles. This sample does not utilise language translation.
 # Configure document options e.g. page size, margins, default font, page orientation
 # It is recommended to use a web safe system font. If the configured font is not installed on the
 # system from which the report is viewed then a substitute font will be used. This may not result

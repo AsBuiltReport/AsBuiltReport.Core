@@ -121,7 +121,7 @@ _Note: You are not limited to installing the module to those example paths, you 
 
 ### **New-AsBuiltReport**
 
-The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of as built report to generate is specified by using the `Report` parameter. The report parameter relies on additional report modules being installed alongside the `AsBuiltReport.Core` module. The `Target` parameter specifies one or more systems on which to connect and run the report. User credentials to the system are specified using the `Credential`, or the `Username` and `Password` parameters. One or more document formats, such as `HTML`, `Word` or `Text` can be specified using the `Format` parameter. Additional parameters are outlined below.
+The `New-AsBuiltReport` cmdlet is used to generate AsBuiltReports. The type of AsBuiltReport to generate is specified by using the `Report` parameter. The report parameter relies on additional report modules being installed alongside the `AsBuiltReport.Core` module. The `Target` parameter specifies one or more systems on which to connect and run the report. User credentials to the system are specified using the `Credential`, or the `Username` and `Password` parameters. One or more document formats, such as `HTML`, `Word` or `Text` can be specified using the `Format` parameter. Additional parameters are outlined below.
 
 ```powershell
 .PARAMETER Report
@@ -164,7 +164,7 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
 .PARAMETER SendEmail
     Sends report to specified recipients as email attachments.
 .PARAMETER AsBuiltConfigFilePath
-    Enter the full path to the As Built Report configuration JSON file.
+    Enter the full path to the AsBuiltReport configuration JSON file.
     If this parameter is not specified, the user will be prompted for this configuration information on first
     run, with the option to save the configuration to a file.
 .PARAMETER ReportConfigFilePath
@@ -186,7 +186,7 @@ Get-Help New-AsBuiltReport -Full
 
 ### **New-AsBuiltReportConfig**
 
-The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files for individual As Built Reports. Cmdlet parameters and examples are outlined below.
+The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files for individual AsBuiltReports. Cmdlet parameters and examples are outlined below.
 
 ```powershell
 .PARAMETER Report
@@ -216,20 +216,20 @@ Get-Help New-AsBuiltReportConfig -Full
 Here are some examples to get you going.
 
 ```powershell
-# Generate a VMware vSphere As Built report in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the 'H:\Documents\' folder.
+# Generate a VMware vSphere AsBuiltReport in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the 'H:\Documents\' folder.
 New-AsBuiltReport -Report 'VMware.vSphere' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'H:\Documents\'
 
-# Generate a Nutanix Prism Element As Built Report using specified username and password credentials. Specify the report configuration file to be used. Export report to Text, HTML & DOCX formats. Use the default report style. Save the report to the '/Users/Tim/Documents' folder. Display verbose messages to the console.
+# Generate a Nutanix Prism Element AsBuiltReport using specified username and password credentials. Specify the report configuration file to be used. Export report to Text, HTML & DOCX formats. Use the default report style. Save the report to the '/Users/Tim/Documents' folder. Display verbose messages to the console.
 New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target 'prism.nutanix.local' -Username 'demo' -Password 'demo' -Format Text,Html,Word -OutputFolderPath '/Users/Tim/Documents' -ReportConfigFilePath '/Users/Tim/AsBuiltReport/AsBuiltReport.Nutanix.PrismElement.json' -Verbose
 
-# Generate a Pure Storage FlashArray As Built Report in Text format and append a timestamp to the filename. Use stored credentials for authentication. Use the default Pure Storage report style. Save the reports to the 'H:\Documents' folder.
+# Generate a Pure Storage FlashArray AsBuiltReport in Text format and append a timestamp to the filename. Use stored credentials for authentication. Use the default Pure Storage report style. Save the reports to the 'H:\Documents' folder.
 $Credentials = Get-Credential
 New-AsBuiltReport -Report 'PureStorage.FlashArray' -Target '192.168.1.100' -Credential $Credentials -Format Text -Timestamp -OutputFolderPath 'H:\Documents\'
 
-# The following creates a Cisco UCS Manager As Built report in default format (Word) with a customized style.
+# The following creates a Cisco UCS Manager AsBuiltReport in default format (Word) with a customized style.
 New-AsBuiltReport -Report 'Cisco.UCSManager' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
 
-# The following creates a Nutanix Prism Element As Built report in HTML format, with a custom filename.
+# The following creates a Nutanix Prism Element AsBuiltReport in HTML format, with a custom filename.
 New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
 ```
 

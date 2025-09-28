@@ -23,19 +23,19 @@ function New-AsBuiltConfig {
     begin {
         #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
         $global:Config = @{ }
-
-        Initialize-SessionLocalization -ScriptRoot (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
+        $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
+        Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
 
     }
 
     process {
         #region Report configuration
-        Clear-Host
+        #Clear-Host
         # Show As Built Report configuration banner
         Draw-AsciiBanner -Lines @($translate.ReportInfo.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
 
         $ReportAuthor = Read-Host -Prompt ($translate.ReportInfo.ReportAuthor -f [System.Environment]::Username)
-        if (($ReportAuthor -like $null) -or ($ReportAuthor -eq "")) {
+        if (($null -eq $ReportAuthor) -or ($ReportAuthor -eq "")) {
             $ReportAuthor = $([System.Environment]::Username)
         }
 
@@ -50,8 +50,14 @@ function New-AsBuiltConfig {
         Draw-AsciiBanner -Lines @($translate.CompanyConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
 
         $CompanyInfo = Read-Host -Prompt $translate.CompanyConfig.CompanyInfo
+        if (($null -eq $CompanyInfo) -or ($CompanyInfo -eq "")) {
+            $CompanyInfo = "n"
+        }
         while ("y", "n" -notcontains $CompanyInfo) {
             $CompanyInfo = Read-Host -Prompt $translate.CompanyConfig.CompanyInfo
+            if (($null -eq $CompanyInfo) -or ($CompanyInfo -eq "")) {
+                $CompanyInfo = "n"
+            }
         }
 
         if ($CompanyInfo -eq 'y') {
@@ -95,8 +101,14 @@ function New-AsBuiltConfig {
         Draw-AsciiBanner -Lines @($translate.EmailConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
         if (-not ($SendEmail)) {
             $ConfigureMailSettings = Read-Host -Prompt $translate.EmailConfig.ConfigureMailSettings
+            if (($null -eq $ConfigureMailSettings) -or ($ConfigureMailSettings -eq "")) {
+                $ConfigureMailSettings = "n"
+            }
             while ("y", "n" -notcontains $ConfigureMailSettings) {
                 $ConfigureMailSettings = Read-Host -Prompt $translate.EmailConfig.ConfigureMailSettings
+                if (($null -eq $ConfigureMailSettings) -or ($ConfigureMailSettings -eq "")) {
+                    $ConfigureMailSettings = "n"
+                }
             }
         }
         if (($SendEmail) -or ($ConfigureMailSettings -eq "y")) {
@@ -187,8 +199,14 @@ function New-AsBuiltConfig {
             }
 
             $MailServerUseSSL = Read-Host -Prompt $translate.EmailConfig.MailServerUseSSL
+            if (($null -eq $MailServerUseSSL) -or ($MailServerUseSSL -eq "")) {
+                $MailServerUseSSL = "n"
+            }
             while ("y", "n" -notcontains $MailServerUseSSL) {
                 $MailServerUseSSL = Read-Host -Prompt $translate.EmailConfig.MailServerUseSSL
+                if (($null -eq $MailServerUseSSL) -or ($MailServerUseSSL -eq "")) {
+                    $MailServerUseSSL = "n"
+                }
             }
             $MailServerUseSSL = switch ($MailServerUseSSL) {
                 "y" { $true }
@@ -196,8 +214,14 @@ function New-AsBuiltConfig {
             }
 
             $MailCredentials = Read-Host -Prompt $translate.EmailConfig.MailCredentials
+            if (($null -eq $MailCredentials) -or ($MailCredentials -eq "")) {
+                $MailCredentials = "n"
+            }
             while ("y", "n" -notcontains $MailCredentials) {
                 $MailCredentials = Read-Host -Prompt $translate.EmailConfig.MailCredentials
+                if (($null -eq $MailCredentials) -or ($MailCredentials -eq "")) {
+                    $MailCredentials = "n"
+                }
             }
             $MailCredentials = switch ($MailCredentials) {
                 "y" { $true }
@@ -241,8 +265,15 @@ function New-AsBuiltConfig {
 
                 $MailRecipients += $MailTo
                 $AnotherRecipient = @()
+                $AnotherRecipient = Read-Host -Prompt $translate.EmailConfig.AnotherRecipient
+                if (($null -eq $AnotherRecipient) -or ($AnotherRecipient -eq "")) {
+                    $AnotherRecipient = "n"
+                }
                 while ("y", "n" -notcontains $AnotherRecipient) {
                     $AnotherRecipient = Read-Host -Prompt $translate.EmailConfig.AnotherRecipient
+                    if (($null -eq $AnotherRecipient) -or ($AnotherRecipient -eq "")) {
+                        $AnotherRecipient = "n"
+                    }
                 }
             } until($AnotherRecipient -eq "n")
             $MailBody = Read-Host -Prompt $translate.EmailConfig.MailBodyPrompt
@@ -267,9 +298,9 @@ function New-AsBuiltConfig {
             Clear-Host
             # Show Rerport configuration banner
             Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
-            $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $Home + $DirectorySeparatorChar + "AsBuiltReport")
-            if (($ReportConfigFolder -like $null) -or ($ReportConfigFolder -eq "")) {
-                $ReportConfigFolder = $Home + $DirectorySeparatorChar + "AsBuiltReport"
+            $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $($Home + $DirectorySeparatorChar + "AsBuiltReport"))
+            if (($null -eq $ReportConfigFolder) -or ($ReportConfigFolder -eq "")) {
+                $ReportConfigFolder = Join-Path -Path $Home -ChildPath "AsBuiltReport"
             }
 
             #If the folder doesn't exist, create it
@@ -290,22 +321,33 @@ function New-AsBuiltConfig {
             # Test to see if the report configuration file exists. If it doesn't exist, generate the report configuration file.
             # If the report configuration file exists, prompt the user to overwrite the report configuration file.
             $ReportModule = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
-            $SourcePath = $($ReportModule.ModuleBase) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
-            $DestinationPath = $($ReportConfigFolder) + $DirectorySeparatorChar + $($ReportModule.Name) + ".json"
+            $ReportModuleName = $ReportModule.Name
+            $SourcePath = Join-Path -Path $($ReportModule.ModuleBase) -ChildPath "$ReportModuleName.json"
+            $DestinationPath = Join-Path -Path $($ReportConfigFolder) -ChildPath "$ReportModuleName.json"
             if (-not (Get-ChildItem -Path $DestinationPath)) {
                 Write-Verbose -Message ($translate.CopyFile -f $SourcePath, $DestinationPath)
                 New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
+                # Restore core translations after New-AsBuiltReportConfig (which loads its own translations)
+                Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
             } else {
                 try {
                     if (Test-Path -Path $DestinationPath) {
-                        $OverwriteReportConfig = Read-Host -Prompt ($translate.ReportConfig.OverwriteReportConfig -f $ReportModule.Name)
+                        $OverwriteReportConfig = Read-Host -Prompt ($translate.ReportConfig.OverwriteReportConfig -f $ReportModuleName)
+                        if (($null -eq $OverwriteReportConfig) -or ($OverwriteReportConfig -eq "")) {
+                            $OverwriteReportConfig = "n"
+                        }
                         while ("y", "n" -notcontains $OverwriteReportConfig) {
-                            $OverwriteReportConfig = Read-Host -Prompt ($translate.ReportConfig.OverwriteReportConfig -f $ReportModule.Name)
+                            $OverwriteReportConfig = Read-Host -Prompt ($translate.ReportConfig.OverwriteReportConfig -f $ReportModuleName)
+                            if (($null -eq $OverwriteReportConfig) -or ($OverwriteReportConfig -eq "")) {
+                                $OverwriteReportConfig = "n"
+                            }
                         }
                         if ($OverwriteReportConfig -eq 'y') {
                             try {
                                 Write-Verbose -Message ($translate.ReportConfig.OverwriteFile -f $SourcePath, $DestinationPath)
                                 New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder -Force
+                                # Restore core translations after New-AsBuiltReportConfig (which loads its own translations)
+                                Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
                             } catch {
                                 Write-Error $_
                                 break
@@ -323,30 +365,36 @@ function New-AsBuiltConfig {
         Clear-Host
         Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
         $SaveAsBuiltConfig = Read-Host -Prompt $translate.ReportConfig.SaveAsBuiltConfig
+        if (($null -eq $SaveAsBuiltConfig) -or ($SaveAsBuiltConfig -eq "")) {
+            $SaveAsBuiltConfig = "y"
+        }
         while ("y", "n" -notcontains $SaveAsBuiltConfig) {
             $SaveAsBuiltConfig = Read-Host -Prompt $translate.ReportConfig.SaveAsBuiltConfig
+            if (($null -eq $SaveAsBuiltConfig) -or ($SaveAsBuiltConfig -eq "")) {
+                $SaveAsBuiltConfig = "y"
+            }
         }
 
         if ($SaveAsBuiltConfig -eq 'y') {
             $AsBuiltName = Read-Host -Prompt $translate.ReportConfig.AsBuiltName
-            if (($AsBuiltName -like $null) -or ($AsBuiltName -eq "")) {
+            if (($null -eq $AsBuiltName) -or ($AsBuiltName -eq "")) {
                 $AsBuiltName = "AsBuiltReport"
             }
             if ($Config.UserFolder.Path) {
                 $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $Config.UserFolder.Path)
-                if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                if (($null -eq $AsBuiltExportPath) -or ($AsBuiltExportPath -eq "")) {
                     $AsBuiltExportPath = $Config.UserFolder.Path
                 }
             } elseif ($ReportConfigFilePath) {
                 $ReportConfigFolderPath = Split-Path -Path $ReportConfigFilePath
                 $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $ReportConfigFolderPath)
-                if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
+                if (($null -eq $AsBuiltExportPath) -or ($AsBuiltExportPath -eq "")) {
                     $AsBuiltExportPath = $ReportConfigFolderPath
                 }
             } else {
                 $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $($Home + $DirectorySeparatorChar + 'AsBuiltReport'))
-                if (($AsBuiltExportPath -like $null) -or ($AsBuiltExportPath -eq "")) {
-                    $AsBuiltExportPath = $Home + $DirectorySeparatorChar + "AsBuiltReport"
+                if (($null -eq $AsBuiltExportPath) -or ($AsBuiltExportPath -eq "")) {
+                    $AsBuiltExportPath = Join-Path -Path $Home -ChildPath "AsBuiltReport"
                 }
             }
             if (-not (Test-Path -Path $AsBuiltExportPath)) {
@@ -381,6 +429,7 @@ function New-AsBuiltConfig {
         foreach ($x in $Config.Email.Keys) {
             Write-Verbose -Message "Config.Email.$x = $($Config.Email[$x])"
         }
+        Clear-Host
     }
 
     end {}
