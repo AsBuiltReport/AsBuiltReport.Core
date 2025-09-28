@@ -44,11 +44,11 @@ EmailConfig = ConvertFrom-StringData @'
 # Configuración del Informe
 ReportConfig = ConvertFrom-StringData @'
     BannerTitle = Configuración del Informe Según Construcción
-    ReportConfigFolder = Ingrese la ruta completa de la carpeta a usar para almacenar archivos de configuración del informe y scripts de estilo personalizados [{0}]
-    OverwriteReportConfig = Ya existe un archivo de configuración  para {0} del informe en la carpeta especificada. ¿Le gustaría sobrescribirlo? (y/N)
+    ReportConfigFolder = Ingrese la ruta completa de la carpeta a usar para almacenar archivos de configuración del módulo de informe y scripts de estilo personalizados [{0}]
+    OverwriteReportConfig = Ya existe un archivo de configuración del módulo de informe para {0} en la carpeta especificada. ¿Le gustaría sobrescribirlo? (y/N)
     CopyFile = Copiando '{0}' a '{1}'.
     OverwriteFile = Copiando '{0}' a '{1}'. Sobrescribiendo archivo existente.
-    SaveAsBuiltConfig = ¿Le gustaría guardar el archivo de configuración del Informe As Built? (Y/n)
+    SaveAsBuiltConfig = ¿Le gustaría guardar el archivo de configuración del módulo principal del Informe As Built? (Y/n)
     AsBuiltName = Ingrese un nombre para el archivo de configuración del Informe As Built [AsBuiltReport]
     AsBuiltExportPath = Ingrese la ruta para guardar el archivo de configuración del Informe As Built [{0}]
     ConfigFolder = Creando carpeta de configuración del Informe As Built '{0}'.

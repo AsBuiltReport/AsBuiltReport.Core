@@ -102,8 +102,6 @@ function Initialize-LocalizedData {
         return
     }
 
-    #$DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
-
     # Setup all paths required for script to run
     $script:RootPath = $ModuleBasePath
 

@@ -44,11 +44,11 @@ EmailConfig = ConvertFrom-StringData @'
 # Report Configuration
 ReportConfig = ConvertFrom-StringData @'
     BannerTitle = As Built Report Configuration
-    ReportConfigFolder = Enter the full path of the folder to use for storing report configuration files and custom style scripts [{0}]
-    OverwriteReportConfig = A report configuration file for {0} already exists in the specified folder. Would you like to overwrite it? (y/N)
+    ReportConfigFolder = Enter the full path of the folder to use for storing report module configuration files and custom style scripts [{0}]
+    OverwriteReportConfig = A report module configuration file for {0} already exists in the specified folder. Would you like to overwrite it? (y/N)
     CopyFile = Copying '{0}' to '{1}'.
     OverwriteFile = Copying '{0}' to '{1}'. Overwriting existing file.
-    SaveAsBuiltConfig = Would you like to save the As Built Report configuration file? (Y/n)
+    SaveAsBuiltConfig = Would you like to save the As Built Report core module configuration file? (Y/n)
     AsBuiltName = Enter a name for the As Built Report configuration file [AsBuiltReport]
     AsBuiltExportPath = Enter the path to save the As Built Report configuration file [{0}]
     ConfigFolder = Creating As Built Report configuration folder '{0}'.

@@ -21,6 +21,7 @@ function New-AsBuiltConfig {
     param()
 
     begin {
+        #Clear-Host
         #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
         $global:Config = @{ }
         $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
@@ -30,7 +31,6 @@ function New-AsBuiltConfig {
 
     process {
         #region Report configuration
-        #Clear-Host
         # Show As Built Report configuration banner
         Draw-AsciiBanner -Lines @($translate.ReportInfo.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
 

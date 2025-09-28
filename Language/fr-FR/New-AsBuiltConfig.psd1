@@ -44,15 +44,15 @@ EmailConfig = ConvertFrom-StringData @'
 # Configuration du rapport
 ReportConfig = ConvertFrom-StringData @'
     BannerTitle = Configuration du rapport tel que construit
-    ReportConfigFolder = Saisissez le chemin complet du dossier à utiliser pour stocker les fichiers de configuration de rapport et les scripts de style personnalisés [{0}]
-    OverwriteReportConfig = Un fichier de configuration de rapport pour {0} existe déjà dans le dossier spécifié. Souhaitez-vous le remplacer? (y/N)
+    ReportConfigFolder = Saisissez le chemin complet du dossier à utiliser pour stocker les fichiers de configuration du module de rapport et les scripts de style personnalisés [{0}]
+    OverwriteReportConfig = Un fichier de configuration du module de rapport pour {0} existe déjà dans le dossier spécifié. Souhaitez-vous le remplacer? (y/N)
     CopyFile = Copie de '{0}' vers '{1}'.
-    OverwriteFile = Copie de {0} vers {1}. Écrasement du fichier existant.
-    SaveAsBuiltConfig = Souhaitez-vous enregistrer le fichier de configuration du rapport As Built ? (Y/n)
+    OverwriteFile = Copie de '{0}' vers '{1}'. Écrasement du fichier existant.
+    SaveAsBuiltConfig = Souhaitez-vous enregistrer le fichier de configuration du module principal du rapport As Built ? (Y/n)
     AsBuiltName = Entrez un nom pour le fichier de configuration du rapport As Built [AsBuiltReport]
     AsBuiltExportPath = Entrez le chemin pour enregistrer le fichier de configuration du rapport As Built [{0}]
     ConfigFolder = Création d'un dossier de configuration de rapport tel que construit '{0}'.
-    SaveConfig = Enregistrement du fichier de configuration du rapport tel que construit {0}.json dans le chemin {1}.
+    SaveConfig = Enregistrement du fichier de configuration du rapport tel que construit '{0}.json' dans le chemin '{1}'.
     NotSaved = Le fichier de configuration du rapport tel que construit n'est pas enregistré.
 '@
 }
