@@ -21,15 +21,14 @@ function New-AsBuiltConfig {
     param()
 
     begin {
-        #Clear-Host
         #Run section to prompt user for information about the As Built Report to be exported to JSON format (if saved)
         $global:Config = @{ }
-        $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
         Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
 
     }
 
     process {
+        Clear-Host
         #region Report configuration
         # Show As Built Report configuration banner
         Draw-AsciiBanner -Lines @($translate.ReportInfo.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
@@ -298,9 +297,10 @@ function New-AsBuiltConfig {
             Clear-Host
             # Show Rerport configuration banner
             Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
-            $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $($Home + $DirectorySeparatorChar + "AsBuiltReport"))
+            $DefaultConfigFolder = Join-Path -Path $Home -ChildPath "AsBuiltReport"
+            $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $DefaultConfigFolder)
             if (($null -eq $ReportConfigFolder) -or ($ReportConfigFolder -eq "")) {
-                $ReportConfigFolder = Join-Path -Path $Home -ChildPath "AsBuiltReport"
+                $ReportConfigFolder = $DefaultConfigFolder
             }
 
             #If the folder doesn't exist, create it
@@ -392,9 +392,10 @@ function New-AsBuiltConfig {
                     $AsBuiltExportPath = $ReportConfigFolderPath
                 }
             } else {
-                $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $($Home + $DirectorySeparatorChar + 'AsBuiltReport'))
+                $DefaultConfigFolder = Join-Path -Path $Home -ChildPath "AsBuiltReport"
+                $AsBuiltExportPath = Read-Host -Prompt ($translate.ReportConfig.AsBuiltExportPath -f $DefaultConfigFolder)
                 if (($null -eq $AsBuiltExportPath) -or ($AsBuiltExportPath -eq "")) {
-                    $AsBuiltExportPath = Join-Path -Path $Home -ChildPath "AsBuiltReport"
+                    $AsBuiltExportPath = $DefaultConfigFolder
                 }
             }
             if (-not (Test-Path -Path $AsBuiltExportPath)) {

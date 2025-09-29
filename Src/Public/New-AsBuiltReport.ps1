@@ -483,11 +483,11 @@ function New-AsBuiltReport {
         } else {
             # Show progress messages for non-verbose report generation
             Write-Host ($translate.ReportGenerating -f $($Report.Replace(".", " "))) -ForegroundColor Green
-            Write-Host "● Initializing report framework..." -ForegroundColor Cyan
+            Write-Host "> Initializing report framework..." -ForegroundColor Cyan
 
             try {
                 $AsBuiltReport = Document $FileName {
-                    Write-Host "● Loading document style..." -ForegroundColor Cyan
+                    Write-Host "> Loading document style..." -ForegroundColor Cyan
                     # Set Document Style
                     if ($StyleFilePath) {
                         Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
@@ -498,7 +498,7 @@ function New-AsBuiltReport {
                         . $StyleFilePath
                     }
 
-                    Write-Host "● Connecting to target system and gathering data..." -ForegroundColor Cyan
+                    Write-Host "> Connecting to target system and gathering data..." -ForegroundColor Cyan
                     # If Credential has been passed or previously created via Username/Password
                     try {
                         if ($Credential) {
@@ -514,11 +514,11 @@ function New-AsBuiltReport {
                     } catch {
                         Write-Error "Report module execution failed: $($_.Exception.Message)" -ErrorAction Stop
                     }
-                    Write-Host "● Building document structure..." -ForegroundColor Cyan
+                    Write-Host "> Building document structure..." -ForegroundColor Cyan
                 }
-                Write-Host "● Exporting document..." -ForegroundColor Cyan
+                Write-Host "> Exporting document..." -ForegroundColor Cyan
             } catch {
-                Write-Host "✗ Report generation failed" -ForegroundColor Red
+                Write-Host "[FAILED] Report generation failed" -ForegroundColor Red
                 throw
             }
         }
