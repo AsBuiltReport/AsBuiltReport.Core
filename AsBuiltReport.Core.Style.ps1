@@ -1,12 +1,21 @@
 # AsBuiltReport Default Document Style
 try {
     # Try to initialize localized data for style elements
+    # Use the report language from parent scope if available, otherwise fallback to OS language
     if ($PSScriptRoot) {
-        Initialize-LocalizedData -ModuleBasePath $PSScriptRoot -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core'
+        if ($FinalReportLanguage) {
+            Initialize-LocalizedData -ModuleBasePath $PSScriptRoot -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core' -Language $FinalReportLanguage
+        } else {
+            Initialize-LocalizedData -ModuleBasePath $PSScriptRoot -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core'
+        }
     } else {
         # Fallback if $PSScriptRoot is not available
         $StyleModulePath = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
-        Initialize-LocalizedData -ModuleBasePath $StyleModulePath -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core'
+        if ($FinalReportLanguage) {
+            Initialize-LocalizedData -ModuleBasePath $StyleModulePath -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core' -Language $FinalReportLanguage
+        } else {
+            Initialize-LocalizedData -ModuleBasePath $StyleModulePath -LanguageFile 'AsBuiltReportCoreStyle' -ModuleType 'Core'
+        }
     }
 } catch {
     # If localization fails, continue with default style (don't break report generation)
