@@ -205,7 +205,7 @@ function Initialize-LocalizedData {
         if ($TargetCulture -ne $Culture.Name) {
             Write-Warning -Message ("Setting language to '{0}' (fallback from '{1}'){2}." -f $TargetCulture, $Culture.Name, $PathInfo)
         } else {
-            Write-Host -Message ("Setting language to '{0}'{1}" -f $TargetCulture, $PathInfo) -ForegroundColor Green
+            Write-Host "Setting language to '{0}'{1}" -f $TargetCulture, $PathInfo -ForegroundColor Green
         }
 
         # Mark this combination as already shown
