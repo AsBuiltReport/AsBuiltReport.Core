@@ -76,43 +76,43 @@ function New-AsBuiltReportConfig {
 
     # Test to ensure the path the user has specified does exist
     if (-not (Test-Path -Path $($FolderPath))) {
-        Write-Error -Message ($translate.FolderNotExist -f $($FolderPath)) -ErrorAction Stop
+        Write-Error ($translate.FolderNotExist -f $($FolderPath)) -ErrorAction Stop
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
         $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
         $SourcePath = Join-Path -Path $($Module.ModuleBase) -ChildPath "$($Module.Name).json"
         if (Test-Path -Path $($SourcePath)) {
-            Write-Verbose -Message ($translate.ProcessConfig -f $Module.Name, $Module, $Module.Version)
+            Write-Verbose ($translate.ProcessConfig -f $Module.Name, $Module, $Module.Version)
             if ($Filename) {
                 $DestinationPath = Join-Path -Path $($FolderPath) -ChildPath "$($Filename).json"
                 if (-not (Test-Path -Path $($DestinationPath))) {
-                    Write-Verbose -Message ($translate.CopyConfig -f $SourcePath, $DestinationPath)
+                    Write-Verbose ($translate.CopyConfig -f $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination "$($DestinationPath)"
                     Write-Output ($translate.CreateConfig -f $Module.Name, $Filename, $FolderPath)
                 } elseif ($Force) {
-                    Write-Verbose -Message ($translate.OverWriteConfig -f $SourcePath, $DestinationPath)
+                    Write-Verbose ($translate.OverWriteConfig -f $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination $($DestinationPath) -Force
                     Write-Output ($translate.CreateConfig -f $Module.Name, $Filename, $FolderPath)
                 } else {
-                    Write-Error -Message ($translate.ForceOverwrite -f $Module.Name, $Filename, $FolderPath)
+                    Write-Error ($translate.ForceOverwrite -f $Module.Name, $Filename, $FolderPath)
                 }
             } else {
                 $DestinationPath = Join-Path -Path $($FolderPath) -ChildPath "$($Module.Name).json"
                 if (-not (Test-Path -Path $($DestinationPath))) {
-                    Write-Verbose -Message ($translate.CopyModuleConfig -f $Module.Name, $SourcePath, $DestinationPath)
+                    Write-Verbose ($translate.CopyModuleConfig -f $Module.Name, $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination $($DestinationPath)
                     Write-Output ($translate.CreateConfig -f $Module.Name, $Module.Name, $FolderPath)
                 } elseif ($Force) {
-                    Write-Verbose -Message ($translate.OverWriteConfig -f $SourcePath, $DestinationPath)
+                    Write-Verbose ($translate.OverWriteConfig -f $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination $($DestinationPath) -Force
                     Write-Output ($translate.CreateConfig -f $Module.Name, $Module.Name, $FolderPath)
                 } else {
-                    Write-Error -Message ($translate.ForceOverwrite -f $Module.Name, $Module.Name, $FolderPath)
+                    Write-Error ($translate.ForceOverwrite -f $Module.Name, $Module.Name, $FolderPath)
                 }
             }
         } else {
-            Write-Error -Message ($translate.ConfigNotFound -f $Module.ModuleBase)
+            Write-Error ($translate.ConfigNotFound -f $Module.ModuleBase)
         }
     } catch {
         Write-Error $_

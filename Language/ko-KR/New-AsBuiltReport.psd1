@@ -1,0 +1,30 @@
+# culture = 'ko-KR'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport는 Windows PowerShell ISE에서 실행할 수 없습니다. PowerShell 명령 창을 사용하십시오.
+    Password = 사용자 {0}의 암호
+    OutputFolderPath = OutputFolderPath '{0}'은(는) 유효한 폴더 경로가 아닙니다.
+    LoadConfig = {0}에서 As Built Report 구성을 로드하는 중입니다.
+    NoConfigFound = 경로 '{0}'에서 As Built Report 구성을 찾을 수 없습니다.
+    GeneratingReport = 새 As Built Report 구성을 생성하는 중입니다.
+    StyleScriptNotFound = 경로 '{0}'에서 보고서 스타일 스크립트를 찾을 수 없습니다.
+    ReportModuleNotFound = 경로 '{1}'에서 {0} 보고서 구성 파일을 찾을 수 없습니다.
+    LoadingReportConfig = 경로 '{1}'에서 {0} 보고서 구성 파일을 로드하는 중입니다.
+    ReportConfigNotFound = 모듈 경로 '{0}'에서 보고서 구성을 찾을 수 없습니다.
+    SetReportFileName = 보고서 파일 이름을 '{0}'(으)로 설정하는 중입니다.
+    EmailBannerTitle = 이메일 서버 자격 증명
+    EmailCredentials = {0}에 대한 자격 증명을 입력하십시오.
+    InstalledModule = AsBuiltReport.Core {0}이(가) 현재 설치되어 있습니다.
+    AvailableModule = AsBuiltReport.Core {0}을(를) 사용할 수 있습니다.
+    UpdateModule = 최신 버전을 설치하려면 'Update-Module -Name AsBuiltReport.Core -Force'를 실행하십시오.
+    ReportGenerating = {0} As Built Report가 생성되는 동안 기다려 주십시오.
+    ReportInitializing = > 보고서 프레임워크를 초기화하는 중...
+    DocumentStyle = > 문서 스타일을 로드하는 중...
+    TargetSystem = > 대상 시스템에 연결하고 데이터를 수집하는 중...
+    ExecutionFailed = 보고서 모듈 실행 실패: {0}
+    BuildingDocument = > 문서 구조를 구축하는 중...
+    ExportingDocument = > 문서를 내보내는 중...
+    Failed = [실패] 보고서 생성 실패
+    ReportStyleScript = 경로 '{0}'에서 보고서 스타일 스크립트를 실행하는 중입니다.
+    InteractiveAuth = 대화형 인증이 활성화되어 있습니다. 대상 시스템에 인증하려면 인증 창을 확인하십시오.
+    OutputFolder = {0} As Built Report '{1}'이(가) '{2}'에 저장되었습니다.
+'@

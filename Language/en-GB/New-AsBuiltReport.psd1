@@ -1,4 +1,4 @@
-# culture = 'en-US'
+# culture = 'en-GB'
 ConvertFrom-StringData @'
     PwshISE = AsBuiltReport cannot be run from Windows PowerShell ISE. Please use a PowerShell command window instead.
     Password = Password for user {0}
@@ -17,7 +17,14 @@ ConvertFrom-StringData @'
     AvailableModule = AsBuiltReport.Core {0} is available.
     UpdateModule = Run 'Update-Module -Name AsBuiltReport.Core -Force' to install the latest version.
     ReportGenerating = Please wait while the {0} As Built Report is being generated.
+    ReportInitializing = > Initializing report framework...
+    DocumentStyle = > Loading document style...
+    TargetSystem = > Connecting to target system and gathering data...
+    ExecutionFailed = Report module execution failed: {0}
+    BuildingDocument = > Building document structure..
+    ExportingDocument = > Exporting document...
+    Failed = [FAILED] Report generation failed
     ReportStyleScript = Executing report style script from path '{0}'.
-    MfaEnabled = MFA is enabled, please check for MFA authentication windows to generate your report.
+    InteractiveAuth = Interactive authentication is enabled. Please check for authentication windows to authenticate to your target system.
     OutputFolder = {0} As Built Report '{1}' has been saved to '{2}'.
 '@

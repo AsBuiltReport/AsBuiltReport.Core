@@ -1,0 +1,30 @@
+# culture = 'zh-Hant'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport 無法從 Windows PowerShell ISE 執行。請改用 PowerShell 命令視窗。
+    Password = 使用者 {0} 的密碼
+    OutputFolderPath = OutputFolderPath '{0}' 不是有效的資料夾路徑。
+    LoadConfig = 正在從 {0} 載入 As Built Report 組態。
+    NoConfigFound = 在路徑 '{0}' 中找不到 As Built Report 組態。
+    GeneratingReport = 正在產生新的 As Built Report 組態。
+    StyleScriptNotFound = 在路徑 '{0}' 中找不到報告樣式指令碼。
+    ReportModuleNotFound = 在路徑 '{1}' 中找不到 {0} 報告組態檔。
+    LoadingReportConfig = 正在從路徑 '{1}' 載入 {0} 報告組態檔。
+    ReportConfigNotFound = 在模組路徑 '{0}' 中找不到報告組態。
+    SetReportFileName = 將報告檔案名稱設定為 '{0}'。
+    EmailBannerTitle = 電子郵件伺服器認證
+    EmailCredentials = 請輸入 {0} 的認證。
+    InstalledModule = AsBuiltReport.Core {0} 目前已安裝。
+    AvailableModule = AsBuiltReport.Core {0} 可用。
+    UpdateModule = 執行 'Update-Module -Name AsBuiltReport.Core -Force' 以安裝最新版本。
+    ReportGenerating = 請稍候，正在產生 {0} As Built Report。
+    ReportInitializing = > 正在初始化報告框架...
+    DocumentStyle = > 正在載入文件樣式...
+    TargetSystem = > 正在連線到目標系統並收集資料...
+    ExecutionFailed = 報告模組執行失敗：{0}
+    BuildingDocument = > 正在建立文件結構...
+    ExportingDocument = > 正在匯出文件...
+    Failed = [失敗] 報告產生失敗
+    ReportStyleScript = 正在從路徑 '{0}' 執行報告樣式指令碼。
+    InteractiveAuth = 互動式驗證已啟用。請檢查驗證視窗以對目標系統進行驗證。
+    OutputFolder = {0} As Built Report '{1}' 已儲存至 '{2}'。
+'@

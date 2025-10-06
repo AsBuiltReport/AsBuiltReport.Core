@@ -1,0 +1,30 @@
+# culture = 'tr-TR'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport, Windows PowerShell ISE'den çalıştırılamaz. Lütfen bir PowerShell komut penceresi kullanın.
+    Password = {0} kullanıcısı için parola
+    OutputFolderPath = OutputFolderPath '{0}' geçerli bir klasör yolu değil.
+    LoadConfig = As Built Report yapılandırması {0} konumundan yükleniyor.
+    NoConfigFound = '{0}' yolunda As Built Report yapılandırması bulunamadı.
+    GeneratingReport = Yeni As Built Report yapılandırması oluşturuluyor.
+    StyleScriptNotFound = '{0}' yolunda rapor stil betiği bulunamadı.
+    ReportModuleNotFound = '{1}' yolunda {0} rapor yapılandırma dosyası bulunamadı.
+    LoadingReportConfig = {0} rapor yapılandırma dosyası '{1}' yolundan yükleniyor.
+    ReportConfigNotFound = '{0}' modül yolunda rapor yapılandırması bulunamadı.
+    SetReportFileName = Rapor dosya adı '{0}' olarak ayarlanıyor.
+    EmailBannerTitle = E-posta Sunucusu Kimlik Bilgileri
+    EmailCredentials = Lütfen {0} için kimlik bilgilerini girin.
+    InstalledModule = AsBuiltReport.Core {0} şu anda yüklü.
+    AvailableModule = AsBuiltReport.Core {0} mevcut.
+    UpdateModule = En son sürümü yüklemek için 'Update-Module -Name AsBuiltReport.Core -Force' komutunu çalıştırın.
+    ReportGenerating = Lütfen {0} As Built Report oluşturulurken bekleyin.
+    ReportInitializing = > Rapor çerçevesi başlatılıyor...
+    DocumentStyle = > Belge stili yükleniyor...
+    TargetSystem = > Hedef sisteme bağlanılıyor ve veri toplanıyor...
+    ExecutionFailed = Rapor modülü yürütme başarısız: {0}
+    BuildingDocument = > Belge yapısı oluşturuluyor...
+    ExportingDocument = > Belge dışa aktarılıyor...
+    Failed = [BAŞARISIZ] Rapor oluşturma başarısız
+    ReportStyleScript = '{0}' yolundan rapor stil betiği çalıştırılıyor.
+    InteractiveAuth = Etkileşimli kimlik doğrulama etkinleştirildi. Hedef sisteminize kimlik doğrulaması yapmak için lütfen kimlik doğrulama pencerelerini kontrol edin.
+    OutputFolder = {0} As Built Report '{1}' şuraya kaydedildi: '{2}'.
+'@

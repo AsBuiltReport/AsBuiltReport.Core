@@ -1,0 +1,30 @@
+# culture = 'zh-Hans'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport 无法从 Windows PowerShell ISE 运行。请改用 PowerShell 命令窗口。
+    Password = 用户 {0} 的密码
+    OutputFolderPath = OutputFolderPath '{0}' 不是有效的文件夹路径。
+    LoadConfig = 正在从 {0} 加载 As Built Report 配置。
+    NoConfigFound = 在路径 '{0}' 中找不到 As Built Report 配置。
+    GeneratingReport = 正在生成新的 As Built Report 配置。
+    StyleScriptNotFound = 在路径 '{0}' 中找不到报告样式脚本。
+    ReportModuleNotFound = 在路径 '{1}' 中找不到 {0} 报告配置文件。
+    LoadingReportConfig = 正在从路径 '{1}' 加载 {0} 报告配置文件。
+    ReportConfigNotFound = 在模块路径 '{0}' 中找不到报告配置。
+    SetReportFileName = 将报告文件名设置为 '{0}'。
+    EmailBannerTitle = 电子邮件服务器凭据
+    EmailCredentials = 请输入 {0} 的凭据。
+    InstalledModule = AsBuiltReport.Core {0} 当前已安装。
+    AvailableModule = AsBuiltReport.Core {0} 可用。
+    UpdateModule = 运行 'Update-Module -Name AsBuiltReport.Core -Force' 以安装最新版本。
+    ReportGenerating = 请稍候，正在生成 {0} As Built Report。
+    ReportInitializing = > 正在初始化报告框架...
+    DocumentStyle = > 正在加载文档样式...
+    TargetSystem = > 正在连接到目标系统并收集数据...
+    ExecutionFailed = 报告模块执行失败：{0}
+    BuildingDocument = > 正在构建文档结构...
+    ExportingDocument = > 正在导出文档...
+    Failed = [失败] 报告生成失败
+    ReportStyleScript = 正在从路径 '{0}' 执行报告样式脚本。
+    InteractiveAuth = 交互式身份验证已启用。请检查身份验证窗口以对目标系统进行身份验证。
+    OutputFolder = {0} As Built Report '{1}' 已保存到 '{2}'。
+'@

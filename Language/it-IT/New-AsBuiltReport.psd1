@@ -1,0 +1,30 @@
+# culture = 'it-IT'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport non può essere eseguito da Windows PowerShell ISE. Si prega di utilizzare una finestra di comando di PowerShell.
+    Password = Password per l'utente {0}
+    OutputFolderPath = OutputFolderPath '{0}' non è un percorso di cartella valido.
+    LoadConfig = Caricamento configurazione As Built Report da {0}.
+    NoConfigFound = Impossibile trovare la configurazione As Built Report nel percorso '{0}'.
+    GeneratingReport = Generazione di una nuova configurazione As Built Report.
+    StyleScriptNotFound = Impossibile trovare lo script di stile del report nel percorso '{0}'.
+    ReportModuleNotFound = Impossibile trovare il file di configurazione del report {0} nel percorso '{1}'.
+    LoadingReportConfig = Caricamento del file di configurazione del report {0} dal percorso '{1}'.
+    ReportConfigNotFound = Configurazione del report non trovata nel percorso del modulo '{0}'.
+    SetReportFileName = Impostazione del nome del file del report su '{0}'.
+    EmailBannerTitle = Credenziali del server email
+    EmailCredentials = Inserisci le credenziali per {0}.
+    InstalledModule = AsBuiltReport.Core {0} è attualmente installato.
+    AvailableModule = AsBuiltReport.Core {0} è disponibile.
+    UpdateModule = Eseguire 'Update-Module -Name AsBuiltReport.Core -Force' per installare l'ultima versione.
+    ReportGenerating = Attendere mentre viene generato il report {0} As Built.
+    ReportInitializing = > Inizializzazione del framework del report...
+    DocumentStyle = > Caricamento dello stile del documento...
+    TargetSystem = > Connessione al sistema di destinazione e raccolta dati...
+    ExecutionFailed = Esecuzione del modulo del report non riuscita: {0}
+    BuildingDocument = > Creazione della struttura del documento...
+    ExportingDocument = > Esportazione del documento...
+    Failed = [NON RIUSCITO] Generazione del report non riuscita
+    ReportStyleScript = Esecuzione dello script di stile del report dal percorso '{0}'.
+    InteractiveAuth = L'autenticazione interattiva è abilitata. Controllare le finestre di autenticazione per autenticarsi al sistema di destinazione.
+    OutputFolder = {0} As Built Report '{1}' è stato salvato in '{2}'.
+'@

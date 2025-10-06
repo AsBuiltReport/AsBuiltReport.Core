@@ -1,0 +1,30 @@
+# culture = 'th-TH'
+ConvertFrom-StringData @'
+    PwshISE = ไม่สามารถเรียกใช้ AsBuiltReport จาก Windows PowerShell ISE กรุณาใช้หน้าต่างคำสั่ง PowerShell แทน
+    Password = รหัสผ่านสำหรับผู้ใช้ {0}
+    OutputFolderPath = OutputFolderPath '{0}' ไม่ใช่เส้นทางโฟลเดอร์ที่ถูกต้อง
+    LoadConfig = กำลังโหลดการกำหนดค่า As Built Report จาก {0}
+    NoConfigFound = ไม่พบการกำหนดค่า As Built Report ในเส้นทาง '{0}'
+    GeneratingReport = กำลังสร้างการกำหนดค่า As Built Report ใหม่
+    StyleScriptNotFound = ไม่พบสคริปต์สไตล์รายงานในเส้นทาง '{0}'
+    ReportModuleNotFound = ไม่พบไฟล์การกำหนดค่ารายงาน {0} ในเส้นทาง '{1}'
+    LoadingReportConfig = กำลังโหลดไฟล์การกำหนดค่ารายงาน {0} จากเส้นทาง '{1}'
+    ReportConfigNotFound = ไม่พบการกำหนดค่ารายงานในเส้นทางโมดูล '{0}'
+    SetReportFileName = กำลังตั้งชื่อไฟล์รายงานเป็น '{0}'
+    EmailBannerTitle = ข้อมูลรับรองเซิร์ฟเวอร์อีเมล
+    EmailCredentials = กรุณากรอกข้อมูลรับรองสำหรับ {0}
+    InstalledModule = AsBuiltReport.Core {0} ติดตั้งอยู่ในปัจจุบัน
+    AvailableModule = AsBuiltReport.Core {0} พร้อมใช้งาน
+    UpdateModule = เรียกใช้ 'Update-Module -Name AsBuiltReport.Core -Force' เพื่อติดตั้งเวอร์ชันล่าสุด
+    ReportGenerating = กรุณารอสักครู่ในขณะที่รายงาน {0} As Built กำลังถูกสร้าง
+    ReportInitializing = > กำลังเริ่มต้นเฟรมเวิร์กรายงาน...
+    DocumentStyle = > กำลังโหลดสไตล์เอกสาร...
+    TargetSystem = > กำลังเชื่อมต่อกับระบบเป้าหมายและรวบรวมข้อมูล...
+    ExecutionFailed = การดำเนินการโมดูลรายงานล้มเหลว: {0}
+    BuildingDocument = > กำลังสร้างโครงสร้างเอกสาร...
+    ExportingDocument = > กำลังส่งออกเอกสาร...
+    Failed = [ล้มเหลว] การสร้างรายงานล้มเหลว
+    ReportStyleScript = กำลังดำเนินการสคริปต์สไตล์รายงานจากเส้นทาง '{0}'
+    InteractiveAuth = เปิดใช้งานการยืนยันตัวตนแบบโต้ตอบแล้ว กรุณาตรวจสอบหน้าต่างการยืนยันตัวตนเพื่อยืนยันตัวตนกับระบบเป้าหมายของคุณ
+    OutputFolder = {0} As Built Report '{1}' ได้รับการบันทึกไปยัง '{2}' แล้ว
+'@

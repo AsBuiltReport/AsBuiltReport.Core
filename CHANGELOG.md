@@ -11,18 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multilingual support for AsBuiltReport Core module
     - `Initialize-LocalizedData` function to handle localization for both Core and Report modules
     - `Resolve-Culture` function with comprehensive culture fallback chains for 135+ culture variants
-    - Localized user prompts and messages in `New-AsBuiltConfig` function. Initial support for English, Spanish & French.
+    - Localized user prompts and messages in `New-AsBuiltConfig` function. Support for all main languages.
     - `ReportLanguage` parameter added to `New-AsBuiltReport` function with dynamic validation based on available languages in individual report modules
     - Support for setting default language in report JSON configuration files using the `Report.Language` property
 - Improve error handling with comprehensive try-catch blocks and meaningful error messages
 
 ### Changed
 - Core module functions (`New-AsBuiltConfig`, `New-AsBuiltReport`, `New-AsBuiltReportConfig`) now default to user's OS language instead of hardcoded English
-- Report modules default to 'en-US' when no language is specified
+- Report modules default to 'en-US' when no other language is supported
 - Updated parameter validation to use ValidateScript blocks for dynamic language detection
 - Enhanced error messages to include specific language and module information
 - Improved progress messaging during report generation
 - Updated all y/n prompts in `New-AsBuiltConfig` to show defaults and handle empty input
+- Renamed `MFA` parameter to `UseInteractiveAuth` (`MFA` alias retained for backwards compatibility)
 
 ## [1.4.3] - 2025-03-08
 

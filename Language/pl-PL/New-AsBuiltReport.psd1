@@ -1,0 +1,30 @@
+# culture = 'pl-PL'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport nie może być uruchomiony z Windows PowerShell ISE. Proszę użyć okna poleceń PowerShell.
+    Password = Hasło dla użytkownika {0}
+    OutputFolderPath = OutputFolderPath '{0}' nie jest prawidłową ścieżką folderu.
+    LoadConfig = Ładowanie konfiguracji As Built Report z {0}.
+    NoConfigFound = Nie można znaleźć konfiguracji As Built Report w ścieżce '{0}'.
+    GeneratingReport = Generowanie nowej konfiguracji As Built Report.
+    StyleScriptNotFound = Nie można znaleźć skryptu stylu raportu w ścieżce '{0}'.
+    ReportModuleNotFound = Nie można znaleźć pliku konfiguracji raportu {0} w ścieżce '{1}'.
+    LoadingReportConfig = Ładowanie pliku konfiguracji raportu {0} ze ścieżki '{1}'.
+    ReportConfigNotFound = Konfiguracja raportu nie została znaleziona w ścieżce modułu '{0}'.
+    SetReportFileName = Ustawianie nazwy pliku raportu na '{0}'.
+    EmailBannerTitle = Poświadczenia serwera e-mail
+    EmailCredentials = Proszę wprowadzić poświadczenia dla {0}.
+    InstalledModule = AsBuiltReport.Core {0} jest obecnie zainstalowany.
+    AvailableModule = AsBuiltReport.Core {0} jest dostępny.
+    UpdateModule = Uruchom 'Update-Module -Name AsBuiltReport.Core -Force', aby zainstalować najnowszą wersję.
+    ReportGenerating = Proszę czekać, trwa generowanie raportu {0} As Built.
+    ReportInitializing = > Inicjowanie struktury raportu...
+    DocumentStyle = > Ładowanie stylu dokumentu...
+    TargetSystem = > Łączenie z systemem docelowym i zbieranie danych...
+    ExecutionFailed = Wykonanie modułu raportu nie powiodło się: {0}
+    BuildingDocument = > Budowanie struktury dokumentu...
+    ExportingDocument = > Eksportowanie dokumentu...
+    Failed = [NIEPOWODZENIE] Generowanie raportu nie powiodło się
+    ReportStyleScript = Wykonywanie skryptu stylu raportu ze ścieżki '{0}'.
+    InteractiveAuth = Uwierzytelnianie interaktywne jest włączone. Sprawdź okna uwierzytelniania, aby uwierzytelnić się w systemie docelowym.
+    OutputFolder = {0} As Built Report '{1}' został zapisany w '{2}'.
+'@

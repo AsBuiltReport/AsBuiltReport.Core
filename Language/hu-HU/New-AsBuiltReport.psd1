@@ -1,0 +1,30 @@
+# culture = 'hu-HU'
+ConvertFrom-StringData @'
+    PwshISE = Az AsBuiltReport nem futtatható a Windows PowerShell ISE-ből. Kérjük, használjon PowerShell parancsablakot.
+    Password = Jelszó a(z) {0} felhasználóhoz
+    OutputFolderPath = Az OutputFolderPath '{0}' nem érvényes mappa elérési út.
+    LoadConfig = As Built Report konfiguráció betöltése innen: {0}.
+    NoConfigFound = Nem található As Built Report konfiguráció a(z) '{0}' elérési útvonalon.
+    GeneratingReport = Új As Built Report konfiguráció generálása.
+    StyleScriptNotFound = Nem található jelentésstílus-szkript a(z) '{0}' elérési útvonalon.
+    ReportModuleNotFound = Nem található {0} jelentéskonfigurációs fájl a(z) '{1}' elérési útvonalon.
+    LoadingReportConfig = {0} jelentéskonfigurációs fájl betöltése a(z) '{1}' elérési útról.
+    ReportConfigNotFound = A jelentéskonfiguráció nem található a(z) '{0}' modul elérési útvonalon.
+    SetReportFileName = Jelentésfájl neve beállítva: '{0}'.
+    EmailBannerTitle = E-mail szerver hitelesítő adatok
+    EmailCredentials = Kérjük, adja meg a hitelesítő adatokat a következőhöz: {0}.
+    InstalledModule = Az AsBuiltReport.Core {0} jelenleg telepítve van.
+    AvailableModule = Az AsBuiltReport.Core {0} elérhető.
+    UpdateModule = Futtassa az 'Update-Module -Name AsBuiltReport.Core -Force' parancsot a legújabb verzió telepítéséhez.
+    ReportGenerating = Kérjük, várjon, amíg a(z) {0} As Built Report generálódik.
+    ReportInitializing = > Jelentési keretrendszer inicializálása...
+    DocumentStyle = > Dokumentumstílus betöltése...
+    TargetSystem = > Csatlakozás a célrendszerhez és adatok gyűjtése...
+    ExecutionFailed = A jelentésmodul végrehajtása sikertelen: {0}
+    BuildingDocument = > Dokumentumstruktúra építése...
+    ExportingDocument = > Dokumentum exportálása...
+    Failed = [SIKERTELEN] Jelentésgenerálás sikertelen
+    ReportStyleScript = Jelentésstílus-szkript végrehajtása a(z) '{0}' elérési útról.
+    InteractiveAuth = Az interaktív hitelesítés engedélyezve van. Kérjük, ellenőrizze a hitelesítési ablakokat a célrendszerbe való hitelesítéshez.
+    OutputFolder = {0} As Built Report '{1}' mentve ide: '{2}'.
+'@

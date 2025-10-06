@@ -1,0 +1,30 @@
+# culture = 'ja-JP'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReportはWindows PowerShell ISEから実行できません。PowerShellコマンドウィンドウを使用してください。
+    Password = ユーザー {0} のパスワード
+    OutputFolderPath = OutputFolderPath '{0}' は有効なフォルダパスではありません。
+    LoadConfig = {0} からAs Built Report設定を読み込んでいます。
+    NoConfigFound = パス '{0}' でAs Built Report設定が見つかりませんでした。
+    GeneratingReport = 新しいAs Built Report設定を生成しています。
+    StyleScriptNotFound = パス '{0}' でレポートスタイルスクリプトが見つかりませんでした。
+    ReportModuleNotFound = パス '{1}' で {0} レポート設定ファイルが見つかりませんでした。
+    LoadingReportConfig = パス '{1}' から {0} レポート設定ファイルを読み込んでいます。
+    ReportConfigNotFound = モジュールパス '{0}' でレポート設定が見つかりませんでした。
+    SetReportFileName = レポートファイル名を '{0}' に設定しています。
+    EmailBannerTitle = メールサーバー資格情報
+    EmailCredentials = {0} の資格情報を入力してください。
+    InstalledModule = AsBuiltReport.Core {0} は現在インストールされています。
+    AvailableModule = AsBuiltReport.Core {0} が利用可能です。
+    UpdateModule = 最新バージョンをインストールするには 'Update-Module -Name AsBuiltReport.Core -Force' を実行してください。
+    ReportGenerating = {0} As Built Reportを生成しています。しばらくお待ちください。
+    ReportInitializing = > レポートフレームワークを初期化しています...
+    DocumentStyle = > ドキュメントスタイルを読み込んでいます...
+    TargetSystem = > ターゲットシステムに接続してデータを収集しています...
+    ExecutionFailed = レポートモジュールの実行に失敗しました: {0}
+    BuildingDocument = > ドキュメント構造を構築しています...
+    ExportingDocument = > ドキュメントをエクスポートしています...
+    Failed = [失敗] レポート生成に失敗しました
+    ReportStyleScript = パス '{0}' からレポートスタイルスクリプトを実行しています。
+    InteractiveAuth = 対話型認証が有効になっています。ターゲットシステムへの認証を行うには、認証ウィンドウを確認してください。
+    OutputFolder = {0} As Built Report '{1}' は '{2}' に保存されました。
+'@

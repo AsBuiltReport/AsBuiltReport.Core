@@ -1,0 +1,30 @@
+# culture = 'de-DE'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport kann nicht von Windows PowerShell ISE ausgeführt werden. Bitte verwenden Sie stattdessen ein PowerShell-Befehlsfenster.
+    Password = Passwort für Benutzer {0}
+    OutputFolderPath = OutputFolderPath '{0}' ist kein gültiger Ordnerpfad.
+    LoadConfig = Lade As Built Report-Konfiguration von {0}.
+    NoConfigFound = As Built Report-Konfiguration konnte im Pfad '{0}' nicht gefunden werden.
+    GeneratingReport = Generiere neue As Built Report-Konfiguration.
+    StyleScriptNotFound = Report-Stilskript konnte im Pfad '{0}' nicht gefunden werden.
+    ReportModuleNotFound = {0} Report-Konfigurationsdatei konnte im Pfad '{1}' nicht gefunden werden.
+    LoadingReportConfig = Lade {0} Report-Konfigurationsdatei vom Pfad '{1}'.
+    ReportConfigNotFound = Report-Konfiguration im Modulpfad '{0}' nicht gefunden.
+    SetReportFileName = Setze Report-Dateiname auf '{0}'.
+    EmailBannerTitle = E-Mail-Server-Anmeldeinformationen
+    EmailCredentials = Bitte geben Sie die Anmeldeinformationen für {0} ein.
+    InstalledModule = AsBuiltReport.Core {0} ist derzeit installiert.
+    AvailableModule = AsBuiltReport.Core {0} ist verfügbar.
+    UpdateModule = Führen Sie 'Update-Module -Name AsBuiltReport.Core -Force' aus, um die neueste Version zu installieren.
+    ReportGenerating = Bitte warten Sie, während der {0} As Built Report generiert wird.
+    ReportInitializing = > Initialisiere Report-Framework...
+    DocumentStyle = > Lade Dokumentstil...
+    TargetSystem = > Verbinde mit Zielsystem und sammle Daten...
+    ExecutionFailed = Ausführung des Report-Moduls fehlgeschlagen: {0}
+    BuildingDocument = > Erstelle Dokumentstruktur...
+    ExportingDocument = > Exportiere Dokument...
+    Failed = [FEHLER] Report-Generierung fehlgeschlagen
+    ReportStyleScript = Führe Report-Stilskript vom Pfad '{0}' aus.
+    InteractiveAuth = Interaktive Authentifizierung ist aktiviert. Bitte überprüfen Sie die Authentifizierungsfenster, um sich bei Ihrem Zielsystem zu authentifizieren.
+    OutputFolder = {0} As Built Report '{1}' wurde in '{2}' gespeichert.
+'@

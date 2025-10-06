@@ -325,7 +325,7 @@ function New-AsBuiltConfig {
             $SourcePath = Join-Path -Path $($ReportModule.ModuleBase) -ChildPath "$ReportModuleName.json"
             $DestinationPath = Join-Path -Path $($ReportConfigFolder) -ChildPath "$ReportModuleName.json"
             if (-not (Get-ChildItem -Path $DestinationPath)) {
-                Write-Verbose -Message ($translate.CopyFile -f $SourcePath, $DestinationPath)
+                Write-Verbose ($translate.CopyFile -f $SourcePath, $DestinationPath)
                 New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder
                 # Restore core translations after New-AsBuiltReportConfig (which loads its own translations)
                 Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
@@ -344,7 +344,7 @@ function New-AsBuiltConfig {
                         }
                         if ($OverwriteReportConfig -eq 'y') {
                             try {
-                                Write-Verbose -Message ($translate.ReportConfig.OverwriteFile -f $SourcePath, $DestinationPath)
+                                Write-Verbose ($translate.ReportConfig.OverwriteFile -f $SourcePath, $DestinationPath)
                                 New-AsBuiltReportConfig -Report $Report -FolderPath $ReportConfigFolder -Force
                                 # Restore core translations after New-AsBuiltReportConfig (which loads its own translations)
                                 Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltConfig'
@@ -399,7 +399,7 @@ function New-AsBuiltConfig {
                 }
             }
             if (-not (Test-Path -Path $AsBuiltExportPath)) {
-                Write-Verbose -Message ($translate.ReportConfig.ConfigFolder -f $AsBuiltExportPath)
+                Write-Verbose ($translate.ReportConfig.ConfigFolder -f $AsBuiltExportPath)
                 try {
                     $Folder = New-Item -Path $AsBuiltExportPath -ItemType Directory -Force
                 } catch {
@@ -410,11 +410,11 @@ function New-AsBuiltConfig {
             $Config.UserFolder = @{
                 'Path' = $AsBuiltExportPath
             }
-            Write-Verbose -Message ($translate.ReportConfig.SaveConfig -f $AsBuiltName, $AsBuiltExportPath)
+            Write-Verbose ($translate.ReportConfig.SaveConfig -f $AsBuiltName, $AsBuiltExportPath)
             $AsBuiltConfigPath = Join-Path -Path $AsBuiltExportPath -ChildPath "$AsBuiltName.json"
             $Config | ConvertTo-Json | Out-File $AsBuiltConfigPath
         } else {
-            Write-Verbose -Message $translate.ReportConfig.NotSaved
+            Write-Verbose $translate.ReportConfig.NotSaved
         }
         #endregion Save configuration
 
@@ -422,13 +422,13 @@ function New-AsBuiltConfig {
         $Config
 
         # Verbose Output
-        Write-Verbose -Message "Config.Report.Author = $ReportAuthor"
-        Write-Verbose -Message "Config.UserFolder.Path = $ReportConfigFolder"
+        Write-Verbose "Config.Report.Author = $ReportAuthor"
+        Write-Verbose "Config.UserFolder.Path = $ReportConfigFolder"
         foreach ($x in $Config.Company.Keys) {
-            Write-Verbose -Message "Config.Company.$x = $($Config.Company[$x])"
+            Write-Verbose "Config.Company.$x = $($Config.Company[$x])"
         }
         foreach ($x in $Config.Email.Keys) {
-            Write-Verbose -Message "Config.Email.$x = $($Config.Email[$x])"
+            Write-Verbose "Config.Email.$x = $($Config.Email[$x])"
         }
         Clear-Host
     }

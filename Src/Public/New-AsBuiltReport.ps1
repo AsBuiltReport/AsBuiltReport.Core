@@ -17,8 +17,9 @@ function New-AsBuiltReport {
         Specifies the password for the target system.
     .PARAMETER Token
         Specifies an API token to authenticate to the target system.
-    .PARAMETER MFA
-        Use multifactor authentication to authenticate to the target system.
+    .PARAMETER UseInteractiveAuth
+        Use interactive authentication (via 3rd party identity provider) to authenticate to the target system.
+        This parameter has an alias 'MFA' for backwards compatibility.
     .PARAMETER Format
         Specifies the output format of the report.
         The supported output formats are WORD, HTML & TEXT.
@@ -163,10 +164,11 @@ function New-AsBuiltReport {
         [Parameter(
             Position = 3,
             Mandatory = $true,
-            ParameterSetName = 'MFA'
+            ParameterSetName = 'InteractiveAuth'
         )]
         [ValidateNotNullOrEmpty()]
-        [Switch] $MFA,
+        [Alias('MFA')]
+        [Switch] $UseInteractiveAuth,
 
         [Parameter(
             Position = 4,
@@ -213,7 +215,7 @@ function New-AsBuiltReport {
                 $true
             }
         })]
-        [String] $ReportLanguage = 'en-US',
+        [String] $ReportLanguage,
 
         [Parameter(
             Mandatory = $false,
@@ -288,7 +290,7 @@ function New-AsBuiltReport {
     try {
 
         if ($psISE) {
-            Write-Error -Message $translate.PwshISE -ErrorAction Stop
+            Write-Error ($translate.PwshISE) -ErrorAction Stop
         }
 
         # If Username and Password parameters used, convert specified Password to secure string and store in $Credential
@@ -316,7 +318,7 @@ function New-AsBuiltReport {
                 # Verbose Output for As Built Report configuration
                 Write-PScriboMessage -Plugin "Module" -Message ($translate.LoadConfig -f $AsBuiltConfigFilePath)
             } else {
-                Write-Error -Message ($translate.NoConfigFound -f $AsBuiltConfigFilePath) -ErrorAction Stop
+                Write-Error ($translate.NoConfigFound -f $AsBuiltConfigFilePath) -ErrorAction Stop
             }
         } else {
             Write-PScriboMessage -Plugin "Document" -Message $translate.GeneratingReport
@@ -355,7 +357,7 @@ function New-AsBuiltReport {
         if ($ReportConfigFilePath) {
             # If ReportConfigFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
             if (-not (Test-Path -Path $ReportConfigFilePath)) {
-                Write-Error -Message ($translate.ReportModuleNotFound -f $ReportModuleName, $ReportConfigFilePath) -ErrorAction Stop
+                Write-Error ($translate.ReportModuleNotFound -f $ReportModuleName, $ReportConfigFilePath) -ErrorAction Stop
             } else {
                 # Import the Report Configuration in to a variable
                 Write-PScriboMessage -Plugin "Document" -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
@@ -368,7 +370,7 @@ function New-AsBuiltReport {
                 Write-PScriboMessage -Plugin "Document" -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             } else {
-                Write-Error -Message ($translate.ReportConfigNotFound -f $ReportModulePath) -ErrorAction Stop
+                Write-Error ($translate.ReportConfigNotFound -f $ReportModulePath) -ErrorAction Stop
             }
         }
 
@@ -472,53 +474,55 @@ function New-AsBuiltReport {
                     elseif ($Token) {
                         & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose -ErrorAction Stop
                     }
-                    elseif ($MFA) {
-                        #Write-PScriboMessage -Plugin "Module" -Message $translate.MfaEnabled
-                        & "Invoke-$($ReportModuleName)" -Target $Target -MFA -Verbose -ErrorAction Stop
+                    elseif ($UseInteractiveAuth) {
+                        Write-PScriboMessage -Plugin "Module" -Message ($translate.InteractiveAuth)
+                        & "Invoke-$($ReportModuleName)" -Target $Target -UseInteractiveAuth -Verbose -ErrorAction Stop
                     }
                 } catch {
-                    Write-Error "Report module execution failed: $($_.Exception.Message)" -ErrorAction Stop
+                    Write-Error ($($translate.ExecutionFailed) -f $($_.Exception.Message)) -ErrorAction Stop
                 }
             }
         } else {
             # Show progress messages for non-verbose report generation
             Write-Host ($translate.ReportGenerating -f $($Report.Replace(".", " "))) -ForegroundColor Green
-            Write-Host "> Initializing report framework..." -ForegroundColor Cyan
+            Write-Host ($translate.ReportInitializing) -ForegroundColor Cyan
 
             try {
                 $AsBuiltReport = Document $FileName {
-                    Write-Host "> Loading document style..." -ForegroundColor Cyan
+                    Write-Host ($translate.DocumentStyle) -ForegroundColor Cyan
                     # Set Document Style
                     if ($StyleFilePath) {
-                        Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
+                        #Write-Host ($translate.ReportStyleScript -f $StyleFilePath)
                         . $StyleFilePath
                     } else {
                         $StyleFilePath = Join-Path -Path $CoreModulePath -ChildPath 'AsBuiltReport.Core.Style.ps1'
-                        Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
+                        #Write-Host ($translate.ReportStyleScript -f $StyleFilePath)
                         . $StyleFilePath
                     }
 
-                    Write-Host "> Connecting to target system and gathering data..." -ForegroundColor Cyan
-                    # If Credential has been passed or previously created via Username/Password
+                    # Restore core translations after style script (style script loads its own translations)
+                    $global:translate = $CoreTranslations
+
+                    Write-Host ($translate.TargetSystem) -ForegroundColor Cyan
                     try {
+                        # If Credential has been passed or previously created via Username/Password
                         if ($Credential) {
                             & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -ErrorAction Stop
                         }
                         elseif ($Token) {
                             & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -ErrorAction Stop
                         }
-                        elseif ($MFA) {
-                            #Write-PScriboMessage -Plugin "Module" -Message $translate.MfaEnabled
-                            & "Invoke-$($ReportModuleName)" -Target $Target -MFA -ErrorAction Stop
+                        elseif ($UseInteractiveAuth) {
+                            & "Invoke-$($ReportModuleName)" -Target $Target -UseInteractiveAuth -ErrorAction Stop
                         }
                     } catch {
-                        Write-Error "Report module execution failed: $($_.Exception.Message)" -ErrorAction Stop
+                        Write-Error ($($translate.ExecutionFailed) -f $($_.Exception.Message)) -ErrorAction Stop
                     }
-                    Write-Host "> Building document structure..." -ForegroundColor Cyan
+                    Write-Host ($translate.BuildingDocument) -ForegroundColor Cyan
                 }
-                Write-Host "> Exporting document..." -ForegroundColor Cyan
+                Write-Host ($translate.ExportingDocument) -ForegroundColor Cyan
             } catch {
-                Write-Host "[FAILED] Report generation failed" -ForegroundColor Red
+                Write-Host ($translate.Failed) -ForegroundColor Red
                 throw
             }
         }

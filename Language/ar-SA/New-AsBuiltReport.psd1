@@ -1,0 +1,30 @@
+# culture = 'ar-SA'
+ConvertFrom-StringData @'
+    PwshISE = لا يمكن تشغيل AsBuiltReport من Windows PowerShell ISE. يرجى استخدام نافذة أوامر PowerShell بدلاً من ذلك.
+    Password = كلمة المرور للمستخدم {0}
+    OutputFolderPath = OutputFolderPath '{0}' ليس مسار مجلد صالح.
+    LoadConfig = تحميل تكوين As Built Report من {0}.
+    NoConfigFound = تعذر العثور على تكوين As Built Report في المسار '{0}'.
+    GeneratingReport = إنشاء تكوين As Built Report جديد.
+    StyleScriptNotFound = تعذر العثور على نص نمط التقرير في المسار '{0}'.
+    ReportModuleNotFound = تعذر العثور على ملف تكوين التقرير {0} في المسار '{1}'.
+    LoadingReportConfig = تحميل ملف تكوين التقرير {0} من المسار '{1}'.
+    ReportConfigNotFound = لم يتم العثور على تكوين التقرير في مسار الوحدة '{0}'.
+    SetReportFileName = تعيين اسم ملف التقرير إلى '{0}'.
+    EmailBannerTitle = بيانات اعتماد خادم البريد الإلكتروني
+    EmailCredentials = يرجى إدخال بيانات الاعتماد لـ {0}.
+    InstalledModule = AsBuiltReport.Core {0} مثبت حالياً.
+    AvailableModule = AsBuiltReport.Core {0} متاح.
+    UpdateModule = قم بتشغيل 'Update-Module -Name AsBuiltReport.Core -Force' لتثبيت الإصدار الأحدث.
+    ReportGenerating = يرجى الانتظار بينما يتم إنشاء تقرير {0} As Built.
+    ReportInitializing = > تهيئة إطار عمل التقرير...
+    DocumentStyle = > تحميل نمط المستند...
+    TargetSystem = > الاتصال بالنظام المستهدف وجمع البيانات...
+    ExecutionFailed = فشل تنفيذ وحدة التقرير: {0}
+    BuildingDocument = > بناء هيكل المستند...
+    ExportingDocument = > تصدير المستند...
+    Failed = [فشل] فشل إنشاء التقرير
+    ReportStyleScript = تنفيذ نص نمط التقرير من المسار '{0}'.
+    InteractiveAuth = تم تمكين المصادقة التفاعلية. يرجى التحقق من نوافذ المصادقة للمصادقة على النظام المستهدف.
+    OutputFolder = تم حفظ {0} As Built Report '{1}' في '{2}'.
+'@

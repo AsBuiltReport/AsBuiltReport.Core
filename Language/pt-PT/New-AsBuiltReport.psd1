@@ -1,0 +1,30 @@
+# culture = 'pt-PT'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport não pode ser executado no Windows PowerShell ISE. Por favor, use uma janela de comando do PowerShell.
+    Password = Senha para o usuário {0}
+    OutputFolderPath = OutputFolderPath '{0}' não é um caminho de pasta válido.
+    LoadConfig = Carregando configuração do As Built Report de {0}.
+    NoConfigFound = Não foi possível encontrar a configuração do As Built Report no caminho '{0}'.
+    GeneratingReport = Gerando nova configuração do As Built Report.
+    StyleScriptNotFound = Não foi possível encontrar o script de estilo do relatório no caminho '{0}'.
+    ReportModuleNotFound = Não foi possível encontrar o arquivo de configuração do relatório {0} no caminho '{1}'.
+    LoadingReportConfig = Carregando arquivo de configuração do relatório {0} do caminho '{1}'.
+    ReportConfigNotFound = Configuração do relatório não encontrada no caminho do módulo '{0}'.
+    SetReportFileName = Definindo o nome do arquivo do relatório como '{0}'.
+    EmailBannerTitle = Credenciais do Servidor de Email
+    EmailCredentials = Por favor, insira as credenciais para {0}.
+    InstalledModule = AsBuiltReport.Core {0} está atualmente instalado.
+    AvailableModule = AsBuiltReport.Core {0} está disponível.
+    UpdateModule = Execute 'Update-Module -Name AsBuiltReport.Core -Force' para instalar a versão mais recente.
+    ReportGenerating = Por favor, aguarde enquanto o relatório {0} As Built está sendo gerado.
+    ReportInitializing = > Inicializando estrutura do relatório...
+    DocumentStyle = > Carregando estilo do documento...
+    TargetSystem = > Conectando ao sistema de destino e coletando dados...
+    ExecutionFailed = Execução do módulo de relatório falhou: {0}
+    BuildingDocument = > Construindo estrutura do documento...
+    ExportingDocument = > Exportando documento...
+    Failed = [FALHOU] Geração do relatório falhou
+    ReportStyleScript = Executando script de estilo do relatório do caminho '{0}'.
+    InteractiveAuth = A autenticação interativa está habilitada. Por favor, verifique as janelas de autenticação para se autenticar no seu sistema de destino.
+    OutputFolder = {0} As Built Report '{1}' foi salvo em '{2}'.
+'@

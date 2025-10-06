@@ -98,7 +98,7 @@ function Initialize-LocalizedData {
         $PSDefaultParameterValues['*:UICulture'] = $Culture.Name
         $PSDefaultParameterValues['*:Culture'] = $Culture.Name
     } catch {
-        Write-Error -Message ($_.Exception.Message)
+        Write-Error ($_.Exception.Message)
         return
     }
 
@@ -189,11 +189,27 @@ function Initialize-LocalizedData {
     $script:CulturePath = Join-Path $script:LangPath $TargetCulture
 
     # Output appropriate message (only once per session per culture/module combination)
-    $ModuleTypeText = if ($ModuleType -eq 'Report') { "report module" } else { "core module" }
-    $PathInfo = if ($FoundPath) { " from $ModuleTypeText" } else { "" }
+    # Determine the source of the translations
+    $SourceType = $null
+    foreach ($SearchPath in $SearchPaths) {
+        if ($SearchPath.Path -eq $FoundPath) {
+            $SourceType = $SearchPath.Type
+            break
+        }
+    }
 
-    # Create unique key for this culture fallback scenario (regardless of language file)
-    $LocalizationKey = "$TargetCulture-$($Culture.Name)"
+    # Determine the appropriate message based on module type
+    # Core module = UI language, Report module = Document language
+    $LanguageType = if ($ModuleType -eq 'Core') { "UI language" } else { "document language" }
+
+    # Create unique key for this culture fallback scenario
+    # When there's a fallback, include module type to show both messages
+    # When there's no fallback, just use culture to avoid duplicate messages for same culture
+    if ($TargetCulture -ne $Culture.Name) {
+        $LocalizationKey = "$TargetCulture-$($Culture.Name)-$ModuleType"
+    } else {
+        $LocalizationKey = "$TargetCulture"
+    }
 
     # Initialize global tracking variable if it doesn't exist
     if (-not $global:AsBuiltReportLocalizedWarnings) {
@@ -201,11 +217,18 @@ function Initialize-LocalizedData {
     }
 
     # Only show message if we haven't shown it before for this combination
-    if (-not $global:AsBuiltReportLocalizedWarnings.ContainsKey($LocalizationKey)) {
+    $ShouldShowMessage = -not $global:AsBuiltReportLocalizedWarnings.ContainsKey($LocalizationKey)
+
+    # Suppress messages for style-related language files (internal implementation detail)
+    if ($LanguageFile -eq 'AsBuiltReportCoreStyle') {
+        $ShouldShowMessage = $false
+    }
+
+    if ($ShouldShowMessage) {
         if ($TargetCulture -ne $Culture.Name) {
-            Write-Warning -Message ("Setting language to '{0}' (fallback from '{1}'){2}." -f $TargetCulture, $Culture.Name, $PathInfo)
+            Write-Host ("Setting $LanguageType to '{0}' (fallback from '{1}')." -f $TargetCulture, $Culture.Name) -ForegroundColor Yellow
         } else {
-            Write-Host ("Setting language to '{0}'{1}" -f $TargetCulture, $PathInfo) -ForegroundColor Green
+            Write-Host ("Setting $LanguageType to '{0}'." -f $TargetCulture) -ForegroundColor Yellow
         }
 
         # Mark this combination as already shown

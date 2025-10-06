@@ -1,0 +1,30 @@
+# culture = 'cs-CZ'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport nelze spustit z Windows PowerShell ISE. Použijte místo toho příkazové okno PowerShell.
+    Password = Heslo pro uživatele {0}
+    OutputFolderPath = OutputFolderPath '{0}' není platná cesta ke složce.
+    LoadConfig = Načítání konfigurace As Built Report z {0}.
+    NoConfigFound = Nelze najít konfiguraci As Built Report v cestě '{0}'.
+    GeneratingReport = Generování nové konfigurace As Built Report.
+    StyleScriptNotFound = Nelze najít skript stylu sestavy v cestě '{0}'.
+    ReportModuleNotFound = Nelze najít konfigurační soubor sestavy {0} v cestě '{1}'.
+    LoadingReportConfig = Načítání konfiguračního souboru sestavy {0} z cesty '{1}'.
+    ReportConfigNotFound = Konfigurace sestavy nebyla nalezena v cestě modulu '{0}'.
+    SetReportFileName = Nastavení názvu souboru sestavy na '{0}'.
+    EmailBannerTitle = Přihlašovací údaje e-mailového serveru
+    EmailCredentials = Zadejte přihlašovací údaje pro {0}.
+    InstalledModule = AsBuiltReport.Core {0} je aktuálně nainstalován.
+    AvailableModule = AsBuiltReport.Core {0} je k dispozici.
+    UpdateModule = Spusťte 'Update-Module -Name AsBuiltReport.Core -Force' pro instalaci nejnovější verze.
+    ReportGenerating = Počkejte prosím, než se vygeneruje sestava {0} As Built.
+    ReportInitializing = > Inicializace frameworku sestavy...
+    DocumentStyle = > Načítání stylu dokumentu...
+    TargetSystem = > Připojování k cílovému systému a shromažďování dat...
+    ExecutionFailed = Spuštění modulu sestavy se nezdařilo: {0}
+    BuildingDocument = > Vytváření struktury dokumentu...
+    ExportingDocument = > Export dokumentu...
+    Failed = [SELHALO] Generování sestavy se nezdařilo
+    ReportStyleScript = Spouštění skriptu stylu sestavy z cesty '{0}'.
+    InteractiveAuth = Interaktivní ověřování je povoleno. Zkontrolujte okna ověřování pro ověření v cílovém systému.
+    OutputFolder = {0} As Built Report '{1}' byl uložen do '{2}'.
+'@

@@ -1,0 +1,30 @@
+# culture = 'vi-VN'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport không thể chạy từ Windows PowerShell ISE. Vui lòng sử dụng cửa sổ lệnh PowerShell.
+    Password = Mật khẩu cho người dùng {0}
+    OutputFolderPath = OutputFolderPath '{0}' không phải là đường dẫn thư mục hợp lệ.
+    LoadConfig = Đang tải cấu hình As Built Report từ {0}.
+    NoConfigFound = Không tìm thấy cấu hình As Built Report trong đường dẫn '{0}'.
+    GeneratingReport = Đang tạo cấu hình As Built Report mới.
+    StyleScriptNotFound = Không tìm thấy tập lệnh kiểu báo cáo trong đường dẫn '{0}'.
+    ReportModuleNotFound = Không tìm thấy tệp cấu hình báo cáo {0} trong đường dẫn '{1}'.
+    LoadingReportConfig = Đang tải tệp cấu hình báo cáo {0} từ đường dẫn '{1}'.
+    ReportConfigNotFound = Không tìm thấy cấu hình báo cáo trong đường dẫn mô-đun '{0}'.
+    SetReportFileName = Đang đặt tên tệp báo cáo thành '{0}'.
+    EmailBannerTitle = Thông tin đăng nhập máy chủ email
+    EmailCredentials = Vui lòng nhập thông tin đăng nhập cho {0}.
+    InstalledModule = AsBuiltReport.Core {0} hiện đang được cài đặt.
+    AvailableModule = AsBuiltReport.Core {0} đã có sẵn.
+    UpdateModule = Chạy 'Update-Module -Name AsBuiltReport.Core -Force' để cài đặt phiên bản mới nhất.
+    ReportGenerating = Vui lòng đợi trong khi báo cáo {0} As Built đang được tạo.
+    ReportInitializing = > Đang khởi tạo khung báo cáo...
+    DocumentStyle = > Đang tải kiểu tài liệu...
+    TargetSystem = > Đang kết nối với hệ thống đích và thu thập dữ liệu...
+    ExecutionFailed = Thực thi mô-đun báo cáo thất bại: {0}
+    BuildingDocument = > Đang xây dựng cấu trúc tài liệu...
+    ExportingDocument = > Đang xuất tài liệu...
+    Failed = [THẤT BẠI] Tạo báo cáo thất bại
+    ReportStyleScript = Đang thực thi tập lệnh kiểu báo cáo từ đường dẫn '{0}'.
+    InteractiveAuth = Xác thực tương tác đã được bật. Vui lòng kiểm tra cửa sổ xác thực để xác thực với hệ thống đích của bạn.
+    OutputFolder = {0} As Built Report '{1}' đã được lưu vào '{2}'.
+'@

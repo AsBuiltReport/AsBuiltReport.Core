@@ -1,0 +1,30 @@
+# culture = 'nl-NL'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport kan niet worden uitgevoerd vanuit Windows PowerShell ISE. Gebruik in plaats daarvan een PowerShell-opdrachtvenster.
+    Password = Wachtwoord voor gebruiker {0}
+    OutputFolderPath = OutputFolderPath '{0}' is geen geldig mappad.
+    LoadConfig = As Built Report-configuratie laden van {0}.
+    NoConfigFound = Kan As Built Report-configuratie niet vinden in pad '{0}'.
+    GeneratingReport = Nieuwe As Built Report-configuratie genereren.
+    StyleScriptNotFound = Kan rapportstijlscript niet vinden in pad '{0}'.
+    ReportModuleNotFound = Kan {0} rapportconfiguratiebestand niet vinden in pad '{1}'.
+    LoadingReportConfig = {0} rapportconfiguratiebestand laden van pad '{1}'.
+    ReportConfigNotFound = Rapportconfiguratie niet gevonden in modulepad '{0}'.
+    SetReportFileName = Rapportbestandsnaam instellen op '{0}'.
+    EmailBannerTitle = E-mailserverreferenties
+    EmailCredentials = Voer referenties in voor {0}.
+    InstalledModule = AsBuiltReport.Core {0} is momenteel geïnstalleerd.
+    AvailableModule = AsBuiltReport.Core {0} is beschikbaar.
+    UpdateModule = Voer 'Update-Module -Name AsBuiltReport.Core -Force' uit om de nieuwste versie te installeren.
+    ReportGenerating = Even geduld terwijl het {0} As Built Report wordt gegenereerd.
+    ReportInitializing = > Rapportframework initialiseren...
+    DocumentStyle = > Documentstijl laden...
+    TargetSystem = > Verbinding maken met doelsysteem en gegevens verzamelen...
+    ExecutionFailed = Uitvoering van rapportmodule mislukt: {0}
+    BuildingDocument = > Documentstructuur bouwen...
+    ExportingDocument = > Document exporteren...
+    Failed = [MISLUKT] Rapportgeneratie mislukt
+    ReportStyleScript = Rapportstijlscript uitvoeren vanuit pad '{0}'.
+    InteractiveAuth = Interactieve authenticatie is ingeschakeld. Controleer de authenticatievensters om te authenticeren bij uw doelsysteem.
+    OutputFolder = {0} As Built Report '{1}' is opgeslagen in '{2}'.
+'@

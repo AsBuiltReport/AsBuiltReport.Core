@@ -1,0 +1,30 @@
+# culture = 'nb-NO'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport kan ikke kjøres fra Windows PowerShell ISE. Bruk et PowerShell-kommandovindu i stedet.
+    Password = Passord for bruker {0}
+    OutputFolderPath = OutputFolderPath '{0}' er ikke en gyldig mappebane.
+    LoadConfig = Laster As Built Report-konfigurasjon fra {0}.
+    NoConfigFound = Fant ikke As Built Report-konfigurasjon i banen '{0}'.
+    GeneratingReport = Genererer ny As Built Report-konfigurasjon.
+    StyleScriptNotFound = Fant ikke rapportstilskript i banen '{0}'.
+    ReportModuleNotFound = Fant ikke {0} rapportkonfigurasjonsfil i banen '{1}'.
+    LoadingReportConfig = Laster {0} rapportkonfigurasjonsfil fra banen '{1}'.
+    ReportConfigNotFound = Rapportkonfigurasjon ikke funnet i modulbanen '{0}'.
+    SetReportFileName = Angir rapportfilnavn til '{0}'.
+    EmailBannerTitle = E-postserverlegitimasjon
+    EmailCredentials = Vennligst skriv inn legitimasjon for {0}.
+    InstalledModule = AsBuiltReport.Core {0} er for øyeblikket installert.
+    AvailableModule = AsBuiltReport.Core {0} er tilgjengelig.
+    UpdateModule = Kjør 'Update-Module -Name AsBuiltReport.Core -Force' for å installere den nyeste versjonen.
+    ReportGenerating = Vennligst vent mens {0} As Built Report genereres.
+    ReportInitializing = > Initialiserer rapportrammeverk...
+    DocumentStyle = > Laster dokumentstil...
+    TargetSystem = > Kobler til målsystem og samler data...
+    ExecutionFailed = Kjøring av rapportmodul mislyktes: {0}
+    BuildingDocument = > Bygger dokumentstruktur...
+    ExportingDocument = > Eksporterer dokument...
+    Failed = [MISLYKTES] Rapportgenerering mislyktes
+    ReportStyleScript = Kjører rapportstilskript fra banen '{0}'.
+    InteractiveAuth = Interaktiv autentisering er aktivert. Vennligst sjekk autentiseringsvinduer for å autentisere til målsystemet ditt.
+    OutputFolder = {0} As Built Report '{1}' har blitt lagret i '{2}'.
+'@

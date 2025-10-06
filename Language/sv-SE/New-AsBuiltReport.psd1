@@ -1,0 +1,30 @@
+# culture = 'sv-SE'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport kan inte köras från Windows PowerShell ISE. Använd ett PowerShell-kommandofönster istället.
+    Password = Lösenord för användare {0}
+    OutputFolderPath = OutputFolderPath '{0}' är inte en giltig mappsökväg.
+    LoadConfig = Laddar As Built Report-konfiguration från {0}.
+    NoConfigFound = Kunde inte hitta As Built Report-konfiguration i sökvägen '{0}'.
+    GeneratingReport = Genererar ny As Built Report-konfiguration.
+    StyleScriptNotFound = Kunde inte hitta rapportstilskript i sökvägen '{0}'.
+    ReportModuleNotFound = Kunde inte hitta {0} rapportkonfigurationsfil i sökvägen '{1}'.
+    LoadingReportConfig = Laddar {0} rapportkonfigurationsfil från sökvägen '{1}'.
+    ReportConfigNotFound = Rapportkonfiguration hittades inte i modulsökvägen '{0}'.
+    SetReportFileName = Ställer in rapportfilnamn till '{0}'.
+    EmailBannerTitle = E-postserverreferenser
+    EmailCredentials = Ange autentiseringsuppgifter för {0}.
+    InstalledModule = AsBuiltReport.Core {0} är för närvarande installerat.
+    AvailableModule = AsBuiltReport.Core {0} är tillgängligt.
+    UpdateModule = Kör 'Update-Module -Name AsBuiltReport.Core -Force' för att installera den senaste versionen.
+    ReportGenerating = Vänta medan {0} As Built Report genereras.
+    ReportInitializing = > Initierar rapportramverk...
+    DocumentStyle = > Laddar dokumentstil...
+    TargetSystem = > Ansluter till målsystem och samlar in data...
+    ExecutionFailed = Körning av rapportmodul misslyckades: {0}
+    BuildingDocument = > Bygger dokumentstruktur...
+    ExportingDocument = > Exporterar dokument...
+    Failed = [MISSLYCKADES] Rapportgenerering misslyckades
+    ReportStyleScript = Kör rapportstilskript från sökvägen '{0}'.
+    InteractiveAuth = Interaktiv autentisering är aktiverad. Kontrollera autentiseringsfönster för att autentisera till ditt målsystem.
+    OutputFolder = {0} As Built Report '{1}' har sparats till '{2}'.
+'@

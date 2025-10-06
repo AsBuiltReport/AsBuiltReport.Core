@@ -1,0 +1,30 @@
+# culture = 'ru-RU'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport не может быть запущен из Windows PowerShell ISE. Пожалуйста, используйте командное окно PowerShell.
+    Password = Пароль для пользователя {0}
+    OutputFolderPath = OutputFolderPath '{0}' не является допустимым путем к папке.
+    LoadConfig = Загрузка конфигурации As Built Report из {0}.
+    NoConfigFound = Не удалось найти конфигурацию As Built Report по пути '{0}'.
+    GeneratingReport = Создание новой конфигурации As Built Report.
+    StyleScriptNotFound = Не удалось найти скрипт стиля отчета по пути '{0}'.
+    ReportModuleNotFound = Не удалось найти файл конфигурации отчета {0} по пути '{1}'.
+    LoadingReportConfig = Загрузка файла конфигурации отчета {0} из пути '{1}'.
+    ReportConfigNotFound = Конфигурация отчета не найдена по пути модуля '{0}'.
+    SetReportFileName = Установка имени файла отчета на '{0}'.
+    EmailBannerTitle = Учетные данные почтового сервера
+    EmailCredentials = Пожалуйста, введите учетные данные для {0}.
+    InstalledModule = AsBuiltReport.Core {0} в настоящее время установлен.
+    AvailableModule = AsBuiltReport.Core {0} доступен.
+    UpdateModule = Запустите 'Update-Module -Name AsBuiltReport.Core -Force' для установки последней версии.
+    ReportGenerating = Пожалуйста, подождите, пока создается отчет {0} As Built.
+    ReportInitializing = > Инициализация фреймворка отчета...
+    DocumentStyle = > Загрузка стиля документа...
+    TargetSystem = > Подключение к целевой системе и сбор данных...
+    ExecutionFailed = Ошибка выполнения модуля отчета: {0}
+    BuildingDocument = > Построение структуры документа...
+    ExportingDocument = > Экспорт документа...
+    Failed = [ОШИБКА] Создание отчета не удалось
+    ReportStyleScript = Выполнение скрипта стиля отчета из пути '{0}'.
+    InteractiveAuth = Интерактивная аутентификация включена. Пожалуйста, проверьте окна аутентификации для прохождения аутентификации в целевой системе.
+    OutputFolder = {0} As Built Report '{1}' сохранен в '{2}'.
+'@

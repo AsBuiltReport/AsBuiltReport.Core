@@ -1,0 +1,30 @@
+# culture = 'hi-IN'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReport को Windows PowerShell ISE से नहीं चलाया जा सकता। कृपया इसके बजाय PowerShell कमांड विंडो का उपयोग करें।
+    Password = उपयोगकर्ता {0} के लिए पासवर्ड
+    OutputFolderPath = OutputFolderPath '{0}' एक वैध फ़ोल्डर पथ नहीं है।
+    LoadConfig = {0} से As Built Report कॉन्फ़िगरेशन लोड किया जा रहा है।
+    NoConfigFound = पथ '{0}' में As Built Report कॉन्फ़िगरेशन नहीं मिला।
+    GeneratingReport = नया As Built Report कॉन्फ़िगरेशन जेनरेट किया जा रहा है।
+    StyleScriptNotFound = पथ '{0}' में रिपोर्ट स्टाइल स्क्रिप्ट नहीं मिली।
+    ReportModuleNotFound = पथ '{1}' में {0} रिपोर्ट कॉन्फ़िगरेशन फ़ाइल नहीं मिली।
+    LoadingReportConfig = पथ '{1}' से {0} रिपोर्ट कॉन्फ़िगरेशन फ़ाइल लोड की जा रही है।
+    ReportConfigNotFound = मॉड्यूल पथ '{0}' में रिपोर्ट कॉन्फ़िगरेशन नहीं मिला।
+    SetReportFileName = रिपोर्ट फ़ाइल का नाम '{0}' पर सेट किया जा रहा है।
+    EmailBannerTitle = ईमेल सर्वर क्रेडेंशियल
+    EmailCredentials = कृपया {0} के लिए क्रेडेंशियल दर्ज करें।
+    InstalledModule = AsBuiltReport.Core {0} वर्तमान में इंस्टॉल है।
+    AvailableModule = AsBuiltReport.Core {0} उपलब्ध है।
+    UpdateModule = नवीनतम संस्करण इंस्टॉल करने के लिए 'Update-Module -Name AsBuiltReport.Core -Force' चलाएं।
+    ReportGenerating = कृपया प्रतीक्षा करें जबकि {0} As Built Report जेनरेट किया जा रहा है।
+    ReportInitializing = > रिपोर्ट फ्रेमवर्क आरंभ किया जा रहा है...
+    DocumentStyle = > दस्तावेज़ स्टाइल लोड की जा रही है...
+    TargetSystem = > लक्ष्य सिस्टम से कनेक्ट किया जा रहा है और डेटा एकत्र किया जा रहा है...
+    ExecutionFailed = रिपोर्ट मॉड्यूल निष्पादन विफल: {0}
+    BuildingDocument = > दस्तावेज़ संरचना बनाई जा रही है...
+    ExportingDocument = > दस्तावेज़ निर्यात किया जा रहा है...
+    Failed = [विफल] रिपोर्ट जेनरेशन विफल
+    ReportStyleScript = पथ '{0}' से रिपोर्ट स्टाइल स्क्रिप्ट निष्पादित की जा रही है।
+    InteractiveAuth = इंटरैक्टिव प्रमाणीकरण सक्षम है। कृपया अपने लक्ष्य सिस्टम में प्रमाणित करने के लिए प्रमाणीकरण विंडो की जांच करें।
+    OutputFolder = {0} As Built Report '{1}' को '{2}' में सहेजा गया है।
+'@

@@ -1,0 +1,30 @@
+# culture = 'fi-FI'
+ConvertFrom-StringData @'
+    PwshISE = AsBuiltReportia ei voi suorittaa Windows PowerShell ISE:stä. Käytä sen sijaan PowerShell-komentoikkunaa.
+    Password = Salasana käyttäjälle {0}
+    OutputFolderPath = OutputFolderPath '{0}' ei ole kelvollinen kansion polku.
+    LoadConfig = Ladataan As Built Report -määritystä kohteesta {0}.
+    NoConfigFound = As Built Report -määritystä ei löytynyt polusta '{0}'.
+    GeneratingReport = Luodaan uutta As Built Report -määritystä.
+    StyleScriptNotFound = Raportin tyyliskriptiä ei löytynyt polusta '{0}'.
+    ReportModuleNotFound = {0} raportin määritystiedostoa ei löytynyt polusta '{1}'.
+    LoadingReportConfig = Ladataan {0} raportin määritystiedostoa polusta '{1}'.
+    ReportConfigNotFound = Raportin määritystä ei löytynyt moduulin polusta '{0}'.
+    SetReportFileName = Asetetaan raportin tiedostonimeksi '{0}'.
+    EmailBannerTitle = Sähköpostipalvelimen tunnistetiedot
+    EmailCredentials = Syötä tunnistetiedot kohteelle {0}.
+    InstalledModule = AsBuiltReport.Core {0} on tällä hetkellä asennettuna.
+    AvailableModule = AsBuiltReport.Core {0} on saatavilla.
+    UpdateModule = Suorita 'Update-Module -Name AsBuiltReport.Core -Force' asentaaksesi uusimman version.
+    ReportGenerating = Odota, kun {0} As Built Report -raporttia luodaan.
+    ReportInitializing = > Alustetaan raportointikehystä...
+    DocumentStyle = > Ladataan asiakirjan tyyliä...
+    TargetSystem = > Yhdistetään kohdejärjestelmään ja kerätään tietoja...
+    ExecutionFailed = Raporttimoduulin suoritus epäonnistui: {0}
+    BuildingDocument = > Rakennetaan asiakirjan rakennetta...
+    ExportingDocument = > Viedään asiakirjaa...
+    Failed = [EPÄONNISTUI] Raportin luonti epäonnistui
+    ReportStyleScript = Suoritetaan raportin tyyliskriptiä polusta '{0}'.
+    InteractiveAuth = Interaktiivinen todennus on käytössä. Tarkista todennusikkunat todentuaksesi kohdejärjestelmään.
+    OutputFolder = {0} As Built Report '{1}' on tallennettu kohteeseen '{2}'.
+'@
