@@ -54,38 +54,78 @@ function New-AsBuiltReport {
         If this parameter is not specified, a default report configuration JSON is copied to the specifed user folder.
         If this parameter is specified and the path to a JSON file is invalid, the script will terminate.
     .EXAMPLE
-        New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'c:\scripts\'
+        New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'C:\Reports'
 
         Creates a VMware vSphere As Built Report in HTML & Word formats. The document will highlight particular issues which exist within the environment.
-        The report will be saved to c:\scripts.
+        The report will be saved to C:\Reports.
     .EXAMPLE
         $Creds = Get-Credential
-        New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputFolderPath 'c:\scripts\'
+        New-AsBuiltReport -Report PureStorage.FlashArray -Target 192.168.1.100 -Credential $Creds -Format Text -Timestamp -OutputFolderPath 'C:\Reports'
 
         Creates a Pure Storage FlashArray As Built Report in Text format and appends a timestamp to the filename.
         Stored credentials are used to connect to the system.
-        The report will be saved to c:\scripts.
+        The report will be saved to C:\Reports.
     .EXAMPLE
-        New-AsBuiltReport -Report Rubrik.CDM -Target 192.168.1.100 -Token '123456789abcdefg' -Format HTML -OutputFolderPath 'c:\scripts\'
+        New-AsBuiltReport -Report Veeam.VBR -Target veeam01.corp.local -Username admin -Password admin -Format HTML -Filename 'Veeam-Backup-Report' -OutputFolderPath 'C:\Reports'
+
+        Creates a Veeam Backup & Replication As Built Report in HTML format with a custom filename.
+        The report will be saved as 'Veeam-Backup-Report.html' in C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report Rubrik.CDM -Target 192.168.1.100 -Token 'eyJ0eXAiOiJKV1QiLCJhbGc...' -Format HTML -OutputFolderPath 'C:\Reports'
 
         Creates a Rubrik CDM As Built Report in HTML format.
         An API token is used to connect to the system.
-        The report will be saved to c:\scripts.
+        The report will be saved to C:\Reports.
     .EXAMPLE
-        New-AsBuiltReport -Report Cisco.UCSManager -Target '192.168.1.100' -Username admin -Password admin -StyleFilePath '/Users/Tim/AsBuiltReport/Styles/ACME.ps1' -OutputFolderPath '/Users/Tim/scripts'
+        New-AsBuiltReport -Report Microsoft.Azure -Target 'tenant.onmicrosoft.com' -UseInteractiveAuth -Format Word -OutputFolderPath 'C:\Reports'
 
-        Creates a Cisco UCS Manager As Built Report in default format (Word), using a custom style.
-        The report will be saved to '/Users/Tim/scripts'.
+        Creates a Microsoft Azure As Built Report in Word format.
+        Interactive authentication (via web browser) is used to authenticate to Azure.
+        The report will be saved to C:\Reports.
     .EXAMPLE
-        New-AsBuiltReport -Report Nutanix.PrismElement -Target 192.168.1.100 -Username admin -Password admin -SendEmail -OutputFolderPath c:\scripts\
+        New-AsBuiltReport -Report NetApp.ONTAP -Target ontap.corp.local -Username admin -Password admin -Format HTML -Orientation Landscape -OutputFolderPath 'C:\Reports'
 
-        Creates a Nutanix Prism Element As Built Report in default format (Word). Report will be attached and sent via email.
-        The report will be saved to c:\scripts.
+        Creates a NetApp ONTAP As Built Report in HTML format with Landscape page orientation.
+        The report will be saved to C:\Reports.
     .EXAMPLE
-        New-AsBuiltReport -Report VMware.vSphere -Target 192.168.1.100 -Username admin -Password admin -Format HTML-AsBuiltConfigFilePath C:\scripts\asbuiltreport.json -OutputFolderPath c:\scripts\
+        New-AsBuiltReport -Report VMware.vSphere -Target vcenter.corp.local -Username admin -Password admin -Format Word -StyleFilePath 'C:\Styles\Corporate-Style.ps1' -OutputFolderPath 'C:\Reports'
 
-        Creates a VMware vSphere As Built Report in HTML format, using the configuration in the asbuiltreport.json file located in the C:\scripts\ folder.
-        The report will be saved to c:\scripts.
+        Creates a VMware vSphere As Built Report in Word format using a custom corporate style.
+        The report will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report Nutanix.PrismElement -Target 192.168.1.100 -Username admin -Password admin -Format Word -SendEmail -OutputFolderPath 'C:\Reports'
+
+        Creates a Nutanix Prism Element As Built Report in Word format. Report will be attached and sent via email.
+        Email settings must be configured using New-AsBuiltConfig or -AsBuiltConfigFilePath parameter.
+        The report will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report VMware.vSphere -Target vcenter01.corp.local,vcenter02.corp.local -Username admin -Password admin -Format HTML -OutputFolderPath 'C:\Reports'
+
+        Creates VMware vSphere As Built Reports in HTML format for multiple vCenter servers.
+        Separate reports will be generated for each target.
+        The reports will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report Microsoft.AD -Target dc01.corp.local -Username 'CORP\admin' -Password admin -Format HTML -ReportLanguage 'es-ES' -OutputFolderPath 'C:\Reports'
+
+        Creates a Microsoft Active Directory As Built Report in HTML format with Spanish language content.
+        The report will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report DellEMC.VxRail -Target vxrail-mgr.corp.local -Username admin -Password admin -Format Word -AsBuiltConfigFilePath 'C:\Config\asbuiltreport.json' -OutputFolderPath 'C:\Reports'
+
+        Creates a Dell EMC VxRail As Built Report in Word format, using the configuration in the asbuiltreport.json file.
+        The report will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report VMware.Horizon -Target horizon-cs.corp.local -Username admin -Password admin -Format HTML -ReportConfigFilePath 'C:\Config\VMware.Horizon.json' -OutputFolderPath 'C:\Reports'
+
+        Creates a VMware Horizon As Built Report in HTML format, using a custom report configuration file.
+        The custom configuration allows you to control report depth and detail levels.
+        The report will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report Aruba.ClearPass -Target aruba.corp.local -Username admin -Password admin -Format HTML,Word,Text -Timestamp -EnableHealthCheck -OutputFolderPath 'C:\Reports'
+
+        Creates an Aruba ClearPass As Built Report in HTML, Word, and Text formats with timestamp appended to the filename.
+        Health checks are enabled to highlight any configuration issues.
+        The reports will be saved to C:\Reports.
     .LINK
         https://github.com/AsBuiltReport/AsBuiltReport.Core
     .LINK
