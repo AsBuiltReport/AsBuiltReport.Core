@@ -110,7 +110,7 @@
             ProjectUri = 'https://github.com/AsBuiltReport/AsBuiltReport.Core'
 
             # A URL to an icon representing this module.
-            IconUri = 'https://github.com/AsBuiltReport.png'
+            IconUri = 'https://raw.githubusercontent.com/AsBuiltReport/.github/main/profile/images/AsBuiltReport.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/CHANGELOG.md'
