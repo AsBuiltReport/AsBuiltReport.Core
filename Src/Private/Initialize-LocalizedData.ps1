@@ -202,6 +202,27 @@ function Initialize-LocalizedData {
     # Core module = UI language, Report module = Document language
     $LanguageType = if ($ModuleType -eq 'Core') { "UI language" } else { "document language" }
 
+
+    # Determine the language source for Report modules
+    $LanguageSourceText = ""
+    if ($ModuleType -eq 'Report' -and $Language) {
+        # Check if the language was explicitly specified via command-line parameter
+        # by examining if ReportConfig exists and comparing with its language setting
+        if ($global:ReportConfig -and $global:ReportConfig.Report.Language) {
+            if ($Language -eq $global:ReportConfig.Report.Language) {
+                $LanguageSourceText = "(from report configuration file)"
+            } else {
+                # Language differs from config, so it must be from command-line
+                $LanguageSourceText = "(from command-line parameter)"
+            }
+        } elseif ($Language -eq 'en-US') {
+            # Default language
+            $LanguageSourceText = "(fallback to default)"
+        } else {
+            # Explicitly specified via command-line (no config or config doesn't have language)
+            $LanguageSourceText = "(from command-line parameter)"
+        }
+    }
     # Create unique key for this culture fallback scenario
     # When there's a fallback, include module type to show both messages
     # When there's no fallback, just use culture to avoid duplicate messages for same culture
@@ -226,9 +247,9 @@ function Initialize-LocalizedData {
 
     if ($ShouldShowMessage) {
         if ($TargetCulture -ne $Culture.Name) {
-            Write-Host ("Setting $LanguageType to '{0}' (fallback from '{1}')." -f $TargetCulture, $Culture.Name) -ForegroundColor Yellow
+            Write-Host ("Setting $LanguageType to '{0}' (fallback from '{1}')$LanguageSourceText." -f $TargetCulture, $Culture.Name) -ForegroundColor Yellow
         } else {
-            Write-Host ("Setting $LanguageType to '{0}'." -f $TargetCulture) -ForegroundColor Yellow
+            Write-Host ("Setting $LanguageType to '{0}' $LanguageSourceText." -f $TargetCulture) -ForegroundColor Yellow
         }
 
         # Mark this combination as already shown
