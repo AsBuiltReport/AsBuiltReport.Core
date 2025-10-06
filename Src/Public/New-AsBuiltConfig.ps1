@@ -11,6 +11,16 @@ function New-AsBuiltConfig {
         New-AsBuiltConfig will automatically be called by New-AsBuiltReport if the -AsBuiltConfigFilePath parameter is not specified
         If a user wants to generate a new As Built Report configuration without running a new report, this cmdlet is exported
         in the AsBuiltReport powershell module and can be called as a standalone cmdlet.
+    .EXAMPLE
+        New-AsBuiltConfig
+
+        Starts the interactive configuration wizard to create a new As Built Report configuration file.
+        You will be prompted for report author, company information, email settings, and save location.
+    .EXAMPLE
+        $Config = New-AsBuiltConfig
+
+        Creates a new As Built Report configuration and stores it in the $Config variable.
+        The configuration can be used with New-AsBuiltReport without specifying -AsBuiltConfigFilePath.
     .LINK
         https://github.com/AsBuiltReport/AsBuiltReport.Core
     .LINK

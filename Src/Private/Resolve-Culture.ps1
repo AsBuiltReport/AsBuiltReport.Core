@@ -1,5 +1,44 @@
 # Function to resolve culture with fallback
 function Resolve-Culture {
+    <#
+    .SYNOPSIS
+        Resolves a culture name to a fallback chain of culture names.
+    .DESCRIPTION
+        Returns an array of culture names representing the fallback chain for a given culture.
+        The function provides intelligent fallbacks for regional language variants.
+
+        For example, 'fr-CA' (French-Canada) will fall back to 'fr-FR' (French-France), then 'en-US'.
+        This ensures that if a specific regional translation is not available, the function will try
+        the parent language, and finally fall back to en-US.
+
+        The function includes comprehensive mappings for:
+        - English variants (en-AU, en-GB, en-CA, etc.)
+        - Chinese variants (simplified and traditional)
+        - French, Spanish, German, Italian variants
+        - Japanese, Korean, Arabic, and many other languages
+    .PARAMETER CultureName
+        The culture name to resolve (e.g., 'en-US', 'fr-CA', 'zh-CN').
+    .OUTPUTS
+        System.String[]
+        Returns an array of culture names in fallback order.
+    .EXAMPLE
+        Resolve-Culture -CultureName 'fr-CA'
+
+        Returns: @('fr-CA', 'fr-FR', 'en-US')
+    .EXAMPLE
+        Resolve-Culture -CultureName 'en-AU'
+
+        Returns: @('en-AU', 'en-GB', 'en-US')
+    .EXAMPLE
+        Resolve-Culture -CultureName 'es-MX'
+
+        Returns: @('es-MX', 'es-ES', 'en-US')
+    .NOTES
+        This is a private function used internally by Initialize-LocalizedData.
+        Supports over 60 culture variants with intelligent fallback chains.
+        If a culture is not explicitly mapped, the function will attempt to fall back to
+        the parent language family (e.g., 'de-XX' -> 'de-DE' -> 'en-US').
+    #>
     param([string]$CultureName)
 
     # Define culture mapping with fallback chain
