@@ -41,7 +41,7 @@ function New-AsBuiltConfig {
         Clear-Host
         #region Report configuration
         # Show As Built Report configuration banner
-        Draw-AsciiBanner -Lines @($translate.ReportInfo.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.ReportInfo.BannerTitle) -TextColor 'Cyan' -SeparatorColor 'Cyan'
 
         $ReportAuthor = Read-Host -Prompt ($translate.ReportInfo.ReportAuthor -f [System.Environment]::Username)
         if (($null -eq $ReportAuthor) -or ($ReportAuthor -eq "")) {
@@ -56,7 +56,7 @@ function New-AsBuiltConfig {
         #region Company configuration
         Clear-Host
         # Show Company configuration banner
-        Draw-AsciiBanner -Lines @($translate.CompanyConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.CompanyConfig.BannerTitle) -TextColor 'Cyan' -SeparatorColor 'Cyan'
 
         $CompanyInfo = Read-Host -Prompt $translate.CompanyConfig.CompanyInfo
         if (($null -eq $CompanyInfo) -or ($CompanyInfo -eq "")) {
@@ -107,7 +107,7 @@ function New-AsBuiltConfig {
         #region Email configuration
         Clear-Host
         # Show Email configuration banner
-        Draw-AsciiBanner -Lines @($translate.EmailConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.EmailConfig.BannerTitle) -TextColor 'Cyan' -SeparatorColor 'Cyan'
         if (-not ($SendEmail)) {
             $ConfigureMailSettings = Read-Host -Prompt $translate.EmailConfig.ConfigureMailSettings
             if (($null -eq $ConfigureMailSettings) -or ($ConfigureMailSettings -eq "")) {
@@ -306,7 +306,7 @@ function New-AsBuiltConfig {
         if ($Report -and (-not $ReportConfigFilePath)) {
             Clear-Host
             # Show Rerport configuration banner
-            Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+            Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -TextColor 'Cyan' -SeparatorColor 'Cyan'
             $DefaultConfigFolder = Join-Path -Path $Home -ChildPath "AsBuiltReport"
             $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $DefaultConfigFolder)
             if (($null -eq $ReportConfigFolder) -or ($ReportConfigFolder -eq "")) {
@@ -373,7 +373,7 @@ function New-AsBuiltConfig {
 
         #region Save configuration
         Clear-Host
-        Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+        Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -TextColor 'Cyan' -SeparatorColor 'Cyan'
         $SaveAsBuiltConfig = Read-Host -Prompt $translate.ReportConfig.SaveAsBuiltConfig
         if (($null -eq $SaveAsBuiltConfig) -or ($SaveAsBuiltConfig -eq "")) {
             $SaveAsBuiltConfig = "y"
