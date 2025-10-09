@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = '{0}' yolundan rapor stil betiği çalıştırılıyor.
     InteractiveAuth = Etkileşimli kimlik doğrulama etkinleştirildi. Hedef sisteminize kimlik doğrulaması yapmak için lütfen kimlik doğrulama pencerelerini kontrol edin.
     OutputFolder = {0} As Built Report '{1}' şuraya kaydedildi: '{2}'.
+    ReportModuleInfo1 = Dokümantasyon: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Sorunlar veya hata bildirimi: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Her yeni sürüm yayınlandıktan sonra rapor yapılandırma dosyanızı güncellemeyi unutmayın: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = Daha ayrıntılı bilgi için lütfen AsBuiltReport proje web sitesine bakın: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport, topluluk tarafından sürdürülen açık kaynaklı bir projedir. Herhangi bir teknoloji sağlayıcısı, çalışanları veya bağlı kuruluşlarıyla sponsorluğu, onayı veya bağlantısı yoktur.
+    ReportModuleInstalled = {0} {1} şu anda yüklü.
+    ReportModuleAvailable = {0} {1} mevcut.
+    ReportModuleUpdate = En son sürümü yüklemek için 'Update-Module -Name {0} -Force' komutunu çalıştırın.
+    RequiredModuleNotInstalled = {0} {1} veya daha yüksek sürüm gereklidir. Gerekli modülü yüklemek için 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' komutunu çalıştırın.
+    RequiredModuleTooOld = {0} {1} şu anda yüklü. {0} {2} veya daha yüksek sürüm gereklidir. Gerekli sürüme güncellemek için 'Update-Module -Name {0} -RequiredVersion {2} -Force' komutunu çalıştırın.
 '@

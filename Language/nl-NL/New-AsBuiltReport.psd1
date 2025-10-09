@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = Rapportstijlscript uitvoeren vanuit pad '{0}'.
     InteractiveAuth = Interactieve authenticatie is ingeschakeld. Controleer de authenticatievensters om te authenticeren bij uw doelsysteem.
     OutputFolder = {0} As Built Report '{1}' is opgeslagen in '{2}'.
+    ReportModuleInfo1 = Documentatie: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Problemen of bugrapportage: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Vergeet niet uw rapportconfiguratiebestand bij te werken na elke nieuwe versie: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = Raadpleeg de AsBuiltReport-projectwebsite voor meer gedetailleerde informatie: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport is een door de gemeenschap onderhouden open source-project. Het heeft geen sponsoring, ondersteuning of affiliatie met technologieleveranciers, hun werknemers of gelieerde bedrijven.
+    ReportModuleInstalled = {0} {1} is momenteel geïnstalleerd.
+    ReportModuleAvailable = {0} {1} is beschikbaar.
+    ReportModuleUpdate = Voer 'Update-Module -Name {0} -Force' uit om de nieuwste versie te installeren.
+    RequiredModuleNotInstalled = {0} {1} of hoger is vereist. Voer 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' uit om de vereiste module te installeren.
+    RequiredModuleTooOld = {0} {1} is momenteel geïnstalleerd. {0} {2} of hoger is vereist. Voer 'Update-Module -Name {0} -RequiredVersion {2} -Force' uit om bij te werken naar de vereiste versie.
 '@

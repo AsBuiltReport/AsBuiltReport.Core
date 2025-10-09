@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = Suoritetaan raportin tyyliskriptiä polusta '{0}'.
     InteractiveAuth = Interaktiivinen todennus on käytössä. Tarkista todennusikkunat todentuaksesi kohdejärjestelmään.
     OutputFolder = {0} As Built Report '{1}' on tallennettu kohteeseen '{2}'.
+    ReportModuleInfo1 = Dokumentaatio: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Ongelmat tai virheilmoitukset: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Muista päivittää raportin määritystiedosto jokaisen uuden version julkaisun jälkeen: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = Katso AsBuiltReport-projektin verkkosivusto lisätietoja varten: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport on yhteisön ylläpitämä avoimen lähdekoodin projekti. Sillä ei ole sponsorointia, tukea tai yhteyttä mihinkään teknologiatoimittajiin, heidän työntekijöihinsä tai yhteistyökumppaneihinsa.
+    ReportModuleInstalled = {0} {1} on tällä hetkellä asennettuna.
+    ReportModuleAvailable = {0} {1} on saatavilla.
+    ReportModuleUpdate = Suorita 'Update-Module -Name {0} -Force' asentaaksesi uusimman version.
+    RequiredModuleNotInstalled = {0} {1} tai uudempi vaaditaan. Suorita 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' asentaaksesi vaaditun moduulin.
+    RequiredModuleTooOld = {0} {1} on tällä hetkellä asennettuna. {0} {2} tai uudempi vaaditaan. Suorita 'Update-Module -Name {0} -RequiredVersion {2} -Force' päivittääksesi vaadittuun versioon.
 '@

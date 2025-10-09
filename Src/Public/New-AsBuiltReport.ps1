@@ -506,6 +506,10 @@ function New-AsBuiltReport {
                     Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
                     . $StyleFilePath
                 }
+
+                # Restore core translations after style script (style script loads its own translations)
+                $global:translate = $CoreTranslations
+
                 # If Credential has been passed or previously created via Username/Password
                 try {
                     if ($Credential) {

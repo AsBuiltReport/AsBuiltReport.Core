@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = पथ '{0}' से रिपोर्ट स्टाइल स्क्रिप्ट निष्पादित की जा रही है।
     InteractiveAuth = इंटरैक्टिव प्रमाणीकरण सक्षम है। कृपया अपने लक्ष्य सिस्टम में प्रमाणित करने के लिए प्रमाणीकरण विंडो की जांच करें।
     OutputFolder = {0} As Built Report '{1}' को '{2}' में सहेजा गया है।
+    ReportModuleInfo1 = दस्तावेज़ीकरण: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = समस्याएं या बग रिपोर्टिंग: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = प्रत्येक नए संस्करण रिलीज़ के बाद अपनी रिपोर्ट कॉन्फ़िगरेशन फ़ाइल अपडेट करना न भूलें: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = अधिक विस्तृत जानकारी के लिए कृपया AsBuiltReport प्रोजेक्ट वेबसाइट देखें: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport एक समुदाय-रखरखाव ओपन सोर्स प्रोजेक्ट है। इसमें किसी भी प्रौद्योगिकी विक्रेताओं, उनके कर्मचारियों या सहयोगियों के साथ कोई प्रायोजन, समर्थन या संबद्धता नहीं है।
+    ReportModuleInstalled = {0} {1} वर्तमान में इंस्टॉल है।
+    ReportModuleAvailable = {0} {1} उपलब्ध है।
+    ReportModuleUpdate = नवीनतम संस्करण इंस्टॉल करने के लिए 'Update-Module -Name {0} -Force' चलाएं।
+    RequiredModuleNotInstalled = {0} {1} या उच्चतर आवश्यक है। आवश्यक मॉड्यूल इंस्टॉल करने के लिए 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' चलाएं।
+    RequiredModuleTooOld = {0} {1} वर्तमान में इंस्टॉल है। {0} {2} या उच्चतर आवश्यक है। आवश्यक संस्करण में अपडेट करने के लिए 'Update-Module -Name {0} -RequiredVersion {2} -Force' चलाएं।
 '@

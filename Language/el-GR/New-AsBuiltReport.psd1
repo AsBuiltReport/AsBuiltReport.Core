@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = Εκτέλεση σεναρίου στυλ αναφοράς από τη διαδρομή '{0}'.
     InteractiveAuth = Ο διαδραστικός έλεγχος ταυτότητας είναι ενεργοποιημένος. Ελέγξτε τα παράθυρα ελέγχου ταυτότητας για να πραγματοποιήσετε έλεγχο ταυτότητας στο σύστημα προορισμού σας.
     OutputFolder = {0} As Built Report '{1}' αποθηκεύτηκε στο '{2}'.
+    ReportModuleInfo1 = Τεκμηρίωση: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Ζητήματα ή αναφορά σφαλμάτων: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Μην ξεχάσετε να ενημερώσετε το αρχείο διαμόρφωσης αναφοράς σας μετά από κάθε νέα έκδοση: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = Ανατρέξτε στον ιστότοπο του έργου AsBuiltReport για πιο λεπτομερείς πληροφορίες: https://www.asbuiltreport.com
+    CommunityProject = Το AsBuiltReport είναι ένα έργο ανοιχτού κώδικα που διατηρείται από την κοινότητα. Δεν έχει χορηγία, υποστήριξη ή σύνδεση με οποιουσδήποτε προμηθευτές τεχνολογίας, τους υπαλλήλους τους ή τις συνδεδεμένες εταιρείες τους.
+    ReportModuleInstalled = Το {0} {1} είναι εγκατεστημένο αυτήν τη στιγμή.
+    ReportModuleAvailable = Το {0} {1} είναι διαθέσιμο.
+    ReportModuleUpdate = Εκτελέστε 'Update-Module -Name {0} -Force' για εγκατάσταση της πιο πρόσφατης έκδοσης.
+    RequiredModuleNotInstalled = Απαιτείται {0} {1} ή νεότερη έκδοση. Εκτελέστε 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' για εγκατάσταση της απαιτούμενης μονάδας.
+    RequiredModuleTooOld = Το {0} {1} είναι εγκατεστημένο αυτήν τη στιγμή. Απαιτείται {0} {2} ή νεότερη έκδοση. Εκτελέστε 'Update-Module -Name {0} -RequiredVersion {2} -Force' για ενημέρωση στην απαιτούμενη έκδοση.
 '@

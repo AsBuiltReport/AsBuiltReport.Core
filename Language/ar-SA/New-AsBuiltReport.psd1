@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = تنفيذ نص نمط التقرير من المسار '{0}'.
     InteractiveAuth = تم تمكين المصادقة التفاعلية. يرجى التحقق من نوافذ المصادقة للمصادقة على النظام المستهدف.
     OutputFolder = تم حفظ {0} As Built Report '{1}' في '{2}'.
+    ReportModuleInfo1 = التوثيق: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = المشاكل أو الإبلاغ عن الأخطاء: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = لا تنس تحديث ملف تكوين التقرير الخاص بك بعد كل إصدار جديد: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = يرجى الرجوع إلى موقع مشروع AsBuiltReport لمزيد من المعلومات التفصيلية: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport هو مشروع مفتوح المصدر تحتفظ به المجتمع. ليس له رعاية أو تأييد أو ارتباط مع أي موردي تكنولوجيا أو موظفيهم أو الشركات التابعة لهم.
+    ReportModuleInstalled = {0} {1} مثبت حالياً.
+    ReportModuleAvailable = {0} {1} متاح.
+    ReportModuleUpdate = قم بتشغيل 'Update-Module -Name {0} -Force' لتثبيت الإصدار الأحدث.
+    RequiredModuleNotInstalled = {0} {1} أو أعلى مطلوب. قم بتشغيل 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' لتثبيت الوحدة المطلوبة.
+    RequiredModuleTooOld = {0} {1} مثبت حالياً. {0} {2} أو أعلى مطلوب. قم بتشغيل 'Update-Module -Name {0} -RequiredVersion {2} -Force' للتحديث إلى الإصدار المطلوب.
 '@

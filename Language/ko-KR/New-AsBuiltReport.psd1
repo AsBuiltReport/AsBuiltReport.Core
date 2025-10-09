@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = 경로 '{0}'에서 보고서 스타일 스크립트를 실행하는 중입니다.
     InteractiveAuth = 대화형 인증이 활성화되어 있습니다. 대상 시스템에 인증하려면 인증 창을 확인하십시오.
     OutputFolder = {0} As Built Report '{1}'이(가) '{2}'에 저장되었습니다.
+    ReportModuleInfo1 = 문서: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = 문제 또는 버그 보고: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = 새 버전이 출시된 후 보고서 구성 파일을 업데이트하는 것을 잊지 마십시오: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = 자세한 내용은 AsBuiltReport 프로젝트 웹사이트를 참조하십시오: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport는 커뮤니티에서 유지 관리하는 오픈 소스 프로젝트입니다. 기술 공급업체, 직원 또는 계열사와의 후원, 보증 또는 제휴가 없습니다.
+    ReportModuleInstalled = {0} {1}이(가) 현재 설치되어 있습니다.
+    ReportModuleAvailable = {0} {1}을(를) 사용할 수 있습니다.
+    ReportModuleUpdate = 최신 버전을 설치하려면 'Update-Module -Name {0} -Force'를 실행하십시오.
+    RequiredModuleNotInstalled = {0} {1} 이상이 필요합니다. 필요한 모듈을 설치하려면 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber'를 실행하십시오.
+    RequiredModuleTooOld = {0} {1}이(가) 현재 설치되어 있습니다. {0} {2} 이상이 필요합니다. 필요한 버전으로 업데이트하려면 'Update-Module -Name {0} -RequiredVersion {2} -Force'를 실행하십시오.
 '@

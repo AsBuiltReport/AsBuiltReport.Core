@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = パス '{0}' からレポートスタイルスクリプトを実行しています。
     InteractiveAuth = 対話型認証が有効になっています。ターゲットシステムへの認証を行うには、認証ウィンドウを確認してください。
     OutputFolder = {0} As Built Report '{1}' は '{2}' に保存されました。
+    ReportModuleInfo1 = ドキュメント: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = 問題またはバグ報告: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = 新しいバージョンリリース後は、レポート設定ファイルを更新することを忘れないでください: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = 詳細については、AsBuiltReportプロジェクトのWebサイトを参照してください: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReportは、コミュニティが保守するオープンソースプロジェクトです。いかなるテクノロジーベンダー、その従業員、または関連会社とのスポンサーシップ、支援、または提携はありません。
+    ReportModuleInstalled = {0} {1} は現在インストールされています。
+    ReportModuleAvailable = {0} {1} が利用可能です。
+    ReportModuleUpdate = 最新バージョンをインストールするには 'Update-Module -Name {0} -Force' を実行してください。
+    RequiredModuleNotInstalled = {0} {1} 以降が必要です。必要なモジュールをインストールするには 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' を実行してください。
+    RequiredModuleTooOld = {0} {1} は現在インストールされています。{0} {2} 以降が必要です。必要なバージョンに更新するには 'Update-Module -Name {0} -RequiredVersion {2} -Force' を実行してください。
 '@
