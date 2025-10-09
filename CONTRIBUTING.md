@@ -171,29 +171,7 @@ Use [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) to check 
 ### DO
 
 - Use PascalCasing for all public member, type, and namespace names
-- Use custom label headers within tables for readability
 - Favor readability over brevity
-- Use PSCustomObjects to store data for PScribo tables:
-  ```powershell
-  $myObject = [PSCustomObject]@{
-      Name = 'Value'
-      Property = 'Value'
-  }
-
-  $TableParams = @{
-      Name = 'Table Name'
-      List = $true
-      ColumnWidths = 40, 60
-  }
-
-  if ($Report.ShowTableCaptions) {
-      $TableParams['Caption'] = "- $($TableParams.Name)"
-  }
-
-  $myObject | Table @TableParams
-  ```
-- Set ColumnWidths for all tables (list tables typically use 40, 60)
-- Sort primary object properties in alphanumeric order
 - Perform all safe commands (Get-*, API calls) at the start of scripts
 - Use comments in English to explain reasoning, not to describe commands
 - Maintain a changelog following [Keep a Changelog](https://keepachangelog.com/) guidelines
