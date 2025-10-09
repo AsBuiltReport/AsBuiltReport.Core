@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = 正在从路径 '{0}' 执行报告样式脚本。
     InteractiveAuth = 交互式身份验证已启用。请检查身份验证窗口以对目标系统进行身份验证。
     OutputFolder = {0} As Built Report '{1}' 已保存到 '{2}'。
+    ReportModuleInfo1 = 文档: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = 问题或错误报告: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = 不要忘记在每次新版本发布后更新您的报告配置文件: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = 请参阅 AsBuiltReport 项目网站以获取更详细的信息: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport 是一个由社区维护的开源项目。它与任何技术供应商、其员工或附属公司没有赞助、认可或关联。
+    ReportModuleInstalled = {0} {1} 当前已安装。
+    ReportModuleAvailable = {0} {1} 可用。
+    ReportModuleUpdate = 运行 'Update-Module -Name {0} -Force' 以安装最新版本。
+    RequiredModuleNotInstalled = 需要 {0} {1} 或更高版本。运行 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' 以安装所需的模块。
+    RequiredModuleTooOld = {0} {1} 当前已安装。需要 {0} {2} 或更高版本。运行 'Update-Module -Name {0} -RequiredVersion {2} -Force' 以更新到所需版本。
 '@

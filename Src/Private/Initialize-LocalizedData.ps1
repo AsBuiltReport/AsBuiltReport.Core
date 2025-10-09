@@ -210,17 +210,17 @@ function Initialize-LocalizedData {
         # by examining if ReportConfig exists and comparing with its language setting
         if ($global:ReportConfig -and $global:ReportConfig.Report.Language) {
             if ($Language -eq $global:ReportConfig.Report.Language) {
-                $LanguageSourceText = "(from report configuration file)"
+                $LanguageSourceText = " (from report configuration file)"
             } else {
                 # Language differs from config, so it must be from command-line
-                $LanguageSourceText = "(from command-line parameter)"
+                $LanguageSourceText = " (from command-line parameter)"
             }
         } elseif ($Language -eq 'en-US') {
             # Default language
-            $LanguageSourceText = "(fallback to default)"
+            $LanguageSourceText = " (fallback to default)"
         } else {
             # Explicitly specified via command-line (no config or config doesn't have language)
-            $LanguageSourceText = "(from command-line parameter)"
+            $LanguageSourceText = " (from command-line parameter)"
         }
     }
     # Create unique key for this culture fallback scenario
@@ -249,7 +249,7 @@ function Initialize-LocalizedData {
         if ($TargetCulture -ne $Culture.Name) {
             Write-Host ("Setting $LanguageType to '{0}' (fallback from '{1}')$LanguageSourceText." -f $TargetCulture, $Culture.Name) -ForegroundColor Yellow
         } else {
-            Write-Host ("Setting $LanguageType to '{0}' $LanguageSourceText." -f $TargetCulture) -ForegroundColor Yellow
+            Write-Host ("Setting $LanguageType to '{0}'$LanguageSourceText." -f $TargetCulture) -ForegroundColor Yellow
         }
 
         # Mark this combination as already shown

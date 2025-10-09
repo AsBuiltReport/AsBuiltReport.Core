@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = Đang thực thi tập lệnh kiểu báo cáo từ đường dẫn '{0}'.
     InteractiveAuth = Xác thực tương tác đã được bật. Vui lòng kiểm tra cửa sổ xác thực để xác thực với hệ thống đích của bạn.
     OutputFolder = {0} As Built Report '{1}' đã được lưu vào '{2}'.
+    ReportModuleInfo1 = Tài liệu: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Vấn đề hoặc báo cáo lỗi: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Đừng quên cập nhật tệp cấu hình báo cáo của bạn sau mỗi lần phát hành phiên bản mới: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = Vui lòng tham khảo trang web dự án AsBuiltReport để biết thông tin chi tiết hơn: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport là một dự án mã nguồn mở được cộng đồng duy trì. Nó không có tài trợ, xác nhận hoặc liên kết với bất kỳ nhà cung cấp công nghệ, nhân viên hoặc công ty liên kết nào.
+    ReportModuleInstalled = {0} {1} hiện đang được cài đặt.
+    ReportModuleAvailable = {0} {1} đã có sẵn.
+    ReportModuleUpdate = Chạy 'Update-Module -Name {0} -Force' để cài đặt phiên bản mới nhất.
+    RequiredModuleNotInstalled = Yêu cầu {0} {1} hoặc cao hơn. Chạy 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' để cài đặt mô-đun bắt buộc.
+    RequiredModuleTooOld = {0} {1} hiện đang được cài đặt. Yêu cầu {0} {2} hoặc cao hơn. Chạy 'Update-Module -Name {0} -RequiredVersion {2} -Force' để cập nhật lên phiên bản bắt buộc.
 '@

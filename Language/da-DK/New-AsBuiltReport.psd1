@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = Udfører rapportstilscript fra stien '{0}'.
     InteractiveAuth = Interaktiv godkendelse er aktiveret. Tjek venligst godkendelsesvinduer for at godkende til dit målsystem.
     OutputFolder = {0} As Built Report '{1}' er blevet gemt i '{2}'.
+    ReportModuleInfo1 = Dokumentation: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Problemer eller fejlrapportering: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Glem ikke at opdatere din rapportkonfigurationsfil efter hver ny versionsudgivelse: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = Se venligst AsBuiltReport-projektets websted for mere detaljerede oplysninger: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport er et fællesskabsvedligeholdt open source-projekt. Det har ingen sponsorering, godkendelse eller tilknytning til nogen teknologileverandører, deres ansatte eller associerede virksomheder.
+    ReportModuleInstalled = {0} {1} er i øjeblikket installeret.
+    ReportModuleAvailable = {0} {1} er tilgængelig.
+    ReportModuleUpdate = Kør 'Update-Module -Name {0} -Force' for at installere den nyeste version.
+    RequiredModuleNotInstalled = {0} {1} eller højere er påkrævet. Kør 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' for at installere den påkrævede modul.
+    RequiredModuleTooOld = {0} {1} er i øjeblikket installeret. {0} {2} eller højere er påkrævet. Kør 'Update-Module -Name {0} -RequiredVersion {2} -Force' for at opdatere til den påkrævede version.
 '@

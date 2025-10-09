@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = Spouštění skriptu stylu sestavy z cesty '{0}'.
     InteractiveAuth = Interaktivní ověřování je povoleno. Zkontrolujte okna ověřování pro ověření v cílovém systému.
     OutputFolder = {0} As Built Report '{1}' byl uložen do '{2}'.
+    ReportModuleInfo1 = Dokumentace: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Problémy nebo hlášení chyb: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Nezapomeňte aktualizovat konfigurační soubor sestavy po každém novém vydání verze: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = Podrobnější informace naleznete na webových stránkách projektu AsBuiltReport: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport je open source projekt udržovaný komunitou. Nemá žádné sponzorství, podporu ani příslušnost k žádným dodavatelům technologií, jejich zaměstnancům nebo přidruženým osobám.
+    ReportModuleInstalled = {0} {1} je aktuálně nainstalován.
+    ReportModuleAvailable = {0} {1} je k dispozici.
+    ReportModuleUpdate = Spusťte 'Update-Module -Name {0} -Force' pro instalaci nejnovější verze.
+    RequiredModuleNotInstalled = Je vyžadován {0} {1} nebo vyšší. Spusťte 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' pro instalaci požadovaného modulu.
+    RequiredModuleTooOld = {0} {1} je aktuálně nainstalován. Je vyžadován {0} {2} nebo vyšší. Spusťte 'Update-Module -Name {0} -RequiredVersion {2} -Force' pro aktualizaci na požadovanou verzi.
 '@

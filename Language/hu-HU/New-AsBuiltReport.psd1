@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = Jelentésstílus-szkript végrehajtása a(z) '{0}' elérési útról.
     InteractiveAuth = Az interaktív hitelesítés engedélyezve van. Kérjük, ellenőrizze a hitelesítési ablakokat a célrendszerbe való hitelesítéshez.
     OutputFolder = {0} As Built Report '{1}' mentve ide: '{2}'.
+    ReportModuleInfo1 = Dokumentáció: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = Problémák vagy hibajelentés: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = Ne felejtse el frissíteni a jelentéskonfigurációs fájlt minden új verzió kiadása után: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = További részletes információkért tekintse meg az AsBuiltReport projekt webhelyét: https://www.asbuiltreport.com
+    CommunityProject = Az AsBuiltReport egy közösség által karbantartott nyílt forráskódú projekt. Nincs szponzorálása, támogatása vagy kapcsolata semmilyen technológiai szállítóval, azok alkalmazottaival vagy társult vállalkozásaival.
+    ReportModuleInstalled = {0} {1} jelenleg telepítve van.
+    ReportModuleAvailable = {0} {1} elérhető.
+    ReportModuleUpdate = Futtassa az 'Update-Module -Name {0} -Force' parancsot a legújabb verzió telepítéséhez.
+    RequiredModuleNotInstalled = {0} {1} vagy újabb verzió szükséges. Futtassa az 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' parancsot a szükséges modul telepítéséhez.
+    RequiredModuleTooOld = {0} {1} jelenleg telepítve van. {0} {2} vagy újabb verzió szükséges. Futtassa az 'Update-Module -Name {0} -RequiredVersion {2} -Force' parancsot a szükséges verzióra való frissítéshez.
 '@

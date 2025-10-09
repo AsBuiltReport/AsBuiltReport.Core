@@ -27,4 +27,14 @@ ConvertFrom-StringData @'
     ReportStyleScript = กำลังดำเนินการสคริปต์สไตล์รายงานจากเส้นทาง '{0}'
     InteractiveAuth = เปิดใช้งานการยืนยันตัวตนแบบโต้ตอบแล้ว กรุณาตรวจสอบหน้าต่างการยืนยันตัวตนเพื่อยืนยันตัวตนกับระบบเป้าหมายของคุณ
     OutputFolder = {0} As Built Report '{1}' ได้รับการบันทึกไปยัง '{2}' แล้ว
+    ReportModuleInfo1 = เอกสาร: https://github.com/AsBuiltReport/AsBuiltReport.{0}
+    ReportModuleInfo2 = ปัญหาหรือการรายงานข้อบกพร่อง: https://github.com/AsBuiltReport/AsBuiltReport.{0}/issues
+    ReportModuleInfo3 = อย่าลืมอัปเดตไฟล์การกำหนดค่ารายงานของคุณหลังจากการออกเวอร์ชันใหม่แต่ละครั้ง: https://www.asbuiltreport.com/user-guide/new-asbuiltreportconfig/
+    ProjectWebsite = โปรดดูเว็บไซต์โครงการ AsBuiltReport สำหรับข้อมูลโดยละเอียดเพิ่มเติม: https://www.asbuiltreport.com
+    CommunityProject = AsBuiltReport เป็นโครงการโอเพนซอร์สที่ดูแลโดยชุมชน ไม่มีการสนับสนุน การรับรอง หรือความเกี่ยวข้องกับผู้จัดจำหน่ายเทคโนโลยีใดๆ พนักงาน หรือบริษัทในเครือ
+    ReportModuleInstalled = {0} {1} ติดตั้งอยู่ในปัจจุบัน
+    ReportModuleAvailable = {0} {1} พร้อมใช้งาน
+    ReportModuleUpdate = เรียกใช้ 'Update-Module -Name {0} -Force' เพื่อติดตั้งเวอร์ชันล่าสุด
+    RequiredModuleNotInstalled = ต้องการ {0} {1} หรือสูงกว่า เรียกใช้ 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' เพื่อติดตั้งโมดูลที่ต้องการ
+    RequiredModuleTooOld = {0} {1} ติดตั้งอยู่ในปัจจุบัน ต้องการ {0} {2} หรือสูงกว่า เรียกใช้ 'Update-Module -Name {0} -RequiredVersion {2} -Force' เพื่ออัปเดตเป็นเวอร์ชันที่ต้องการ
 '@

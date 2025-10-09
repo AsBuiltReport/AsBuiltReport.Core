@@ -10,5 +10,14 @@ foreach ($Module in @($Public + $Private)) {
     }
 }
 
+# Export public functions
 Export-ModuleMember -Function $Public.BaseName
-Export-ModuleMember -Function $Private.BaseName
+
+# Make helper functions available globally for report modules to use
+# This keeps them out of the public API but accessible from report modules
+$GlobalFunctions = @('Write-ReportModuleInfo', 'Get-RequiredModule')
+foreach ($FunctionName in $GlobalFunctions) {
+    if (Get-Command -Name $FunctionName -ErrorAction SilentlyContinue) {
+        Set-Item -Path "Function:\Global:$FunctionName" -Value (Get-Command $FunctionName).ScriptBlock
+    }
+}
