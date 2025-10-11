@@ -72,48 +72,47 @@ function New-AsBuiltReportConfig {
         [Switch] $Force
     )
 
-    $DirectorySeparatorChar = [System.IO.Path]::DirectorySeparatorChar
+    Initialize-LocalizedData -ModuleType 'Core' -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReportConfig'
 
     # Test to ensure the path the user has specified does exist
     if (-not (Test-Path -Path $($FolderPath))) {
-        Write-Error "The folder '$($FolderPath)' does not exist. Please create the folder and run New-AsBuiltReportConfig again."
-        break
+        Write-Error ($translate.FolderNotExist -f $($FolderPath)) -ErrorAction Stop
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
         $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
-        $SourcePath = $($Module.ModuleBase) + $($DirectorySeparatorChar) + $($Module.Name) + ".json"
+        $SourcePath = Join-Path -Path $($Module.ModuleBase) -ChildPath "$($Module.Name).json"
         if (Test-Path -Path $($SourcePath)) {
-            Write-Verbose -Message "Processing $($Module.Name) report configuration file from module $($Module), version $($Module.Version)."
+            Write-Verbose ($translate.ProcessConfig -f $Module.Name, $Module, $Module.Version)
             if ($Filename) {
-                $DestinationPath = $($FolderPath) + $($DirectorySeparatorChar) + $($Filename) + ".json"
+                $DestinationPath = Join-Path -Path $($FolderPath) -ChildPath "$($Filename).json"
                 if (-not (Test-Path -Path $($DestinationPath))) {
-                    Write-Verbose -Message "Copying report configuration file '$($SourcePath)' to '$($DestinationPath)'."
+                    Write-Verbose ($translate.CopyConfig -f $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination "$($DestinationPath)"
-                    Write-Output "$($Module.Name) report configuration file '$($Filename).json' created in '$($FolderPath)'."
+                    Write-Output ($translate.CreateConfig -f $Module.Name, $Filename, $FolderPath)
                 } elseif ($Force) {
-                    Write-Verbose -Message "Copying report configuration file '$($SourcePath)' to '$($DestinationPath)'. Overwriting existing file."
+                    Write-Verbose ($translate.OverWriteConfig -f $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination $($DestinationPath) -Force
-                    Write-Output "$($Module.Name) report configuration file '$($Filename).json' created in '$($FolderPath)'."
+                    Write-Output ($translate.CreateConfig -f $Module.Name, $Filename, $FolderPath)
                 } else {
-                    Write-Error "$($Module.Name) report configuration file '$($Filename).json' already exists in '$($FolderPath)'. Use 'Force' parameter to overwrite existing file."
+                    Write-Error ($translate.ForceOverwrite -f $Module.Name, $Filename, $FolderPath)
                 }
             } else {
-                $DestinationPath = $($FolderPath) + $($DirectorySeparatorChar) + $($Module.Name) + ".json"
+                $DestinationPath = Join-Path -Path $($FolderPath) -ChildPath "$($Module.Name).json"
                 if (-not (Test-Path -Path $($DestinationPath))) {
-                    Write-Verbose -Message "Copying $($Module.Name) report configuration file '$($SourcePath)' to '$($DestinationPath)'."
+                    Write-Verbose ($translate.CopyModuleConfig -f $Module.Name, $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination $($DestinationPath)
-                    Write-Output "$($Module.Name) report configuration file '$($Module.Name).json' created in '$($FolderPath)'."
+                    Write-Output ($translate.CreateConfig -f $Module.Name, $Module.Name, $FolderPath)
                 } elseif ($Force) {
-                    Write-Verbose -Message "Copying report configuration file '$($SourcePath)' to '$($DestinationPath)'. Overwriting existing file."
+                    Write-Verbose ($translate.OverWriteConfig -f $SourcePath, $DestinationPath)
                     Copy-Item -Path $($SourcePath) -Destination $($DestinationPath) -Force
-                    Write-Output "$($Module.Name) report configuration file '$($Module.Name).json' created in '$($FolderPath)'."
+                    Write-Output ($translate.CreateConfig -f $Module.Name, $Module.Name, $FolderPath)
                 } else {
-                    Write-Error "$($Module.Name) report configuration file '$($Module.Name).json' already exists in '$($FolderPath)'. Use 'Force' parameter to overwrite existing file."
+                    Write-Error ($translate.ForceOverwrite -f $Module.Name, $Module.Name, $FolderPath)
                 }
             }
         } else {
-            Write-Error "Report configuration file not found in module path '$($Module.ModuleBase)'."
+            Write-Error ($translate.ConfigNotFound -f $Module.ModuleBase)
         }
     } catch {
         Write-Error $_

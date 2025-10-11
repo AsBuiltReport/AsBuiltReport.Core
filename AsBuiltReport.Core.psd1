@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.4.3'
+    ModuleVersion = '1.5.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = 'Desktop'
@@ -110,19 +110,19 @@
             ProjectUri = 'https://github.com/AsBuiltReport/AsBuiltReport.Core'
 
             # A URL to an icon representing this module.
-            IconUri = 'https://github.com/AsBuiltReport.png'
+            IconUri = 'https://raw.githubusercontent.com/AsBuiltReport/.github/main/profile/images/AsBuiltReport.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/CHANGELOG.md'
 
             # Prerelease string of this module
-            # Prerelease = ''
+            Prerelease = 'RC1'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
             # RequireLicenseAcceptance = $false
 
             # External dependent modules of this module
-            # ExternalModuleDependencies = @()
+            # ExternalModuleDependencies = @('PScribo')
 
         } # End of PSData hashtable
 

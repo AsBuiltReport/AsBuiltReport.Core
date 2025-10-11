@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0-RC1] - 2025-10-10
+
+### Added
+- Add multilingual support for AsBuiltReport Core module
+    - `Initialize-LocalizedData` function to handle localization for both Core and Report modules
+    - `Resolve-Culture` function with comprehensive culture fallback chains for 135+ culture variants
+    - Localized user prompts and messages in `New-AsBuiltConfig` function. Support for all main languages.
+    - `ReportLanguage` parameter added to `New-AsBuiltReport` function with dynamic validation based on available languages in individual report modules
+    - Support for setting default language in report JSON configuration files using the `Report.Language` property
+- Add PowerShell module dependency checking for report modules with `Get-RequiredModule` function
+- Add `Draw-AsciiBanner` function to improve user interface in `New-AsBuiltConfig`
+- Add `Write-ReportModuleInfo` function to provide information on report modules
+- Add `SECURITY.md` and `CODE_OF_CODUCT.md` documentation
+- Add `Stale.yml` GitHub workflow to manage GitHub issues
+- Add `FUNDING.yml` to provide sponsorship links
+- Improve error handling with comprehensive try-catch blocks and meaningful error messages
+
+### Changed
+- Core module functions (`New-AsBuiltConfig`, `New-AsBuiltReport`, `New-AsBuiltReportConfig`) now default to user's OS language instead of hardcoded English
+- Report modules default to 'en-US' when no other language is supported
+- Update parameter validation to use ValidateScript blocks for dynamic language detection
+- Update `AsBuiltReport.Core.Style.ps1` script to support language translation
+- Enhanced error messages to include specific language and module information
+- Improved progress messaging during report generation
+- Update all y/n prompts in `New-AsBuiltConfig` to show defaults and handle empty input
+- Renamed `MFA` parameter to `UseInteractiveAuth` (`MFA` alias retained for backwards compatibility)
+- Update `README.md` and `CONTRIBUTING.md` documentation
+- Update `LICENSE`
+
+# Removed
+- Remove sample style scripts
+
 ## [1.4.3] - 2025-03-08
 
 ### Changed
@@ -125,7 +157,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2019-03-26
 ### Added
-- `AsBuiltReport.Core` module created to provide core as built report functionality
+- `AsBuiltReport.Core` module created to provide core AsBuiltReport functionality
 
 ### Changed
 - `AsBuiltReport` module simply becomes a manifest to install required core and report modules
@@ -139,7 +171,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.0] - 2019-03-16
 ### Added
-- `New-AsbuiltConfig` cmdlet to generate a base As Built Report JSON configuration file
+- `New-AsbuiltConfig` cmdlet to generate a base AsBuiltReport JSON configuration file
 - `New-AsBuiltReport` cmdlet to generate a report JSON configuration file
 - Username and Password parameters on `New-AsBuiltReport`
 - Support for setting the document orientation for the output report
@@ -160,5 +192,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New As-Built JSON configuration structure
   - new `AsBuiltConfigPath` parameter
   - allows unique configuration files to be created and saved
-  - if `AsBuiltConfigPath` parameter is not specified, user is prompted for As Built report configuration information
+  - if `AsBuiltConfigPath` parameter is not specified, user is prompted for AsBuiltReport configuration information
   - `New-AsBuiltConfig.ps1` & `Config.json` files are no longer required
