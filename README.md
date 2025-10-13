@@ -63,34 +63,23 @@ The module includes comprehensive mappings for:
 - French, Spanish, German, Italian variants
 - Japanese, Korean, Arabic, and many other languages
 
-### Supported Languages
-- English (US) (Default)
-- English (GB)
-- Arabic (SA)
-- Czech (CZ)
-- Danish (DK)
-- Dutch (NL)
-- Finnish (FI)
-- French (FR)
-- German (DE)
-- Greek (GR)
-- Hebrew (IL)
-- Hindi (HI)
-- Hungarian (HU)
-- Italian (IT)
-- Japanese (JP)
-- Korean (KR)
-- Norwegian (NO)
-- Polish (PL)
-- Portuguese (PT)
-- Russian (RU)
-- Simplified Chinese
-- Spanish (ES)
-- Swedish (SE)
-- Thai (TH)
-- Traditional Chinese
-- Turkish (TR)
-- Vietnamese (VN)
+### Languages supported by AsBuiltReport.Core
+| Locale Code | Language | Locale Code | Language |
+|-------------|----------|-------------|----------|
+| **en-US (default)** | English (United States) | **hu-HU** | Hungarian (Hungary) |
+| **en-GB** | English (United Kingdom) | **it-IT** | Italian (Italy) |
+| **ar-SA** | Arabic (Saudi Arabia) | **ja-JP** | Japanese (Japan) |
+| **cs-CZ** | Czech (Czech Republic) | **ko-KR** | Korean (South Korea) |
+| **da-DK** | Danish (Denmark) | **nb-NO** | Norwegian Bokmål (Norway) |
+| **de-DE** | German (Germany) | **nl-NL** | Dutch (Netherlands) |
+| **el-GR** | Greek (Greece) | **pl-PL** | Polish (Poland) |
+| **es-ES** | Spanish (Spain) | **pt-PT** | Portuguese (Portugal) |
+| **fi-FI** | Finnish (Finland) | **ru-RU** | Russian (Russia) |
+| **fr-FR** | French (France) | **sv-SE** | Swedish (Sweden) |
+| **he-IL** | Hebrew (Israel) | **th-TH** | Thai (Thailand) |
+| **hi-IN** | Hindi (India) | **tr-TR** | Turkish (Turkey) |
+| **vi-VN** | Vietnamese (Vietnam) | **zh-CN** | Chinese (China, Simplified) |
+| **zh-Hans** | Chinese (Simplified) | **zh-Hant** | Chinese (Traditional) |
 
 ## :wrench: System Requirements
 
