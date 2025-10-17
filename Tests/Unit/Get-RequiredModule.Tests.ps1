@@ -53,7 +53,7 @@ Describe 'Get-RequiredModule Unit Tests' {
         }
     }
 
-    Context 'Module Version Checking' -Skip:($PSVersionTable.PSEdition -ne 'Core') {
+    Context 'Module Version Checking' {
         It 'Should pass when module version meets requirement' {
             InModuleScope 'AsBuiltReport.Core' {
                 Mock Get-Module {

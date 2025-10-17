@@ -8,8 +8,6 @@ function Get-RequiredModule {
         minimum version. If the module is not installed or the version is too old, it throws an
         error with instructions on how to install or update the module.
 
-        This check only works for PowerShell Core (7.x) due to version comparison requirements.
-
     .PARAMETER Name
         The name of the required PowerShell module (e.g., 'Az', 'VMware.PowerCLI').
 
@@ -28,7 +26,6 @@ function Get-RequiredModule {
 
     .NOTES
         This function uses the global $translate variable for localized error messages.
-        Only works with PowerShell Core (7.x) due to version comparison logic.
         Throws an error if the module is not installed or version is too old.
     #>
 
@@ -43,26 +40,24 @@ function Get-RequiredModule {
         [String] $Version
     )
 
-    # Check if the required version of the module is installed (check only works for PowerShell Core / 7.x)
-    if ($PSVersionTable.PSEdition -eq 'Core') {
-        $RequiredModule = Get-Module -ListAvailable -Name $Name |
-            Sort-Object -Property Version -Descending |
-            Select-Object -First 1
+    # Check if the required version of the module is installed
+    $RequiredModule = Get-Module -ListAvailable -Name $Name |
+        Sort-Object -Property Version -Descending |
+        Select-Object -First 1
 
-        if ($RequiredModule) {
-            $ModuleVersion = "$($RequiredModule.Version.Major)" + "." + "$($RequiredModule.Version.Minor)" + "." + "$($RequiredModule.Version.Build)"
-        } else {
-            $ModuleVersion = $null
-        }
+    if ($RequiredModule) {
+        $ModuleVersion = "$($RequiredModule.Version.Major)" + "." + "$($RequiredModule.Version.Minor)" + "." + "$($RequiredModule.Version.Build)"
+    } else {
+        $ModuleVersion = $null
+    }
 
-        # Module not installed
-        if (-not $ModuleVersion -or $ModuleVersion -eq ".") {
-            throw ($translate.RequiredModuleNotInstalled -f $Name, $Version)
-        }
+    # Module not installed
+    if (-not $ModuleVersion -or $ModuleVersion -eq ".") {
+        throw ($translate.RequiredModuleNotInstalled -f $Name, $Version)
+    }
 
-        # Module version too old
-        if ([Version]$ModuleVersion -lt [Version]$Version) {
-            throw ($translate.RequiredModuleTooOld -f $Name, $ModuleVersion, $Version)
-        }
+    # Module version too old
+    if ([Version]$ModuleVersion -lt [Version]$Version) {
+        throw ($translate.RequiredModuleTooOld -f $Name, $ModuleVersion, $Version)
     }
 }

@@ -136,7 +136,15 @@ Describe 'Draw-AsciiBanner Unit Tests' {
                 Mock Write-Host { param($Object) $script:Output += @($Object) }
                 $script:Output = @()
                 Draw-AsciiBanner -Lines @() -TextColor 'Cyan' -SeparatorColor 'Cyan'
-                $script:Output[0] | Should -Match '─'
+                # Check separator line properties instead of exact character match
+                # This handles encoding differences between PS 5.1 and PS 7.x
+                $separator = $script:Output[0]
+                $separator.Length | Should -Be 60
+                # Verify all characters in the separator are the same
+                $uniqueChars = $separator.ToCharArray() | Select-Object -Unique
+                $uniqueChars.Count | Should -Be 1
+                # Verify it's the expected Unicode character (0x2500)
+                [int][char]$uniqueChars[0] | Should -Be 0x2500
             }
         }
     }
