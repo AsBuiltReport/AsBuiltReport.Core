@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Improve error handling for localized data import
 - Add Pester tests and GitHub workflow
+- Add Dependabot configuration for automated dependency updates
 
 ### Changed
 - Update GitHub Release action for new folder structures
+- Update Stale workflow to mark issues stale after 60 days
 
 ## [1.5.0-RC1] - 2025-10-10
 
