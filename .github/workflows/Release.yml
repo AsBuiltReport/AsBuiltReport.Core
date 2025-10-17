@@ -1,5 +1,6 @@
 name: Publish PowerShell Module
-
+permissions:
+  contents: read
 on:
   release:
     types: [published]

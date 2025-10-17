@@ -92,7 +92,7 @@ Invoke-Pester -Configuration $PesterConfiguration
 
 ## Continuous Integration
 
-The tests are automatically run on every push and pull request via GitHub Actions. See `.github/workflows/Tests.yml` for the CI/CD pipeline configuration.
+The tests are automatically run on every push and pull request via GitHub Actions. See `.github/workflows/Pester.yml` for the CI/CD pipeline configuration.
 
 ### CI/CD Pipeline Features
 - **Windows Testing**: Tests run on Windows Server (latest)

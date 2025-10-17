@@ -137,7 +137,7 @@ Tests code quality and best practices:
 
 ### Automated Testing Workflow
 
-The module includes a dedicated GitHub Actions workflow (`.github/workflows/Tests.yml`) that:
+The module includes a dedicated GitHub Actions workflow (`.github/workflows/Pester.yml`) that:
 
 1. **Runs on Multiple Events**
    - Push to main/dev/master branches
