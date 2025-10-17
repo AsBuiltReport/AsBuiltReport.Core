@@ -20,7 +20,7 @@
 </p>
 <p align="center">
     <a href="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core" alt="Code Coverage">
-        <img src="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core/branch/master/graph/badge.svg" /></a>
+        <img src="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core/graph/badge.svg" /></a>
     <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/actions/workflows/Pester.yml" alt="Pester Tests">
         <img src="https://github.com/AsBuiltReport/AsBuiltReport.Core/workflows/Pester%20Tests/badge.svg" /></a>
 </p>
