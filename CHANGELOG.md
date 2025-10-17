@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Pester tests and GitHub workflow
 - Add Dependabot configuration for automated dependency updates
 - Add Codecov integration for code coverage reporting
+- Add comprehensive unit tests for all Private functions
 
 ### Changed
 - Update GitHub Release action for new folder structures
