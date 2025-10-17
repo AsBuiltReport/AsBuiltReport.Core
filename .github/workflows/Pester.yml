@@ -12,21 +12,34 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        psversion: [pwsh, powershell]
+        exclude:
+          # PowerShell 5.1 (powershell) is only available on Windows
+          - os: ubuntu-latest
+            psversion: powershell
+          - os: macos-latest
+            psversion: powershell
+
+    name: Test on ${{ matrix.os }} with ${{ matrix.psversion == 'pwsh' && 'PowerShell 7.x' || 'PowerShell 5.1' }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install required modules
-        shell: pwsh
+        shell: ${{ matrix.psversion }}
         run: |
           Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
           Install-Module -Name Pester -MinimumVersion 5.0.0 -Force -SkipPublisherCheck
           Install-Module -Name PScribo -MinimumVersion 0.11.1 -Force
 
       - name: Run Pester tests
-        shell: pwsh
+        shell: ${{ matrix.psversion }}
         run: |
           .\Tests\Invoke-Tests.ps1 -CodeCoverage -OutputFormat NUnitXml
 
@@ -34,14 +47,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-${{ matrix.os }}-${{ matrix.psversion }}
           path: testResults.xml
 
       - name: Upload code coverage
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: code-coverage
+          name: code-coverage-${{ matrix.os }}-${{ matrix.psversion }}
           path: coverage.xml
 
       - name: Upload coverage reports to Codecov
@@ -51,7 +64,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: AsBuiltReport/AsBuiltReport.Core
           files: ./coverage.xml
-          flags: unittests
+          flags: unittests-${{ matrix.os }}-${{ matrix.psversion }}
           fail_ci_if_error: false
 
   analyze:
