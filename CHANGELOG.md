@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve error handling for localized data import
 - Add Pester tests and GitHub workflow
 - Add Dependabot configuration for automated dependency updates
+- Add Codecov integration for code coverage reporting
 
 ### Changed
 - Update GitHub Release action for new folder structures

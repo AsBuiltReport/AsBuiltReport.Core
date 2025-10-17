@@ -44,6 +44,15 @@ jobs:
           name: code-coverage
           path: coverage.xml
 
+      - name: Upload coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-asbuiltreport-core
+          fail_ci_if_error: false
+
   analyze:
     runs-on: windows-latest
 

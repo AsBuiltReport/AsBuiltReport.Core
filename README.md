@@ -19,6 +19,12 @@
         <img src="https://img.shields.io/github/contributors/AsBuiltReport/AsBuiltReport.Core.svg"/></a>
 </p>
 <p align="center">
+    <a href="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core" alt="Code Coverage">
+        <img src="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core/branch/master/graph/badge.svg" /></a>
+    <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/actions/workflows/Pester.yml" alt="Pester Tests">
+        <img src="https://github.com/AsBuiltReport/AsBuiltReport.Core/workflows/Pester%20Tests/badge.svg" /></a>
+</p>
+<p align="center">
     <a href="https://twitter.com/AsBuiltReport" alt="Twitter">
             <img src="https://img.shields.io/twitter/follow/AsBuiltReport.svg?style=social"/></a>
 </p>
