@@ -2,6 +2,9 @@ BeforeAll {
     # Import the module
     $ModulePath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\AsBuiltReport.Core\AsBuiltReport.Core.psd1'
     Import-Module $ModulePath -Force
+
+    # Ensure PowerShellGet is imported for Find-Module
+    Import-Module PowerShellGet -Force -ErrorAction SilentlyContinue
 }
 
 Describe 'Write-ReportModuleInfo Unit Tests' {
@@ -46,8 +49,8 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
                 Mock Write-Host { }
                 Mock Write-PScriboMessage { }
 
-                $VerbosePreference = 'SilentlyContinue'
-                $translate = @{
+                $script:VerbosePreference = 'SilentlyContinue'
+                $global:translate = @{
                     ReportModuleInfo1 = 'Documentation for {0} report module'
                     ReportModuleInfo2 = 'https://github.com/AsBuiltReport/AsBuiltReport.{0}'
                     ReportModuleInfo3 = 'For more information visit'
@@ -66,8 +69,8 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
                 Mock Write-Host { }
                 Mock Write-PScriboMessage { }
 
-                $VerbosePreference = 'SilentlyContinue'
-                $translate = @{
+                $script:VerbosePreference = 'SilentlyContinue'
+                $global:translate = @{
                     ReportModuleInfo1 = 'Documentation for {0} report module'
                     ReportModuleInfo2 = 'https://github.com/AsBuiltReport/AsBuiltReport.{0}'
                     ReportModuleInfo3 = 'For more information visit'
@@ -90,8 +93,8 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
                 Mock Write-Host { }
                 Mock Write-PScriboMessage { }
 
-                $VerbosePreference = 'SilentlyContinue'
-                $translate = @{
+                $script:VerbosePreference = 'SilentlyContinue'
+                $global:translate = @{
                     ReportModuleInfo1 = 'Documentation for {0} report module'
                     ReportModuleInfo2 = 'https://github.com/AsBuiltReport/AsBuiltReport.{0}'
                     ReportModuleInfo3 = 'For more information visit'
