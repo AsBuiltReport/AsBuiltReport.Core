@@ -41,12 +41,13 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
     Context 'Basic Functionality' {
         It 'Should execute without errors in non-verbose mode' {
             InModuleScope 'AsBuiltReport.Core' {
-                Mock Get-Module { } -ModuleName AsBuiltReport.Core
-                Mock Find-Module { } -ModuleName AsBuiltReport.Core
-                Mock Write-Host { } -ModuleName AsBuiltReport.Core
+                Mock Get-Module { }
+                Mock Find-Module { }
+                Mock Write-Host { }
+                Mock Write-PScriboMessage { }
 
-                $global:VerbosePreference = 'SilentlyContinue'
-                $global:translate = @{
+                $VerbosePreference = 'SilentlyContinue'
+                $translate = @{
                     ReportModuleInfo1 = 'Documentation for {0} report module'
                     ReportModuleInfo2 = 'https://github.com/AsBuiltReport/AsBuiltReport.{0}'
                     ReportModuleInfo3 = 'For more information visit'
@@ -60,12 +61,13 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
 
         It 'Should check for installed module version' {
             InModuleScope 'AsBuiltReport.Core' {
-                Mock Get-Module { } -ModuleName AsBuiltReport.Core
-                Mock Find-Module { } -ModuleName AsBuiltReport.Core
-                Mock Write-Host { } -ModuleName AsBuiltReport.Core
+                Mock Get-Module { }
+                Mock Find-Module { }
+                Mock Write-Host { }
+                Mock Write-PScriboMessage { }
 
-                $global:VerbosePreference = 'SilentlyContinue'
-                $global:translate = @{
+                $VerbosePreference = 'SilentlyContinue'
+                $translate = @{
                     ReportModuleInfo1 = 'Documentation for {0} report module'
                     ReportModuleInfo2 = 'https://github.com/AsBuiltReport/AsBuiltReport.{0}'
                     ReportModuleInfo3 = 'For more information visit'
@@ -75,7 +77,7 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
 
                 Write-ReportModuleInfo -ModuleName 'TestModule'
 
-                Should -Invoke Get-Module -ModuleName AsBuiltReport.Core -ParameterFilter {
+                Should -Invoke Get-Module -ParameterFilter {
                     $Name -eq 'AsBuiltReport.TestModule' -and $ListAvailable -eq $true
                 }
             }
@@ -83,12 +85,13 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
 
         It 'Should construct full module name correctly' {
             InModuleScope 'AsBuiltReport.Core' {
-                Mock Get-Module { } -ModuleName AsBuiltReport.Core
-                Mock Find-Module { } -ModuleName AsBuiltReport.Core
-                Mock Write-Host { } -ModuleName AsBuiltReport.Core
+                Mock Get-Module { }
+                Mock Find-Module { }
+                Mock Write-Host { }
+                Mock Write-PScriboMessage { }
 
-                $global:VerbosePreference = 'SilentlyContinue'
-                $global:translate = @{
+                $VerbosePreference = 'SilentlyContinue'
+                $translate = @{
                     ReportModuleInfo1 = 'Documentation for {0} report module'
                     ReportModuleInfo2 = 'https://github.com/AsBuiltReport/AsBuiltReport.{0}'
                     ReportModuleInfo3 = 'For more information visit'
@@ -98,7 +101,7 @@ Describe 'Write-ReportModuleInfo Unit Tests' {
 
                 Write-ReportModuleInfo -ModuleName 'VMware.vSphere'
 
-                Should -Invoke Get-Module -ModuleName AsBuiltReport.Core -ParameterFilter {
+                Should -Invoke Get-Module -ParameterFilter {
                     $Name -eq 'AsBuiltReport.VMware.vSphere'
                 }
             }
