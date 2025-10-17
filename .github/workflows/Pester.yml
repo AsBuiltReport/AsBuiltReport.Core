@@ -31,15 +31,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install required modules
-        shell: ${{ matrix.psversion }}
+      - name: Install required modules (PowerShell 7.x)
+        if: matrix.psversion == 'pwsh'
+        shell: pwsh
         run: |
           Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
           Install-Module -Name Pester -MinimumVersion 5.0.0 -Force -SkipPublisherCheck
           Install-Module -Name PScribo -MinimumVersion 0.11.1 -Force
 
-      - name: Run Pester tests
-        shell: ${{ matrix.psversion }}
+      - name: Install required modules (PowerShell 5.1)
+        if: matrix.psversion == 'powershell'
+        shell: powershell
+        run: |
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module -Name Pester -MinimumVersion 5.0.0 -Force -SkipPublisherCheck
+          Install-Module -Name PScribo -MinimumVersion 0.11.1 -Force
+
+      - name: Run Pester tests (PowerShell 7.x)
+        if: matrix.psversion == 'pwsh'
+        shell: pwsh
+        run: |
+          .\Tests\Invoke-Tests.ps1 -CodeCoverage -OutputFormat NUnitXml
+
+      - name: Run Pester tests (PowerShell 5.1)
+        if: matrix.psversion == 'powershell'
+        shell: powershell
         run: |
           .\Tests\Invoke-Tests.ps1 -CodeCoverage -OutputFormat NUnitXml
 
