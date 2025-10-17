@@ -1,5 +1,8 @@
 name: Pester Tests
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main, dev, master]
