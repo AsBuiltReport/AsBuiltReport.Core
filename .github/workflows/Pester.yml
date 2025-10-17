@@ -44,13 +44,14 @@ jobs:
           name: code-coverage
           path: coverage.xml
 
-      - name: Upload coverage to Codecov
+      - name: Upload coverage reports to Codecov
         if: always()
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: AsBuiltReport/AsBuiltReport.Core
           files: ./coverage.xml
           flags: unittests
-          name: codecov-asbuiltreport-core
           fail_ci_if_error: false
 
   analyze:
