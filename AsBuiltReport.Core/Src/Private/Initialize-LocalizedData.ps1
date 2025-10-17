@@ -151,8 +151,9 @@ function Initialize-LocalizedData {
                     $script:LangPath = $SearchPath.Path
                     break
                 } catch {
-                    # Continue to next fallback if import fails
-                    Write-Error "Cannot load $FallbackCulture language file. Ensure $TestFile exists and is valid." -ErrorAction Stop
+                    # Preserve the actual error details and continue to next fallback if import fails
+                    $ErrorDetails = "Cannot load $FallbackCulture language file from '$TestFile'. Error: $($_.Exception.Message)"
+                    Write-Error $ErrorDetails -ErrorAction Stop
                 }
             }
         }
@@ -174,7 +175,8 @@ function Initialize-LocalizedData {
                     $script:LangPath = $SearchPath.Path
                     break
                 } catch {
-                    Write-Error "Cannot load en-US language file. Ensure $TestFile exists and is valid." -ErrorAction Stop
+                    $ErrorDetails = "Cannot load en-US language file from '$TestFile'. Error: $($_.Exception.Message)"
+                    Write-Error $ErrorDetails -ErrorAction Stop
                 }
             }
         }

@@ -434,9 +434,17 @@ function New-AsBuiltReport {
                 Initialize-LocalizedData -ModuleBasePath $ReportModulePath -LanguageFile $ReportLanguageFile -ModuleType 'Report' -ModuleName $Report -Language $FinalReportLanguage
                 $ReportTranslations = $global:translate
             } catch {
-                # If report-specific language file not found, use default empty translations for reports
-                Write-Warning "Report module localization not found for $ReportModuleName. Using default language '$FinalReportLanguage'."
-                $ReportTranslations = @{}
+                # If report-specific language file not found or invalid, determine severity
+                $ErrorMessage = $_.Exception.Message
+                if ($ErrorMessage -match "Error:") {
+                    # This is a file validation error from Initialize-LocalizedData - this is FATAL
+                    # The file exists but has syntax errors (duplicate keys, invalid PowerShell syntax, etc.)
+                    Write-Error "Report module localization file error for $ReportModuleName`: $ErrorMessage`n`nPlease fix the language file syntax errors before running the report." -ErrorAction Stop
+                } else {
+                    # This is a file not found error - warn but allow to continue with empty translations
+                    Write-Warning "Report module localization not found for $ReportModuleName. Using default language '$FinalReportLanguage'."
+                    $ReportTranslations = @{}
+                }
             }
         } else {
             $ReportTranslations = @{}
