@@ -53,9 +53,9 @@ The AsBuiltReport Core module is compatible with the following PowerShell versio
 The AsBuiltReport Core module provides UI language support, translating on-screen prompts and messages to match your PowerShell session's configured language. The UI language is automatically detected from your PowerShell session's [culture](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-culture) settings.
 
 > [!IMPORTANT]
-> The AsBuiltReport Core module translates UI prompts and messages only.
+> The AsBuiltReport Core module provides the translation functionality for both core UI prompts and report module content.
 >
-> Individual report modules provide their own language support for report content such as headings, text, and tables.
+> Individual report modules provide their own translation files for report-specific content such as headings, text, and tables.
 >
 > Please refer to individual [report module documentation](https://www.asbuiltreport.com/user-guide/report-modules/overview/) for their language support.
 
