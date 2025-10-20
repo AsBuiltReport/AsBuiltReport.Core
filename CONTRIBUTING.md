@@ -1,164 +1,200 @@
-# Contributing to AsBuiltReport
-Your contribution is welcomed and appreciated. Contributing to this project is as easy as:
+# Contributing to AsBuiltReport.Core
 
-- Discussing the current state of the code
+Your contribution is welcomed and appreciated! Thank you for taking the time to contribute to this project.
+
+Please take a moment to review this document to make the contribution process easy and effective for everyone involved.
+
+Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue or assessing patches and features.
+
+## Ways to Contribute
+
+Contributing to this project is as easy as:
+
+- Reporting bugs and issues
 - Proposing new features
-- Reporting an issue or bug
-- Submitting a fix
-- Creating a new report module
+- Discussing the current state of the code
+- Submitting fixes and improvements
+- Creating new report modules
+- Improving documentation
 
-### Intro to Git and GitHub
-* Make sure you have a [GitHub account](https://github.com/signup/free).
-* Learning Git:
-    * [Learning Git and GitHub](https://help.github.com/articles/good-resources-for-learning-git-and-github/)
-    * [Git Branching](https://learngitbranching.js.org/)
+For comprehensive contribution guidelines, please visit our [Developer Guide](https://www.asbuiltreport.com/dev-guide/contributing).
 
-### Develop with GitHub
-This project uses GitHub to host code, to track issues and feature requests, as well as accept pull requests.
+## Getting Started
 
-We use [GitHub Flow](https://docs.github.com/get-started/quickstart/github-flow) to collaborate and to propose changes to the codebase. We actively welcome your pull requests.
+### Prerequisites
 
-#### Forks and Pull Requests
+- A [GitHub account](https://github.com/signup/free)
+- Git installed on your local machine
+- PowerShell 5.1 or PowerShell 7+
+- [Visual Studio Code](https://code.visualstudio.com/) (recommended)
 
-GitHub fosters collaboration through the notion of [pull requests](https://help.github.com/articles/using-pull-requests/). On GitHub, anyone can [fork](https://help.github.com/articles/fork-a-repo/) an existing repository into their own user account, where they can make private changes to their fork. To contribute these changes back into the original repository, a user simply creates a pull request in order to "request" that the changes be taken "upstream".
+### Learning Resources
 
-Additional references:
+If you're new to Git and GitHub:
 
-- GitHub's guide on [Forking](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)
-- GitHub's guide on [Contributing to Open Source](https://docs.github.com/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github)
-- GitHub's guide on [Understanding the GitHub Flow](https://docs.github.com/get-started/quickstart/github-flow)
+- [GitHub's guide on Forking](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)
+- [GitHub's guide on Contributing to Open Source](https://docs.github.com/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github)
+- [Understanding the GitHub Flow](https://docs.github.com/get-started/quickstart/github-flow)
 
-#### Version control branching
+## Using the Issue Tracker
 
-- Always [create a new branch](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests) for your work, no matter how small.
-- Avoid submitting unrelated changes (bug fixes & new features) in the same branch/pull request.
-- Base your new branch off of the appropriate branch on the `dev` repository.
+The issue tracker is the preferred channel for bug reports, feature requests, and submitting pull requests. Please respect the following:
 
-### How to submit a contribution
-If you wish to discuss ways in which to contribute to the AsBuiltReport project, you may raise an [issue](https://docs.github.com/issues/tracking-your-work-with-issues/about-issues#working-with-issues) within the relevant [repository](https://github.com/AsBuiltReport), or [email us](mailto:support@asbuiltreport.com).
+- **Do not** use the issue tracker for personal support requests. Use [Stack Overflow](http://stackoverflow.com) or community forums instead.
+- **Do not** derail or troll issues. Keep discussions on topic and respect the opinions of others.
+- Search existing issues (both open and closed) before creating a new one to avoid duplicates.
 
-#### Creating quality pull requests
-A good quality pull request will have the following characteristics:
+## Reporting Bugs
 
-- When you create a pull request, include a summary about your changes in the PR description. The description is used to create change logs, so try to have the first sentence explain the benefit to end users. If the changes are related to an existing GitHub issue, please reference the issue in the PR description (e.g. *Fix #11*)
-- It's recommended to avoid a PR with too many changes. A large PR not only stretches the review time, but also makes it much harder to identify issues. In such case, it's better to split the PR to multiple smaller ones. For large features, try to approach it in an incremental way, so that each PR won't be too big.
-- Add a meaningful title of the PR describing what change you want to check in. Don't simply put: *"Fix issue #5"*. Also don't directly use the issue title as the PR title. An issue title is to briefly describe what is wrong, while a PR title is to briefly describe what is changed. A better example is: *"Add Ensure parameter to New-Item cmdlet"*, with *"Fix #5"* in the PR's body.
+A bug is a demonstrable problem that is caused by the code in the repository. Good bug reports are extremely helpful!
 
-- Please use the present tense and imperative mood when describing your changes:
-    - Instead of *"Adding support for Windows Server 2012 R2"*, write *"Add support for Windows Server 2012 R2"*.
-    - Instead of *"Fixed for server connection issue"*, write *"Fix server connection issue"*.
-- It will have a title that reflects the work within, and a summary that helps to understand the context of the change.
-- There will be well written commit messages, with well crafted commits that tell the story of the development of this work.
-- Ideally it will be small and easy to understand. Single commit PRs are usually easy to submit, review, and merge.
-- The code contained within will meet the best practices set by the team wherever possible. If in doubt, please [contact us](https://www.asbuiltreport.com/about/contact/).
+### Before Submitting a Bug Report
 
-#### Submitting pull requests
-**Always create a pull request to the `dev` branch of a repository.**
+Please perform the following due diligence:
 
-1. Fork an [AsBuiltReport repository](https://github.com/AsBuiltReport). The example below uses the main AsBuiltReport.Core repository in the command examples.
-2. Add `https://github.com/AsBuiltReport/AsBuiltReport.Core.git` as a remote named `upstream`.
-    - `git remote add upstream https://github.com/AsBuiltReport/AsBuiltReport.Core.git`
-3. Create your feature branch from `dev`.
-4. Work on your feature.
-    - Update `CHANGELOG.md` in the repository you have worked in with add / remove / fix / change information
-    - Update `README.md` in the repository you have worked in with any new information, such as features, instructions, parameters and/or examples
-5. Squash commits into one or two succinct commits.
-    - `git rebase -i HEAD~n` # n being the number of previous commits to rebase
-6. Ensure that your branch is up to date with `upstream/dev`.
-    - `git checkout <branch>`
-    - `git fetch upstream`
-    - `git rebase upstream/dev`
-7. Push branch to your fork.
-    - `git push --force`
-8. Open a Pull Request against the `dev` branch of a repository. We have Pull Requests templates in all repositories for this project. Please follow the template with each Pull Request.
+1. **Read the documentation** - Check the `README` in the AsBuiltReport.Core repository, including Supported Versions, System Requirements, and Module Installation sections.
+2. **Update to the latest version** - Your issue may already be fixed in the most recent release.
+3. **Check dependencies** - Try upgrading or downgrading vendor PowerShell modules if applicable.
+4. **Use the `-Verbose` parameter** - This may help identify the issue.
+5. **Test with InfoLevels** - Set all InfoLevels to 0 in your report config, then gradually increase them to isolate the problem.
+6. **Try older versions** - If you're on the latest release, try rolling back to see if the problem exists in earlier versions.
+7. **Search existing issues** - Make sure it's not a known issue.
 
-Pull requests will be reviewed as soon as possible.
+### What to Include in Bug Reports
 
-### Reporting Issues and Bugs
-GitHub issues is used to track issues and bugs. Report a bug by opening a new [issue](https://docs.github.com/issues/tracking-your-work-with-issues/about-issues#working-with-issues) in the relevant [AsBuiltReport repository](https://github.com/AsBuiltReport).
-
-#### Due diligence
-Before submitting a bug, or raising an issue, please do the following;
-
-- Perform **basic troubleshooting** steps:
-    - **Read the documentation.** Ensure you have read the `README` documentation within the relevant report repository. Check the `Supported Versions`, `System Requirements` and `Module Installation` sections.
-    - **Make sure you're running the latest version.** If you’re not on the most recent version, your problem may have been solved already! Upgrading is always the best first step.
-    - **Review dependencies.** If the release in question has other dependencies (e.g. vendor PowerShell modules) try upgrading/downgrading those as well.
-    - **Use `Verbose` parameter.** Add `-Verbose` parameter to the command line to see if the issue can be identified via the output.
-    - **Disable report InfoLevels.** Edit the report config and set all InfoLevels to 0. Gradually increase InfoLevel values for each section individually, until you are able to recreate the issue.
-    - **Try older versions.** If you’re already on the latest release, try rolling back a few minor versions (e.g. if on 1.7, try 1.5 or 1.6) and see if the problem goes away. This will help narrow down when the problem first arose in the commit log.
-- **Search the open and closed issues within the relevant repository** to make sure it’s not a current or previous known issue.
-
-#### What to include in your issue report
-To make sure your issue gets the attention it deserves, please consider the information requested below as the bare minimum; more information is almost always better! Issues with missing information may be ignored or pushed back to you, delaying a resolution.
-
-Great issue and bug reports tend to have:
+A good bug report should include:
 
 - A quick summary and/or background of the issue
-- Software versions you are using;
-    - AsBuiltReport module versions (e.g. AsBuiltReport.Core v1.2.0 & AsBuiltReport.VMware.vSphere v1.3.1)
-    - PowerShell versions (e.g. Windows PowerShell 5.1)
-    - Operating System versions (e.g. Windows Server 2016 Version 1607)
-- Steps to reproduce the issue;
-    - Be specific
-    - Provide the full command line you are executing
-    - Give sample code if you can
-    - Upload a screenshot if possible
-- What you expected would happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or steps you have performed to resolve the issue)
+- Software versions:
+  - AsBuiltReport module versions (e.g., AsBuiltReport.Core v1.4.3)
+  - PowerShell version (e.g., Windows PowerShell 5.1 or PowerShell 7.4)
+  - Operating System (e.g., Windows Server 2022)
+- Steps to reproduce:
+  - Be specific
+  - Provide the full command line you executed
+  - Include sample code if applicable
+  - Upload screenshots if helpful
+- What you expected to happen
+- What actually happened
+- Additional notes (why you think this might be happening, troubleshooting steps you've tried)
 
-### Code Contributions
+## Feature Requests
 
-#### Code Editor
-We highly encourage you use the multi-platform code editor [Visual Studio Code (VS Code)](https://code.visualstudio.com/docs) when developing code for AsBuiltReport.
+Feature requests are welcome! Please provide as much detail and context as possible about:
 
-#### Use a Consistent Coding Style
-Code contributors should follow the [PowerShell Guidelines](https://github.com/PoshCode/PowerShellPracticeAndStyle) wherever possible to ensure scripts are consistent in style.
+- The problem you're trying to solve
+- Why this feature would be valuable
+- How you envision it working
+- Any examples from other tools or projects
 
-Use [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) to check code quality against PowerShell Best Practices.
+It's up to you to make a strong case for the merits of this feature. Keep in mind that features should fit within the scope and aims of the project.
 
-✅ DO
+## Pull Requests
 
-- Use [PascalCasing](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/capitalization-conventions) for all public member, type, and namespace names consisting of multiple words.
-- Use custom label headers within tables, where required, to make easily readable labels.
-- Favour readability over [brevity](https://www.dictionary.com/browse/brevity).
-- Use [PSCustomObjects](https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-pscustomobject?view=powershell-7) to store data that will be exported to a [PScribo](https://github.com/iainbrighton/PScribo) table. This helps with readability.
-    - Use the following structure to create tables
+Good pull requests (patches, improvements, new features) are a fantastic help. They should remain focused in scope and avoid containing unrelated commits.
 
-        ```powershell title="Creating tables with PSCustomObject"
-            # Create the PSCustomObject
-            $myObject = [PSCustomObject]@{
-                Name     = 'Tim'
-                Language = 'PowerShell'
-                City = 'Melbourne'
-                State    = 'Victoria'
-                Country = 'Australia'
-            }
-            # Set the table parameters - Table name, type & column widths
-            # A list table is set and column widths are evenly set at 50% for each column
-            $TableParams = @{
-                Name = 'User Info'
-                List = $true
-                ColumnWidths = 50, 50
-            }
-            # This code snippet must be included for options to show table captions
-            if ($Report.ShowTableCaptions) {
-                $TableParams['Caption'] = "- $($TableParams.Name)"
-            }
-            # Output PSCustomObject to table using defined parameters
-            $myObject | Table @TableParams
-        ```
+**Please ask first** before embarking on any significant pull request (e.g., implementing features, refactoring code), otherwise you risk spending time on something that might not be merged.
 
-- Set `ColumnWidths` for all tables to improve formatting and readability. Try to maintain a consistent style throughout the report. Cell text will word wrap. List tables should generally use column widths of `50, 50`.
-- Sort primary object properties in alphanumeric order.
-- Try to perform all safe commands (Get-*, Get API call, etc) at the start of a report script so it can easily be seen what data is being collected.
-- Use comments written in English, but don't overdo it. Comments should serve to your reasoning and decision-making, not attempt to explain what a command does.
-- Maintain a change log as per [these guidelines](https://keepachangelog.com/en/1.0.0/). The change log should be named `CHANGELOG.md`.
+### Creating Quality Pull Requests
 
-❌ DO NOT
-- Do not include code within report scripts to install or import PowerShell modules. Dependencies should either be documented under the `System Requirements` and `Module Installation` sections of the `README`, or added to the `RequiredModules` section within the report module manifest.
-- Do not include functions within report scripts. Individual script files should be created as a private function and be stored in the `\Src\Private` folder.
+A good quality pull request will have:
 
-### License
-By contributing, you agree that your contributions will be licensed under the MIT License.
+- **A meaningful title** describing what change you're making (not just "Fix issue #5")
+  - Use present tense and imperative mood: "Add support for Server 2022" not "Added support"
+  - "Fix connection timeout" not "Fixed for connection issue"
+- **A clear description** summarizing the changes and their benefits
+  - Reference related issues (e.g., "Fix #11")
+  - First sentence should explain the benefit to end users
+- **Focused scope** - Avoid PRs with too many changes; split large features into smaller PRs
+- **Updated documentation**:
+  - Update `CHANGELOG.md` with add/remove/fix/change information
+  - Update `README.md` with new features, instructions, parameters, or examples
+- **Well-written commits** that tell the story of the development
+- **Code quality** meeting project best practices
+
+### Submitting Pull Requests
+
+Always create pull requests against the `dev` branch:
+
+1. Fork the AsBuiltReport repository
+
+2. Clone your fork and add the upstream remote:
+   ```bash
+   git clone https://github.com/<your-username>/AsBuiltReport.Core
+   cd AsBuiltReport.Core
+   git remote add upstream https://github.com/AsBuiltReport/AsBuiltReport.Core
+   ```
+
+3. Create a new feature branch from `dev`:
+   ```bash
+   git checkout dev
+   git pull upstream dev
+   git checkout -b <feature-branch-name>
+   ```
+
+4. Make your changes and commit with clear messages
+
+5. Update documentation (`CHANGELOG.md` and `README.md`)
+
+6. Squash commits into one or two succinct commits if needed:
+   ```bash
+   git rebase -i HEAD~n  # n being the number of commits to rebase
+   ```
+
+7. Ensure your branch is up to date with upstream:
+   ```bash
+   git fetch upstream
+   git rebase upstream/dev
+   ```
+
+8. Push your branch to your fork:
+   ```bash
+   git push --force origin <feature-branch-name>
+   ```
+
+9. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/) against the `dev` branch
+
+Pull requests will be reviewed as soon as possible. Please follow the PR template provided in the repository.
+
+## Code Contributions
+
+### Code Editor
+
+We highly recommend using [Visual Studio Code](https://code.visualstudio.com/) for development.
+
+### Coding Standards
+
+Code contributors should follow the [PowerShell Best Practices and Style Guide](https://github.com/PoshCode/PowerShellPracticeAndStyle) to ensure consistency.
+
+Use [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) to check code quality.
+
+### DO
+
+- Use PascalCasing for all public member, type, and namespace names
+- Favor readability over brevity
+- Perform all safe commands (Get-*, API calls) at the start of scripts
+- Use comments in English to explain reasoning, not to describe commands
+- Maintain a changelog following [Keep a Changelog](https://keepachangelog.com/) guidelines
+
+### DO NOT
+
+- Include functions within report scripts (create separate files in `\Src\Private`)
+- Submit unrelated changes in the same pull request
+
+## Version Control Branching
+
+- Always create a new branch for your work
+- Base your branch off `dev`
+- Avoid submitting unrelated changes (bug fixes & new features) in the same branch
+
+## Questions and Discussion
+
+If you have questions or want to discuss contributions:
+
+- Raise an issue in the AsBuiltReport.Core [repository](https://github.com/AsBuiltReport/AsBuiltReport.Core)
+- Email us at support@asbuiltreport.com
+- Visit our website at [www.asbuiltreport.com](https://www.asbuiltreport.com)
+
+## License
+
+By submitting a patch, you agree to allow the project owner to license your work under the [MIT License](https://www.asbuiltreport.com/about/license/).

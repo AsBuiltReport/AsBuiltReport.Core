@@ -3,6 +3,9 @@ on: [push, pull_request]
 jobs:
   lint:
     name: Run PSScriptAnalyzer
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4

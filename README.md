@@ -19,12 +19,18 @@
         <img src="https://img.shields.io/github/contributors/AsBuiltReport/AsBuiltReport.Core.svg"/></a>
 </p>
 <p align="center">
+    <a href="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core" alt="Code Coverage">
+        <img src="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core/graph/badge.svg?token=DRYB310SS4" /></a>
+    <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/actions/workflows/Pester.yml" alt="Pester Tests">
+        <img src="https://github.com/AsBuiltReport/AsBuiltReport.Core/workflows/Pester%20Tests/badge.svg" /></a>
+</p>
+<p align="center">
     <a href="https://twitter.com/AsBuiltReport" alt="Twitter">
             <img src="https://img.shields.io/twitter/follow/AsBuiltReport.svg?style=social"/></a>
 </p>
 
 <p align="center">
-    <a href='https://ko-fi.com/B0B7DDGZ7' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+    <a href='https://ko-fi.com/B0B7DDGZ7' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://ko-fi.com/img/githubbutton_sm.svg' border='0' alt='Want to keep alive this project? Support me on Ko-fi' /></a>
 </p>
 
 # AsBuiltReport.Core
@@ -37,11 +43,49 @@ The following simple list of instructions will get you started with the AsBuiltR
 
 ## :floppy_disk: Supported Versions
 ### **PowerShell**
-This module is compatible with the following PowerShell versions;
+The AsBuiltReport Core module is compatible with the following PowerShell versions;
 
 | Windows PowerShell 5.1 |    PowerShell 7    |
 | :--------------------: | :----------------: |
 |   :white_check_mark:   | :white_check_mark: |
+
+## 🗺️ Language Support
+The AsBuiltReport Core module provides UI language support, translating on-screen prompts and messages to match your PowerShell session's configured language. The UI language is automatically detected from your PowerShell session's [culture](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-culture) settings.
+
+> [!IMPORTANT]
+> The AsBuiltReport Core module provides the translation functionality for both core UI prompts and report module content.
+>
+> Individual report modules provide their own translation files for report-specific content such as headings, text, and tables.
+>
+> Please refer to individual [report module documentation](https://www.asbuiltreport.com/user-guide/report-modules/overview/) for their language support.
+
+The module provides intelligent fallbacks for regional language variants.
+
+For example, 'fr-CA' (French-Canada) will fall back to 'fr-FR' (French-France), then 'en-US'. This ensures that if a specific regional translation is not available, the module will try the parent language, and finally fall back to 'en-US'.
+
+The module includes comprehensive mappings for:
+- English variants (en-AU, en-GB, en-CA, etc.)
+- Chinese variants (simplified and traditional)
+- French, Spanish, German, Italian variants
+- Japanese, Korean, Arabic, and many other languages
+
+### Languages supported by AsBuiltReport.Core
+| Locale Code | Language | Locale Code | Language |
+|-------------|----------|-------------|----------|
+| **en-US (default)** | English (United States) | **hu-HU** | Hungarian (Hungary) |
+| **en-GB** | English (United Kingdom) | **it-IT** | Italian (Italy) |
+| **ar-SA** | Arabic (Saudi Arabia) | **ja-JP** | Japanese (Japan) |
+| **cs-CZ** | Czech (Czech Republic) | **ko-KR** | Korean (South Korea) |
+| **da-DK** | Danish (Denmark) | **nb-NO** | Norwegian Bokmål (Norway) |
+| **de-DE** | German (Germany) | **nl-NL** | Dutch (Netherlands) |
+| **el-GR** | Greek (Greece) | **pl-PL** | Polish (Poland) |
+| **es-ES** | Spanish (Spain) | **pt-PT** | Portuguese (Portugal) |
+| **fi-FI** | Finnish (Finland) | **ru-RU** | Russian (Russia) |
+| **fr-FR** | French (France) | **sv-SE** | Swedish (Sweden) |
+| **he-IL** | Hebrew (Israel) | **th-TH** | Thai (Thailand) |
+| **hi-IN** | Hindi (India) | **tr-TR** | Turkish (Turkey) |
+| **vi-VN** | Vietnamese (Vietnam) | **zh-CN** | Chinese (China, Simplified) |
+| **zh-Hans** | Chinese (Simplified) | **zh-Hant** | Chinese (Traditional) |
 
 ## :wrench: System Requirements
 
@@ -121,7 +165,7 @@ _Note: You are not limited to installing the module to those example paths, you 
 
 ### **New-AsBuiltReport**
 
-The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of as built report to generate is specified by using the `Report` parameter. The report parameter relies on additional report modules being installed alongside the `AsBuiltReport.Core` module. The `Target` parameter specifies one or more systems on which to connect and run the report. User credentials to the system are specified using the `Credential`, or the `Username` and `Password` parameters. One or more document formats, such as `HTML`, `Word` or `Text` can be specified using the `Format` parameter. Additional parameters are outlined below.
+The `New-AsBuiltReport` cmdlet is used to generate AsBuiltReports. The type of AsBuiltReport to generate is specified by using the `Report` parameter. The report parameter relies on additional report modules being installed alongside the `AsBuiltReport.Core` module. The `Target` parameter specifies one or more systems on which to connect and run the report. User credentials to the system are specified using the `Credential`, or the `Username` and `Password` parameters. One or more document formats, such as `HTML`, `Word` or `Text` can be specified using the `Format` parameter. Additional parameters are outlined below.
 
 ```powershell
 .PARAMETER Report
@@ -137,12 +181,17 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
     Specifies the password for the target system.
 .PARAMETER Token
     Specifies an API token to authenticate to the target system.
-.PARAMETER MFA
-    Use multifactor authentication to authenticate to the target system.
+.PARAMETER UseInteractiveAuth
+    Use interactive authentication (via 3rd party identity provider) to authenticate to the target system.
+    This parameter has an alias 'MFA' for backwards compatibility.
 .PARAMETER Format
     Specifies the output format of the report.
     The supported output formats are WORD, HTML & TEXT.
     Multiple output formats may be specified, separated by a comma.
+.PARAMETER ReportLanguage
+    Specifies the language for report content generated by the report module.
+    Available languages are dynamically determined based on language folders in the selected report module.
+    By default, the language will be set to en-US.
 .PARAMETER Orientation
     Sets the page orientation of the report to Portrait or Landscape.
     By default, page orientation will be set to Portrait.
@@ -161,7 +210,7 @@ The `New-AsBuiltReport` cmdlet is used to generate as built reports. The type of
 .PARAMETER SendEmail
     Sends report to specified recipients as email attachments.
 .PARAMETER AsBuiltConfigFilePath
-    Enter the full path to the As Built Report configuration JSON file.
+    Enter the full path to the AsBuiltReport configuration JSON file.
     If this parameter is not specified, the user will be prompted for this configuration information on first
     run, with the option to save the configuration to a file.
 .PARAMETER ReportConfigFilePath
@@ -183,7 +232,7 @@ Get-Help New-AsBuiltReport -Full
 
 ### **New-AsBuiltReportConfig**
 
-The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files for individual As Built Reports. Cmdlet parameters and examples are outlined below.
+The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files for individual AsBuiltReports. Cmdlet parameters and examples are outlined below.
 
 ```powershell
 .PARAMETER Report
@@ -213,21 +262,21 @@ Get-Help New-AsBuiltReportConfig -Full
 Here are some examples to get you going.
 
 ```powershell
-# Generate a VMware vSphere As Built report in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the 'H:\Documents\' folder.
+# Generate a VMware vSphere AsBuiltReport in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the 'H:\Documents\' folder.
 New-AsBuiltReport -Report 'VMware.vSphere' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'H:\Documents\'
 
-# Generate a Nutanix Prism Element As Built Report using specified username and password credentials. Specify the report configuration file to be used. Export report to Text, HTML & DOCX formats. Use the default report style. Save the report to the '/Users/Tim/Documents' folder. Display verbose messages to the console.
+# Generate a Nutanix Prism Element AsBuiltReport using specified username and password credentials. Specify the report configuration file to be used. Export report to Text, HTML & DOCX formats. Use the default report style. Save the report to the '/Users/Tim/Documents' folder. Display verbose messages to the console.
 New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target 'prism.nutanix.local' -Username 'demo' -Password 'demo' -Format Text,Html,Word -OutputFolderPath '/Users/Tim/Documents' -ReportConfigFilePath '/Users/Tim/AsBuiltReport/AsBuiltReport.Nutanix.PrismElement.json' -Verbose
 
-# Generate a Pure Storage FlashArray As Built Report in Text format and append a timestamp to the filename. Use stored credentials for authentication. Use the default Pure Storage report style. Save the reports to the 'H:\Documents' folder.
+# Generate a Pure Storage FlashArray AsBuiltReport in Text format and append a timestamp to the filename. Use stored credentials for authentication. Use the default Pure Storage report style. Save the reports to the 'H:\Documents' folder.
 $Credentials = Get-Credential
 New-AsBuiltReport -Report 'PureStorage.FlashArray' -Target '192.168.1.100' -Credential $Credentials -Format Text -Timestamp -OutputFolderPath 'H:\Documents\'
 
-# The following creates a Cisco UCS Manager As Built report in default format (Word) with a customized style.
-New-AsBuiltReport -Report 'Cisco.UCSManager' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -StyleFilePath 'C:\scripts\ACME.ps1' -OutputFolderPath 'H:\Documents\'
+# The following creates a Microsoft Active Directory As Built Report in HTML format with Spanish language content.
+New-AsBuiltReport -Report Microsoft.AD -Target dc01.corp.local -Username 'CORP\admin' -Password admin -Format HTML -ReportLanguage 'es-ES' -OutputFolderPath 'H:\Documents\'
 
-# The following creates a Nutanix Prism Element As Built report in HTML format, with a custom filename.
-New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML -AsBuiltConfigFilePath 'C:\scripts\asbuilt.json' -OutputFolderPath 'H:\Documents\' -Filename 'My Nutanix Configuration'
+# The following creates a Veeam Backup & Replication As Built Report in HTML format with a custom filename.
+New-AsBuiltReport -Report Veeam.VBR -Target veeam01.corp.local -Username admin -Password admin -Format HTML -Filename 'Veeam-Backup-Report' -OutputFolderPath 'H:\Documents\'
 ```
 
 ## :x: Known Issues
