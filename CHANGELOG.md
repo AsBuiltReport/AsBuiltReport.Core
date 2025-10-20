@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update GitHub Release action for new folder structures
 - Update Stale workflow to mark issues stale after 60 days
 
-# Removed
+### Removed
 - Remove sample style scripts
 
 ## [1.4.3] - 2025-03-08
