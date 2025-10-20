@@ -305,7 +305,7 @@ function New-AsBuiltConfig {
         #region Report Configuration Folder
         if ($Report -and (-not $ReportConfigFilePath)) {
             Clear-Host
-            # Show Rerport configuration banner
+            # Show Report configuration banner
             Draw-AsciiBanner -Lines @($translate.ReportConfig.BannerTitle) -TextColor 'Cyan' -SeparatorColor 'Cyan'
             $DefaultConfigFolder = Join-Path -Path $Home -ChildPath "AsBuiltReport"
             $ReportConfigFolder = Read-Host -Prompt ($translate.ReportConfig.ReportConfigFolder -f $DefaultConfigFolder)

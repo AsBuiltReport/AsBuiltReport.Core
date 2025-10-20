@@ -5,20 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.0-RC2] - 2025-10-17
-
-### Added
-- Improve error handling for localized data import
-- Add Pester tests and GitHub workflow
-- Add Dependabot configuration for automated dependency updates
-- Add Codecov integration for code coverage reporting
-- Add comprehensive unit tests for all Private functions
-
-### Changed
-- Update GitHub Release action for new folder structures
-- Update Stale workflow to mark issues stale after 60 days
-
-## [1.5.0-RC1] - 2025-10-10
+## [1.5.0] - 2025-10-21
 
 ### Added
 - Add multilingual support for AsBuiltReport Core module
@@ -34,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `Stale.yml` GitHub workflow to manage GitHub issues
 - Add `FUNDING.yml` to provide sponsorship links
 - Improve error handling with comprehensive try-catch blocks and meaningful error messages
+- Improve error handling for localized data import
+- Add Pester tests and GitHub workflow
+- Add Dependabot configuration for automated dependency updates
+- Add Codecov integration for code coverage reporting
+- Add comprehensive unit tests for all Private functions
 
 ### Changed
 - Core module functions (`New-AsBuiltConfig`, `New-AsBuiltReport`, `New-AsBuiltReportConfig`) now default to user's OS language instead of hardcoded English
@@ -46,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed `MFA` parameter to `UseInteractiveAuth` (`MFA` alias retained for backwards compatibility)
 - Update `README.md` and `CONTRIBUTING.md` documentation
 - Update `LICENSE`
+- Update GitHub Release action for new folder structures
+- Update Stale workflow to mark issues stale after 60 days
 
 # Removed
 - Remove sample style scripts

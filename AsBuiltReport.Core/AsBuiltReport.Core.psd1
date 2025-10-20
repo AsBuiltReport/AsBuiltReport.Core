@@ -16,7 +16,7 @@
     ModuleVersion = '1.5.0'
 
     # Supported PSEditions
-    # CompatiblePSEditions = 'Desktop'
+    CompatiblePSEditions = @('Desktop', 'Core')
 
     # ID used to uniquely identify this module
     GUID = '0f1094c4-c6b1-495c-8cdd-9331f67f9f6f'
@@ -34,7 +34,7 @@
     Description = 'A PowerShell module which provides the core framework for generating As-Built documentation for many common datacentre systems.'
 
     # Minimum version of the Windows PowerShell engine required by this module
-    # PowerShellVersion = '5.1'
+    PowerShellVersion = '5.1'
 
     # Name of the Windows PowerShell host required by this module
     # PowerShellHostName = ''
@@ -116,13 +116,13 @@
             ReleaseNotes = 'https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/CHANGELOG.md'
 
             # Prerelease string of this module
-            Prerelease = 'RC2'
+            # Prerelease = ''
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
             # RequireLicenseAcceptance = $false
 
             # External dependent modules of this module
-            # ExternalModuleDependencies = @('PScribo')
+            ExternalModuleDependencies = @('PScribo')
 
         } # End of PSData hashtable
 
