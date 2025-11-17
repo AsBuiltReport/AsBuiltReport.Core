@@ -262,8 +262,8 @@ Get-Help New-AsBuiltReportConfig -Full
 Here are some examples to get you going.
 
 ```powershell
-# Generate a VMware vSphere AsBuiltReport in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the 'H:\Documents\' folder.
-New-AsBuiltReport -Report 'VMware.vSphere' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'H:\Documents\'
+# Generate a VMware vSphere AsBuiltReport in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the current folder.
+New-AsBuiltReport -Report 'VMware.vSphere' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML,Word -EnableHealthCheck
 
 # Generate a Nutanix Prism Element AsBuiltReport using specified username and password credentials. Specify the report configuration file to be used. Export report to Text, HTML & DOCX formats. Use the default report style. Save the report to the '/Users/Tim/Documents' folder. Display verbose messages to the console.
 New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target 'prism.nutanix.local' -Username 'demo' -Password 'demo' -Format Text,Html,Word -OutputFolderPath '/Users/Tim/Documents' -ReportConfigFilePath '/Users/Tim/AsBuiltReport/AsBuiltReport.Nutanix.PrismElement.json' -Verbose
