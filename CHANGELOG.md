@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2025-11-17
+
+### Changed
+- `OutputFolderPath` parameter is now optional. If not specified, the report will be saved to the current folder location. Resolves [#65](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/65).
+
 ## [1.5.0] - 2025-10-21
 
 ### Added

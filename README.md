@@ -152,7 +152,7 @@ If you are unable to use the PowerShell Gallery, you can still install the `AsBu
 
 1. Download the [latest release](https://github.com/AsBuiltReport/AsBuiltReport.Core/releases/latest) zip from GitHub
 2. Extract the zip file
-3. Copy the folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`.
+3. Copy the sub-folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`.
 4. For Windows users only, open a PowerShell terminal window and unblock the downloaded files with
     ```powershell
     $path = (Get-Module -Name AsBuiltReport.Core -ListAvailable).ModuleBase; Unblock-File -Path $path\*.psd1; Unblock-File -Path $path\Src\Public\*.ps1
@@ -262,8 +262,8 @@ Get-Help New-AsBuiltReportConfig -Full
 Here are some examples to get you going.
 
 ```powershell
-# Generate a VMware vSphere AsBuiltReport in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the 'H:\Documents\' folder.
-New-AsBuiltReport -Report 'VMware.vSphere' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML,Word -EnableHealthCheck -OutputFolderPath 'H:\Documents\'
+# Generate a VMware vSphere AsBuiltReport in HTML & Word formats. Perform a health check to highlight particular issues which exist within the VMware vSphere environment. Save the report to the current folder.
+New-AsBuiltReport -Report 'VMware.vSphere' -Target '192.168.1.100' -Username 'admin' -Password 'admin' -Format HTML,Word -EnableHealthCheck
 
 # Generate a Nutanix Prism Element AsBuiltReport using specified username and password credentials. Specify the report configuration file to be used. Export report to Text, HTML & DOCX formats. Use the default report style. Save the report to the '/Users/Tim/Documents' folder. Display verbose messages to the console.
 New-AsBuiltReport -Report 'Nutanix.PrismElement' -Target 'prism.nutanix.local' -Username 'demo' -Password 'demo' -Format Text,Html,Word -OutputFolderPath '/Users/Tim/Documents' -ReportConfigFilePath '/Users/Tim/AsBuiltReport/AsBuiltReport.Nutanix.PrismElement.json' -Verbose

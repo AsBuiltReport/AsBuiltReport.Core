@@ -266,12 +266,12 @@ function New-AsBuiltReport {
         [String] $Orientation = 'Portrait',
 
         [Parameter(
-            Mandatory = $true,
+            Mandatory = $false,
             HelpMessage = 'Please provide the path to the document output file'
         )]
         [ValidateNotNullOrEmpty()]
         [Alias('OutputPath')]
-        [String] $OutputFolderPath,
+        [String] $OutputFolderPath = (Get-Location).Path,
 
         [Parameter(
             Mandatory = $false,

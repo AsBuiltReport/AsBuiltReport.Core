@@ -20,11 +20,6 @@ Describe 'New-AsBuiltReport Unit Tests' {
             ($TargetParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ParameterAttribute] }).Mandatory | Should -Contain $true
         }
 
-        It 'Should have OutputFolderPath parameter as mandatory' {
-            $OutputParam = $Command.Parameters['OutputFolderPath']
-            ($OutputParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ParameterAttribute] }).Mandatory | Should -Contain $true
-        }
-
         It 'Should have Credential parameter in Credential parameter set' {
             $CredentialParam = $Command.Parameters['Credential']
             $CredentialParam | Should -Not -BeNullOrEmpty
@@ -78,6 +73,10 @@ Describe 'New-AsBuiltReport Unit Tests' {
         It 'Target parameter should accept array of strings' {
             $TargetParam = $Command.Parameters['Target']
             $TargetParam.ParameterType.Name | Should -Be 'String[]'
+        }
+
+        It 'Should have OutputFolderPath parameter' {
+            $Command.Parameters.Keys | Should -Contain 'OutputFolderPath'
         }
 
         It 'Should have Timestamp parameter' {
