@@ -152,7 +152,7 @@ If you are unable to use the PowerShell Gallery, you can still install the `AsBu
 
 1. Download the [latest release](https://github.com/AsBuiltReport/AsBuiltReport.Core/releases/latest) zip from GitHub
 2. Extract the zip file
-3. Copy the folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`.
+3. Copy the sub-folder `AsBuiltReport.Core` to a path that is set in `$env:PSModulePath`.
 4. For Windows users only, open a PowerShell terminal window and unblock the downloaded files with
     ```powershell
     $path = (Get-Module -Name AsBuiltReport.Core -ListAvailable).ModuleBase; Unblock-File -Path $path\*.psd1; Unblock-File -Path $path\Src\Public\*.ps1
