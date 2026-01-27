@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Lütfen {0} As Built Report oluşturulurken bekleyin.
     ReportInitializing = > Rapor çerçevesi başlatılıyor...
     DocumentStyle = > Belge stili yükleniyor...
+    TokenParameters = > Belirteç parametreleri: {0}
     TargetSystem = > Hedef sisteme bağlanılıyor ve veri toplanıyor...
     ExecutionFailed = Rapor modülü yürütme başarısız: {0}
     BuildingDocument = > Belge yapısı oluşturuluyor...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = En son sürümü yüklemek için 'Update-Module -Name {0} -Force' komutunu çalıştırın.
     RequiredModuleNotInstalled = {0} {1} veya daha yüksek sürüm gereklidir. Gerekli modülü yüklemek için 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' komutunu çalıştırın.
     RequiredModuleTooOld = {0} {1} şu anda yüklü. {0} {2} veya daha yüksek sürüm gereklidir. Gerekli sürüme güncellemek için 'Update-Module -Name {0} -RequiredVersion {2} -Force' komutunu çalıştırın.
+    TokenParametersProvided = Sağlanan belirteç parametreleri: {0}
 '@

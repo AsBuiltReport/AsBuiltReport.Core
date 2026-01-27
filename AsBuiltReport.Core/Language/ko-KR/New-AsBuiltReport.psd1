@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = {0} As Built Report가 생성되는 동안 기다려 주십시오.
     ReportInitializing = > 보고서 프레임워크를 초기화하는 중...
     DocumentStyle = > 문서 스타일을 로드하는 중...
+    TokenParameters = > 토큰 매개변수: {0}
     TargetSystem = > 대상 시스템에 연결하고 데이터를 수집하는 중...
     ExecutionFailed = 보고서 모듈 실행 실패: {0}
     BuildingDocument = > 문서 구조를 구축하는 중...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = 최신 버전을 설치하려면 'Update-Module -Name {0} -Force'를 실행하십시오.
     RequiredModuleNotInstalled = {0} {1} 이상이 필요합니다. 필요한 모듈을 설치하려면 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber'를 실행하십시오.
     RequiredModuleTooOld = {0} {1}이(가) 현재 설치되어 있습니다. {0} {2} 이상이 필요합니다. 필요한 버전으로 업데이트하려면 'Update-Module -Name {0} -RequiredVersion {2} -Force'를 실행하십시오.
+    TokenParametersProvided = 제공된 토큰 매개변수: {0}
 '@

@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = กรุณารอสักครู่ในขณะที่รายงาน {0} As Built กำลังถูกสร้าง
     ReportInitializing = > กำลังเริ่มต้นเฟรมเวิร์กรายงาน...
     DocumentStyle = > กำลังโหลดสไตล์เอกสาร...
+    TokenParameters = > พารามิเตอร์โทเค็น: {0}
     TargetSystem = > กำลังเชื่อมต่อกับระบบเป้าหมายและรวบรวมข้อมูล...
     ExecutionFailed = การดำเนินการโมดูลรายงานล้มเหลว: {0}
     BuildingDocument = > กำลังสร้างโครงสร้างเอกสาร...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = เรียกใช้ 'Update-Module -Name {0} -Force' เพื่อติดตั้งเวอร์ชันล่าสุด
     RequiredModuleNotInstalled = ต้องการ {0} {1} หรือสูงกว่า เรียกใช้ 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' เพื่อติดตั้งโมดูลที่ต้องการ
     RequiredModuleTooOld = {0} {1} ติดตั้งอยู่ในปัจจุบัน ต้องการ {0} {2} หรือสูงกว่า เรียกใช้ 'Update-Module -Name {0} -RequiredVersion {2} -Force' เพื่ออัปเดตเป็นเวอร์ชันที่ต้องการ
+    TokenParametersProvided = พารามิเตอร์โทเค็นที่ให้มา: {0}
 '@

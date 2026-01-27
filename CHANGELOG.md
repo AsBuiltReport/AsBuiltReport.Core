@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-01-27
+
+### Added
+- New `TokenParameters` hashtable parameter for `New-AsBuiltReport` command to support vendor-specific token authentication parameters
+- Localization support for token parameter messaging
+- Pester unit tests for `TokenParameters` parameter validation (type, parameter set, mandatory status)
+- Pester unit tests for localization data consistency across all language files (validates all translations contain the same keys as en-US template)
+
+### Changed
+
+- Improved verbose and non-verbose output when using token authentication with additional parameters
+- Update GitHub actions to use latest versions
+
 ## [1.5.1] - 2025-11-17
 
 ### Changed

@@ -9,7 +9,7 @@ jobs:
   publish-to-gallery:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set PSRepository to Trusted for PowerShell Gallery
         shell: pwsh
         run: |
@@ -30,7 +30,7 @@ jobs:
     needs: publish-to-gallery
     runs-on: ubuntu-latest
     steps:
-      - uses: Eomm/why-don-t-you-tweet@v1
+      - uses: Eomm/why-don-t-you-tweet@v2
         # We don't want to tweet if the repository is not a public one
         if: ${{ !github.event.repository.private }}
         with:
@@ -46,7 +46,7 @@ jobs:
     needs: publish-to-gallery
     runs-on: ubuntu-latest
     steps:
-      - uses: zentered/bluesky-post-action@v0.2.0
+      - uses: zentered/bluesky-post-action@v0.3.0
         with:
           post: "[New Release] ${{ github.event.repository.name }} ${{ github.event.release.tag_name }}! Check out what's new! ${{ github.event.release.html_url }} #AsBuiltReport #PowerShell"
         env:

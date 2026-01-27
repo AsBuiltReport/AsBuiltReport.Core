@@ -17,6 +17,10 @@ function New-AsBuiltReport {
         Specifies the password for the target system.
     .PARAMETER Token
         Specifies an API token to authenticate to the target system.
+    .PARAMETER TokenParameters
+        Specifies additional parameters required for token authentication as a hashtable.
+        The required parameters vary by report module.
+        Consult the specific report module documentation for required token parameters.
     .PARAMETER UseInteractiveAuth
         Use interactive authentication (via 3rd party identity provider) to authenticate to the target system.
         This parameter has an alias 'MFA' for backwards compatibility.
@@ -75,6 +79,12 @@ function New-AsBuiltReport {
 
         Creates a Rubrik CDM As Built Report in HTML format.
         An API token is used to connect to the system.
+        The report will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report Microsoft.Azure -Target 'contoso.onmicrosoft.com' -Token 'eyJ0eXAiOiJKV1QiLCJhbGc...' -TokenParameters @{AccountId='admin@contoso.com'} -Format HTML -OutputFolderPath 'C:\Reports'
+
+        Creates a Microsoft Azure As Built Report in HTML format using token authentication.
+        The AccountId parameter is passed via TokenParameters to specify the user account associated with the access token.
         The report will be saved to C:\Reports.
     .EXAMPLE
         New-AsBuiltReport -Report Microsoft.Azure -Target 'tenant.onmicrosoft.com' -UseInteractiveAuth -Format Word -OutputFolderPath 'C:\Reports'
@@ -202,6 +212,14 @@ function New-AsBuiltReport {
         [String] $Token,
 
         [Parameter(
+            Position = 4,
+            Mandatory = $false,
+            HelpMessage = 'Additional parameters for token authentication (e.g., @{AccountId="user@domain.com"}). Required parameters vary by report module - see module documentation.',
+            ParameterSetName = 'APIToken'
+        )]
+        [Hashtable] $TokenParameters,
+
+        [Parameter(
             Position = 3,
             Mandatory = $true,
             ParameterSetName = 'InteractiveAuth'
@@ -225,36 +243,36 @@ function New-AsBuiltReport {
         )]
         [ValidateNotNullOrEmpty()]
         [ValidateScript({
-            if ($Report) {
-                $ReportModuleName = "AsBuiltReport.$Report"
-                $ReportModule = Get-Module -Name $ReportModuleName -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
-                if ($ReportModule) {
-                    $LanguagePath = Join-Path -Path $ReportModule.ModuleBase -ChildPath 'Language'
-                    $AvailableLanguages = @()
-                    if (Test-Path $LanguagePath) {
-                        $AvailableLanguages = Get-ChildItem -Path $LanguagePath -Directory | Select-Object -ExpandProperty Name
-                    }
-                    if ($AvailableLanguages.Count -eq 0) {
-                        $AvailableLanguages = @('en-US')
-                    }
-                    if ($_ -in $AvailableLanguages) {
-                        $true
+                if ($Report) {
+                    $ReportModuleName = "AsBuiltReport.$Report"
+                    $ReportModule = Get-Module -Name $ReportModuleName -ListAvailable | Sort-Object -Property Version -Descending | Select-Object -First 1
+                    if ($ReportModule) {
+                        $LanguagePath = Join-Path -Path $ReportModule.ModuleBase -ChildPath 'Language'
+                        $AvailableLanguages = @()
+                        if (Test-Path $LanguagePath) {
+                            $AvailableLanguages = Get-ChildItem -Path $LanguagePath -Directory | Select-Object -ExpandProperty Name
+                        }
+                        if ($AvailableLanguages.Count -eq 0) {
+                            $AvailableLanguages = @('en-US')
+                        }
+                        if ($_ -in $AvailableLanguages) {
+                            $true
+                        } else {
+                            throw "Report Language '$_' is not supported for module '$ReportModuleName'. Available report languages are: $($AvailableLanguages -join ', ')"
+                        }
                     } else {
-                        throw "Report Language '$_' is not supported for module '$ReportModuleName'. Available report languages are: $($AvailableLanguages -join ', ')"
+                        # If report module not found, default to en-US validation
+                        if ($_ -eq 'en-US') {
+                            $true
+                        } else {
+                            throw "Report module '$ReportModuleName' not found. Defaulting to 'en-US' language."
+                        }
                     }
                 } else {
-                    # If report module not found, default to en-US validation
-                    if ($_ -eq 'en-US') {
-                        $true
-                    } else {
-                        throw "Report module '$ReportModuleName' not found. Defaulting to 'en-US' language."
-                    }
+                    # If no Report specified yet, allow any language for now
+                    $true
                 }
-            } else {
-                # If no Report specified yet, allow any language for now
-                $true
-            }
-        })]
+            })]
         [String] $ReportLanguage,
 
         [Parameter(
@@ -405,7 +423,7 @@ function New-AsBuiltReport {
             }
         } else {
             # If a report config hasn't been provided, check for the existance of the default JSON in the paths the user specified in base config
-            $ReportConfigFilePath =  Join-Path -Path $ReportModulePath -ChildPath "$($ReportModuleName).json"
+            $ReportConfigFilePath = Join-Path -Path $ReportModulePath -ChildPath "$($ReportModuleName).json"
             if (Test-Path -Path $ReportConfigFilePath) {
                 Write-PScriboMessage -Plugin "Document" -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
@@ -485,7 +503,7 @@ function New-AsBuiltReport {
         #endregion Email Server Authentication
 
         # Check installed module version
-        Try {
+        try {
             $InstalledVersion = Get-Module -ListAvailable -Name AsBuiltReport.Core -ErrorAction SilentlyContinue | Sort-Object -Property Version -Descending | Select-Object -First 1 -ExpandProperty Version
 
             if ($InstalledVersion) {
@@ -496,8 +514,8 @@ function New-AsBuiltReport {
                     Write-PScriboMessage -Plugin "Module" -Message $translate.UpdateModule
                 }
             }
-        } Catch {
-            Write-PscriboMessage -Plugin "Module" -IsWarning $_.Exception.Message
+        } catch {
+            Write-PScriboMessage -Plugin "Module" -IsWarning $_.Exception.Message
         }
 
         #region Generate PScribo document
@@ -522,11 +540,22 @@ function New-AsBuiltReport {
                 try {
                     if ($Credential) {
                         & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -Verbose -ErrorAction Stop
-                    }
-                    elseif ($Token) {
-                        & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -Verbose -ErrorAction Stop
-                    }
-                    elseif ($UseInteractiveAuth) {
+                    } elseif ($Token) {
+                        $InvokeParams = @{
+                            Target = $Target
+                            Token = $Token
+                        }
+
+                        # Merge TokenParameters into InvokeParams
+                        if ($TokenParameters) {
+                            Write-PScriboMessage -Plugin "Module" -Message ($translate.TokenParametersProvided -f ($TokenParameters.Keys -join ', '))
+                            foreach ($key in $TokenParameters.Keys) {
+                                $InvokeParams[$key] = $TokenParameters[$key]
+                            }
+                        }
+
+                        & "Invoke-$($ReportModuleName)" @InvokeParams -Verbose -ErrorAction Stop
+                    } elseif ($UseInteractiveAuth) {
                         Write-PScriboMessage -Plugin "Module" -Message ($translate.InteractiveAuth)
                         & "Invoke-$($ReportModuleName)" -Target $Target -UseInteractiveAuth -Verbose -ErrorAction Stop
                     }
@@ -560,11 +589,22 @@ function New-AsBuiltReport {
                         # If Credential has been passed or previously created via Username/Password
                         if ($Credential) {
                             & "Invoke-$($ReportModuleName)" -Target $Target -Credential $Credential -ErrorAction Stop
-                        }
-                        elseif ($Token) {
-                            & "Invoke-$($ReportModuleName)" -Target $Target -Token $Token -ErrorAction Stop
-                        }
-                        elseif ($UseInteractiveAuth) {
+                        } elseif ($Token) {
+                            $InvokeParams = @{
+                                Target = $Target
+                                Token = $Token
+                            }
+
+                            # Merge TokenParameters into InvokeParams
+                            if ($TokenParameters) {
+                                Write-Host ($translate.TokenParameters -f ($TokenParameters.Keys -join ', ')) -ForegroundColor Cyan
+                                foreach ($key in $TokenParameters.Keys) {
+                                    $InvokeParams[$key] = $TokenParameters[$key]
+                                }
+                            }
+
+                            & "Invoke-$($ReportModuleName)" @InvokeParams -ErrorAction Stop
+                        } elseif ($UseInteractiveAuth) {
                             & "Invoke-$($ReportModuleName)" -Target $Target -UseInteractiveAuth -ErrorAction Stop
                         }
                     } catch {
@@ -578,7 +618,7 @@ function New-AsBuiltReport {
                 throw
             }
         }
-        Try {
+        try {
             $Document = $AsBuiltReport | Export-Document -Path $OutputFolderPath -Format $Format -Options @{ TextWidth = 240 } -PassThru
             # Ensure core translations are available
             if (-not $translate.OutputFolder) {
@@ -675,9 +715,9 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReport' -ParameterName 'Repo
         # Try to parse the Report value from the command AST
         if ($commandAst) {
             $reportParam = $commandAst.FindAll({
-                $args[0] -is [System.Management.Automation.Language.CommandParameterAst] -and
-                $args[0].ParameterName -eq 'Report'
-            }, $true) | Select-Object -First 1
+                    $args[0] -is [System.Management.Automation.Language.CommandParameterAst] -and
+                    $args[0].ParameterName -eq 'Report'
+                }, $true) | Select-Object -First 1
 
             if ($reportParam) {
                 # Get the next element after -Report parameter

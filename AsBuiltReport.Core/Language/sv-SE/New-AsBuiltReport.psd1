@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Vänta medan {0} As Built Report genereras.
     ReportInitializing = > Initierar rapportramverk...
     DocumentStyle = > Laddar dokumentstil...
+    TokenParameters = > Token-parametrar: {0}
     TargetSystem = > Ansluter till målsystem och samlar in data...
     ExecutionFailed = Körning av rapportmodul misslyckades: {0}
     BuildingDocument = > Bygger dokumentstruktur...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Kör 'Update-Module -Name {0} -Force' för att installera den senaste versionen.
     RequiredModuleNotInstalled = {0} {1} eller högre krävs. Kör 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' för att installera den nödvändiga modulen.
     RequiredModuleTooOld = {0} {1} är för närvarande installerat. {0} {2} eller högre krävs. Kör 'Update-Module -Name {0} -RequiredVersion {2} -Force' för att uppdatera till den nödvändiga versionen.
+    TokenParametersProvided = Angivna token-parametrar: {0}
 '@

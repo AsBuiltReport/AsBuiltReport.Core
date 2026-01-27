@@ -181,6 +181,10 @@ The `New-AsBuiltReport` cmdlet is used to generate AsBuiltReports. The type of A
     Specifies the password for the target system.
 .PARAMETER Token
     Specifies an API token to authenticate to the target system.
+.PARAMETER TokenParameters
+    Specifies additional parameters required for token authentication as a hashtable.
+    The required parameters vary by report module.
+    Consult the specific report module documentation for required token parameters.
 .PARAMETER UseInteractiveAuth
     Use interactive authentication (via 3rd party identity provider) to authenticate to the target system.
     This parameter has an alias 'MFA' for backwards compatibility.
@@ -277,6 +281,12 @@ New-AsBuiltReport -Report Microsoft.AD -Target dc01.corp.local -Username 'CORP\a
 
 # The following creates a Veeam Backup & Replication As Built Report in HTML format with a custom filename.
 New-AsBuiltReport -Report Veeam.VBR -Target veeam01.corp.local -Username admin -Password admin -Format HTML -Filename 'Veeam-Backup-Report' -OutputFolderPath 'H:\Documents\'
+
+# Generate a Microsoft Azure AsBuiltReport using token authentication with additional parameters. The AccountId parameter is required for Azure token authentication and is passed via the TokenParameters hashtable.
+New-AsBuiltReport -Report Microsoft.Azure -Target 'contoso.onmicrosoft.com' -Token 'eyJ0eXAiOiJKV1QiLCJhbGc...' -TokenParameters @{AccountId='admin@contoso.com'} -Format HTML,Word -OutputFolderPath 'C:\Reports'
+
+# Generate a Rubrik CDM AsBuiltReport using token authentication. Rubrik does not require additional token parameters, so TokenParameters is not needed.
+New-AsBuiltReport -Report Rubrik.CDM -Target 'rubrik.corp.local' -Token 'abc123def456...' -Format HTML -OutputFolderPath 'C:\Reports'
 ```
 
 ## :x: Known Issues

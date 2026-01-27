@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = 請稍候，正在產生 {0} As Built Report。
     ReportInitializing = > 正在初始化報告框架...
     DocumentStyle = > 正在載入文件樣式...
+    TokenParameters = > 權杖參數: {0}
     TargetSystem = > 正在連線到目標系統並收集資料...
     ExecutionFailed = 報告模組執行失敗：{0}
     BuildingDocument = > 正在建立文件結構...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = 執行 'Update-Module -Name {0} -Force' 以安裝最新版本。
     RequiredModuleNotInstalled = 需要 {0} {1} 或更高版本。執行 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' 以安裝所需的模組。
     RequiredModuleTooOld = {0} {1} 目前已安裝。需要 {0} {2} 或更高版本。執行 'Update-Module -Name {0} -RequiredVersion {2} -Force' 以更新至所需版本。
+    TokenParametersProvided = 提供的權杖參數: {0}
 '@

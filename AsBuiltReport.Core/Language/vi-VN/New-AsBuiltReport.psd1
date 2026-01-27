@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Vui lòng đợi trong khi báo cáo {0} As Built đang được tạo.
     ReportInitializing = > Đang khởi tạo khung báo cáo...
     DocumentStyle = > Đang tải kiểu tài liệu...
+    TokenParameters = > Tham số mã thông báo: {0}
     TargetSystem = > Đang kết nối với hệ thống đích và thu thập dữ liệu...
     ExecutionFailed = Thực thi mô-đun báo cáo thất bại: {0}
     BuildingDocument = > Đang xây dựng cấu trúc tài liệu...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Chạy 'Update-Module -Name {0} -Force' để cài đặt phiên bản mới nhất.
     RequiredModuleNotInstalled = Yêu cầu {0} {1} hoặc cao hơn. Chạy 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' để cài đặt mô-đun bắt buộc.
     RequiredModuleTooOld = {0} {1} hiện đang được cài đặt. Yêu cầu {0} {2} hoặc cao hơn. Chạy 'Update-Module -Name {0} -RequiredVersion {2} -Force' để cập nhật lên phiên bản bắt buộc.
+    TokenParametersProvided = Tham số mã thông báo được cung cấp: {0}
 '@

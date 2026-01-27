@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = אנא המתן בעוד דוח As Built של {0} נוצר.
     ReportInitializing = > מאתחל מסגרת דוח...
     DocumentStyle = > טוען סגנון מסמך...
+    TokenParameters = > פרמטרים של אסימון: {0}
     TargetSystem = > מתחבר למערכת היעד ואוסף נתונים...
     ExecutionFailed = ביצוע מודול הדוח נכשל: {0}
     BuildingDocument = > בונה מבנה מסמך...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = הרץ 'Update-Module -Name {0} -Force' כדי להתקין את הגרסה העדכנית ביותר.
     RequiredModuleNotInstalled = נדרש {0} {1} או גבוה יותר. הרץ 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' כדי להתקין את המודול הנדרש.
     RequiredModuleTooOld = {0} {1} מותקן כרגע. נדרש {0} {2} או גבוה יותר. הרץ 'Update-Module -Name {0} -RequiredVersion {2} -Force' כדי לעדכן לגרסה הנדרשת.
+    TokenParametersProvided = פרמטרים של אסימון שסופקו: {0}
 '@

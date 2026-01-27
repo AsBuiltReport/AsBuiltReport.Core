@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Kérjük, várjon, amíg a(z) {0} As Built Report generálódik.
     ReportInitializing = > Jelentési keretrendszer inicializálása...
     DocumentStyle = > Dokumentumstílus betöltése...
+    TokenParameters = > Token paraméterek: {0}
     TargetSystem = > Csatlakozás a célrendszerhez és adatok gyűjtése...
     ExecutionFailed = A jelentésmodul végrehajtása sikertelen: {0}
     BuildingDocument = > Dokumentumstruktúra építése...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Futtassa az 'Update-Module -Name {0} -Force' parancsot a legújabb verzió telepítéséhez.
     RequiredModuleNotInstalled = {0} {1} vagy újabb verzió szükséges. Futtassa az 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' parancsot a szükséges modul telepítéséhez.
     RequiredModuleTooOld = {0} {1} jelenleg telepítve van. {0} {2} vagy újabb verzió szükséges. Futtassa az 'Update-Module -Name {0} -RequiredVersion {2} -Force' parancsot a szükséges verzióra való frissítéshez.
+    TokenParametersProvided = Megadott token paraméterek: {0}
 '@

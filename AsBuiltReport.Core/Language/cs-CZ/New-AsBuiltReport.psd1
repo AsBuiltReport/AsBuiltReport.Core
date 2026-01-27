@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Počkejte prosím, než se vygeneruje sestava {0} As Built.
     ReportInitializing = > Inicializace frameworku sestavy...
     DocumentStyle = > Načítání stylu dokumentu...
+    TokenParameters = > Parametry tokenu: {0}
     TargetSystem = > Připojování k cílovému systému a shromažďování dat...
     ExecutionFailed = Spuštění modulu sestavy se nezdařilo: {0}
     BuildingDocument = > Vytváření struktury dokumentu...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Spusťte 'Update-Module -Name {0} -Force' pro instalaci nejnovější verze.
     RequiredModuleNotInstalled = Je vyžadován {0} {1} nebo vyšší. Spusťte 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' pro instalaci požadovaného modulu.
     RequiredModuleTooOld = {0} {1} je aktuálně nainstalován. Je vyžadován {0} {2} nebo vyšší. Spusťte 'Update-Module -Name {0} -RequiredVersion {2} -Force' pro aktualizaci na požadovanou verzi.
+    TokenParametersProvided = Poskytnuté parametry tokenu: {0}
 '@

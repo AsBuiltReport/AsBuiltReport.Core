@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Περιμένετε ενώ δημιουργείται η αναφορά {0} As Built.
     ReportInitializing = > Αρχικοποίηση πλαισίου αναφοράς...
     DocumentStyle = > Φόρτωση στυλ εγγράφου...
+    TokenParameters = > Παράμετροι διακριτικού: {0}
     TargetSystem = > Σύνδεση με το σύστημα προορισμού και συλλογή δεδομένων...
     ExecutionFailed = Η εκτέλεση της μονάδας αναφοράς απέτυχε: {0}
     BuildingDocument = > Δημιουργία δομής εγγράφου...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Εκτελέστε 'Update-Module -Name {0} -Force' για εγκατάσταση της πιο πρόσφατης έκδοσης.
     RequiredModuleNotInstalled = Απαιτείται {0} {1} ή νεότερη έκδοση. Εκτελέστε 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' για εγκατάσταση της απαιτούμενης μονάδας.
     RequiredModuleTooOld = Το {0} {1} είναι εγκατεστημένο αυτήν τη στιγμή. Απαιτείται {0} {2} ή νεότερη έκδοση. Εκτελέστε 'Update-Module -Name {0} -RequiredVersion {2} -Force' για ενημέρωση στην απαιτούμενη έκδοση.
+    TokenParametersProvided = Παράμετροι διακριτικού που παρέχονται: {0}
 '@

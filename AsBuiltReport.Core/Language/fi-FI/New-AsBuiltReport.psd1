@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Odota, kun {0} As Built Report -raporttia luodaan.
     ReportInitializing = > Alustetaan raportointikehystä...
     DocumentStyle = > Ladataan asiakirjan tyyliä...
+    TokenParameters = > Token-parametrit: {0}
     TargetSystem = > Yhdistetään kohdejärjestelmään ja kerätään tietoja...
     ExecutionFailed = Raporttimoduulin suoritus epäonnistui: {0}
     BuildingDocument = > Rakennetaan asiakirjan rakennetta...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Suorita 'Update-Module -Name {0} -Force' asentaaksesi uusimman version.
     RequiredModuleNotInstalled = {0} {1} tai uudempi vaaditaan. Suorita 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' asentaaksesi vaaditun moduulin.
     RequiredModuleTooOld = {0} {1} on tällä hetkellä asennettuna. {0} {2} tai uudempi vaaditaan. Suorita 'Update-Module -Name {0} -RequiredVersion {2} -Force' päivittääksesi vaadittuun versioon.
+    TokenParametersProvided = Annetut token-parametrit: {0}
 '@
