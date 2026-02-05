@@ -1,3 +1,4 @@
 .claude/
 .vscode/launch.json
+/tmpclaude*
 coverage.xml

@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Пожалуйста, подождите, пока создается отчет {0} As Built.
     ReportInitializing = > Инициализация фреймворка отчета...
     DocumentStyle = > Загрузка стиля документа...
+    TokenParameters = > Параметры токена: {0}
     TargetSystem = > Подключение к целевой системе и сбор данных...
     ExecutionFailed = Ошибка выполнения модуля отчета: {0}
     BuildingDocument = > Построение структуры документа...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Запустите 'Update-Module -Name {0} -Force' для установки последней версии.
     RequiredModuleNotInstalled = Требуется {0} {1} или выше. Запустите 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' для установки необходимого модуля.
     RequiredModuleTooOld = {0} {1} в настоящее время установлен. Требуется {0} {2} или выше. Запустите 'Update-Module -Name {0} -RequiredVersion {2} -Force' для обновления до требуемой версии.
+    TokenParametersProvided = Предоставленные параметры токена: {0}
 '@

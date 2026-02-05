@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Veuillez patienter pendant que le rapport {0} tel que fournit est en cours de génération.
     ReportInitializing = > Initialisation du cadre de rapport...
     DocumentStyle = > Chargement du style de document...
+    TokenParameters = > Paramètres de jeton : {0}
     TargetSystem = > Connexion au système cible et collecte de données...
     ExecutionFailed = L'exécution du module de rapport a échoué: {0}
     BuildingDocument = > Construction de la structure du document...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Exécutez 'Update-Module -Name {0} -Force' pour installer la dernière version.
     RequiredModuleNotInstalled = {0} {1} ou supérieur est requis. Exécutez 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' pour installer le module requis.
     RequiredModuleTooOld = {0} {1} est actuellement installé. {0} {2} ou supérieur est requis. Exécutez 'Update-Module -Name {0} -RequiredVersion {2} -Force' pour mettre à jour vers la version requise.
+    TokenParametersProvided = Paramètres de jeton fournis : {0}
 '@

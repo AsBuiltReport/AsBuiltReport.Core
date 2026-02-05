@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = Espere mientras se genera el informe As Built {0}.
     ReportInitializing = > Inicializando marco de informe...
     DocumentStyle = > Cargando estilo de documento...
+    TokenParameters = > Parámetros de token: {0}
     TargetSystem = > Conectando al sistema de destino y recopilando datos...
     ExecutionFailed = Error en la ejecución del módulo de informe: {0}
     BuildingDocument = > Construyendo estructura de documento...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = Ejecute 'Update-Module -Name {0} -Force' para instalar la última versión.
     RequiredModuleNotInstalled = Se requiere {0} {1} o superior. Ejecute 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' para instalar el módulo requerido.
     RequiredModuleTooOld = {0} {1} está actualmente instalado. Se requiere {0} {2} o superior. Ejecute 'Update-Module -Name {0} -RequiredVersion {2} -Force' para actualizar a la versión requerida.
+    TokenParametersProvided = Parámetros de token proporcionados: {0}
 '@

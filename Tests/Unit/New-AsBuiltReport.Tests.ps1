@@ -35,6 +35,24 @@ Describe 'New-AsBuiltReport Unit Tests' {
             $TokenParam | Should -Not -BeNullOrEmpty
         }
 
+        It 'Should have TokenParameters parameter in APIToken parameter set' {
+            $TokenParametersParam = $Command.Parameters['TokenParameters']
+            $TokenParametersParam | Should -Not -BeNullOrEmpty
+            $ParameterAttribute = $TokenParametersParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ParameterAttribute] }
+            $ParameterAttribute.ParameterSetName | Should -Contain 'APIToken'
+        }
+
+        It 'TokenParameters parameter should be of type Hashtable' {
+            $TokenParametersParam = $Command.Parameters['TokenParameters']
+            $TokenParametersParam.ParameterType.Name | Should -Be 'Hashtable'
+        }
+
+        It 'TokenParameters parameter should not be mandatory' {
+            $TokenParametersParam = $Command.Parameters['TokenParameters']
+            $ParameterAttribute = $TokenParametersParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ParameterAttribute] }
+            $ParameterAttribute.Mandatory | Should -Be $false
+        }
+
         It 'Should have UseInteractiveAuth parameter in InteractiveAuth parameter set' {
             $Command.Parameters.Keys | Should -Contain 'UseInteractiveAuth'
         }

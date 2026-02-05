@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = يرجى الانتظار بينما يتم إنشاء تقرير {0} As Built.
     ReportInitializing = > تهيئة إطار عمل التقرير...
     DocumentStyle = > تحميل نمط المستند...
+    TokenParameters = > معلمات الرمز: {0}
     TargetSystem = > الاتصال بالنظام المستهدف وجمع البيانات...
     ExecutionFailed = فشل تنفيذ وحدة التقرير: {0}
     BuildingDocument = > بناء هيكل المستند...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = قم بتشغيل 'Update-Module -Name {0} -Force' لتثبيت الإصدار الأحدث.
     RequiredModuleNotInstalled = {0} {1} أو أعلى مطلوب. قم بتشغيل 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' لتثبيت الوحدة المطلوبة.
     RequiredModuleTooOld = {0} {1} مثبت حالياً. {0} {2} أو أعلى مطلوب. قم بتشغيل 'Update-Module -Name {0} -RequiredVersion {2} -Force' للتحديث إلى الإصدار المطلوب.
+    TokenParametersProvided = معلمات الرمز المقدمة: {0}
 '@

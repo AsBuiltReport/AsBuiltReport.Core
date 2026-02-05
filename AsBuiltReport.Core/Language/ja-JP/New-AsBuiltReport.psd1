@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = {0} As Built Reportを生成しています。しばらくお待ちください。
     ReportInitializing = > レポートフレームワークを初期化しています...
     DocumentStyle = > ドキュメントスタイルを読み込んでいます...
+    TokenParameters = > トークンパラメータ: {0}
     TargetSystem = > ターゲットシステムに接続してデータを収集しています...
     ExecutionFailed = レポートモジュールの実行に失敗しました: {0}
     BuildingDocument = > ドキュメント構造を構築しています...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = 最新バージョンをインストールするには 'Update-Module -Name {0} -Force' を実行してください。
     RequiredModuleNotInstalled = {0} {1} 以降が必要です。必要なモジュールをインストールするには 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' を実行してください。
     RequiredModuleTooOld = {0} {1} は現在インストールされています。{0} {2} 以降が必要です。必要なバージョンに更新するには 'Update-Module -Name {0} -RequiredVersion {2} -Force' を実行してください。
+    TokenParametersProvided = 提供されたトークンパラメータ: {0}
 '@

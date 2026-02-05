@@ -19,6 +19,7 @@ ConvertFrom-StringData @'
     ReportGenerating = कृपया प्रतीक्षा करें जबकि {0} As Built Report जेनरेट किया जा रहा है।
     ReportInitializing = > रिपोर्ट फ्रेमवर्क आरंभ किया जा रहा है...
     DocumentStyle = > दस्तावेज़ स्टाइल लोड की जा रही है...
+    TokenParameters = > टोकन पैरामीटर: {0}
     TargetSystem = > लक्ष्य सिस्टम से कनेक्ट किया जा रहा है और डेटा एकत्र किया जा रहा है...
     ExecutionFailed = रिपोर्ट मॉड्यूल निष्पादन विफल: {0}
     BuildingDocument = > दस्तावेज़ संरचना बनाई जा रही है...
@@ -37,4 +38,5 @@ ConvertFrom-StringData @'
     ReportModuleUpdate = नवीनतम संस्करण इंस्टॉल करने के लिए 'Update-Module -Name {0} -Force' चलाएं।
     RequiredModuleNotInstalled = {0} {1} या उच्चतर आवश्यक है। आवश्यक मॉड्यूल इंस्टॉल करने के लिए 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' चलाएं।
     RequiredModuleTooOld = {0} {1} वर्तमान में इंस्टॉल है। {0} {2} या उच्चतर आवश्यक है। आवश्यक संस्करण में अपडेट करने के लिए 'Update-Module -Name {0} -RequiredVersion {2} -Force' चलाएं।
+    TokenParametersProvided = प्रदान किए गए टोकन पैरामीटर: {0}
 '@
