@@ -49,7 +49,7 @@ The AsBuiltReport Core module is compatible with the following PowerShell versio
 | :--------------------: | :----------------: |
 |   :white_check_mark:   | :white_check_mark: |
 
-## 🗺️ Language Support
+## 🌐 Language Support
 The AsBuiltReport Core module provides UI language support, translating on-screen prompts and messages to match your PowerShell session's configured language. The UI language is automatically detected from your PowerShell session's [culture](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-culture) settings.
 
 > [!IMPORTANT]
