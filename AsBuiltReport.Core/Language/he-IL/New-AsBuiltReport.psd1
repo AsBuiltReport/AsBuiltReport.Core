@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} מותקן כרגע.
     ReportModuleAvailable = {0} {1} זמין.
     ReportModuleUpdate = הרץ 'Update-Module -Name {0} -Force' כדי להתקין את הגרסה העדכנית ביותר.
+    RequiredModuleInstalled = {0} {1} מותקן כרגע.
     RequiredModuleNotInstalled = נדרש {0} {1} או גבוה יותר. הרץ 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' כדי להתקין את המודול הנדרש.
     RequiredModuleTooOld = {0} {1} מותקן כרגע. נדרש {0} {2} או גבוה יותר. הרץ 'Update-Module -Name {0} -RequiredVersion {2} -Force' כדי לעדכן לגרסה הנדרשת.
     TokenParametersProvided = פרמטרים של אסימון שסופקו: {0}

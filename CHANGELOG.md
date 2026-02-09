@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.6.1] - 2026-02-09
+
+### Added
+- Add Sinhala (`si-LK`) language support with translation files
+- Add Tamil (`ta-IN`) language support with translation files
+- Add culture mappings for `si-LK`, `ta-IN`, `ta-LK`, `ta-SG`, `ta-MY`, and `en-LK` in `Resolve-Culture`
+- Add Sinhala and Tamil language family fallbacks in `Resolve-Culture`
+- Add Pester unit tests for Sinhala and Tamil culture resolution
+
+### Changed
+- Add version reporting output to `Get-RequiredModule` function
+- Update version reporting output in `Write-ReportModuleInfo` function
+- Add `RequiredModuleInstalled` localization string for module version reporting
+- Update `Get-RequiredModule` Pester unit tests
+
+### Fixed
+- Fix issue with `Get-RequiredModule` function where rollup modules (e.g. Azure PowerShell 'Az') are not detected in Windows PowerShell 5.1 when installed in OneDrive paths
+
+
 ## [1.6.0] - 2026-02-06
 
 ### Added

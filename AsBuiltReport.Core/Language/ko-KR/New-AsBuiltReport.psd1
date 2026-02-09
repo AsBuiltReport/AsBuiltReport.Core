@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1}이(가) 현재 설치되어 있습니다.
     ReportModuleAvailable = {0} {1}을(를) 사용할 수 있습니다.
     ReportModuleUpdate = 최신 버전을 설치하려면 'Update-Module -Name {0} -Force'를 실행하십시오.
+    RequiredModuleInstalled = {0} {1}이(가) 현재 설치되어 있습니다.
     RequiredModuleNotInstalled = {0} {1} 이상이 필요합니다. 필요한 모듈을 설치하려면 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber'를 실행하십시오.
     RequiredModuleTooOld = {0} {1}이(가) 현재 설치되어 있습니다. {0} {2} 이상이 필요합니다. 필요한 버전으로 업데이트하려면 'Update-Module -Name {0} -RequiredVersion {2} -Force'를 실행하십시오.
     TokenParametersProvided = 제공된 토큰 매개변수: {0}

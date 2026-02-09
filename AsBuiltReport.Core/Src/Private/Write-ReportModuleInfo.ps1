@@ -48,13 +48,13 @@ function Write-ReportModuleInfo {
             Select-Object -First 1 -ExpandProperty Version
 
         if ($InstalledVersion) {
-            Write-PScriboMessage -Plugin "Module" -Message ($translate.ReportModuleInstalled -f $FullModuleName, "v$($InstalledVersion.ToString())")
+            Write-PScriboMessage -Plugin "Module" -Message ($translate.ReportModuleInstalled -f $FullModuleName, $($InstalledVersion.ToString()))
 
             $LatestVersion = Find-Module -Name $FullModuleName -Repository PSGallery -ErrorAction SilentlyContinue |
                 Select-Object -ExpandProperty Version
 
             if ($LatestVersion -and ($InstalledVersion -lt $LatestVersion)) {
-                Write-PScriboMessage -Plugin "Module" -IsWarning -Message ($translate.ReportModuleAvailable -f $FullModuleName, "v$($LatestVersion.ToString())")
+                Write-PScriboMessage -Plugin "Module" -IsWarning -Message ($translate.ReportModuleAvailable -f $FullModuleName, $($LatestVersion.ToString()))
                 Write-PScriboMessage -Plugin "Module" -IsWarning -Message ($translate.ReportModuleUpdate -f $FullModuleName)
             }
         }
@@ -73,13 +73,13 @@ function Write-ReportModuleInfo {
             Select-Object -First 1 -ExpandProperty Version
 
         if ($InstalledVersion) {
-            Write-Host -ForegroundColor White "  - $(($translate.ReportModuleInstalled -f $FullModuleName, "v$($InstalledVersion.ToString())"))"
+            Write-Host -ForegroundColor White "  - $(($translate.ReportModuleInstalled -f $FullModuleName, $($InstalledVersion.ToString())))"
 
             $LatestVersion = Find-Module -Name $FullModuleName -Repository PSGallery -ErrorAction SilentlyContinue |
                 Select-Object -ExpandProperty Version
 
             if ($LatestVersion -and ($InstalledVersion -lt $LatestVersion)) {
-                Write-Host -ForegroundColor Red ($translate.ReportModuleAvailable -f $FullModuleName, "v$($LatestVersion.ToString())")
+                Write-Host -ForegroundColor Red ($translate.ReportModuleAvailable -f $FullModuleName, $($LatestVersion.ToString()))
                 Write-Host -ForegroundColor Red ($translate.ReportModuleUpdate -f $FullModuleName)
             }
         }

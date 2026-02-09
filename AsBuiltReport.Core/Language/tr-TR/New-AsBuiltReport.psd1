@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} şu anda yüklü.
     ReportModuleAvailable = {0} {1} mevcut.
     ReportModuleUpdate = En son sürümü yüklemek için 'Update-Module -Name {0} -Force' komutunu çalıştırın.
+    RequiredModuleInstalled = {0} {1} şu anda yüklü.
     RequiredModuleNotInstalled = {0} {1} veya daha yüksek sürüm gereklidir. Gerekli modülü yüklemek için 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' komutunu çalıştırın.
     RequiredModuleTooOld = {0} {1} şu anda yüklü. {0} {2} veya daha yüksek sürüm gereklidir. Gerekli sürüme güncellemek için 'Update-Module -Name {0} -RequiredVersion {2} -Force' komutunu çalıştırın.
     TokenParametersProvided = Sağlanan belirteç parametreleri: {0}

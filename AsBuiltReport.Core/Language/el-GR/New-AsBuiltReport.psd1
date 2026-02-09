@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = Το {0} {1} είναι εγκατεστημένο αυτήν τη στιγμή.
     ReportModuleAvailable = Το {0} {1} είναι διαθέσιμο.
     ReportModuleUpdate = Εκτελέστε 'Update-Module -Name {0} -Force' για εγκατάσταση της πιο πρόσφατης έκδοσης.
+    RequiredModuleInstalled = Το {0} {1} είναι εγκατεστημένο αυτήν τη στιγμή.
     RequiredModuleNotInstalled = Απαιτείται {0} {1} ή νεότερη έκδοση. Εκτελέστε 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' για εγκατάσταση της απαιτούμενης μονάδας.
     RequiredModuleTooOld = Το {0} {1} είναι εγκατεστημένο αυτήν τη στιγμή. Απαιτείται {0} {2} ή νεότερη έκδοση. Εκτελέστε 'Update-Module -Name {0} -RequiredVersion {2} -Force' για ενημέρωση στην απαιτούμενη έκδοση.
     TokenParametersProvided = Παράμετροι διακριτικού που παρέχονται: {0}

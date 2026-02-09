@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} on tällä hetkellä asennettuna.
     ReportModuleAvailable = {0} {1} on saatavilla.
     ReportModuleUpdate = Suorita 'Update-Module -Name {0} -Force' asentaaksesi uusimman version.
+    RequiredModuleInstalled = {0} {1} on tällä hetkellä asennettuna.
     RequiredModuleNotInstalled = {0} {1} tai uudempi vaaditaan. Suorita 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' asentaaksesi vaaditun moduulin.
     RequiredModuleTooOld = {0} {1} on tällä hetkellä asennettuna. {0} {2} tai uudempi vaaditaan. Suorita 'Update-Module -Name {0} -RequiredVersion {2} -Force' päivittääksesi vaadittuun versioon.
     TokenParametersProvided = Annetut token-parametrit: {0}

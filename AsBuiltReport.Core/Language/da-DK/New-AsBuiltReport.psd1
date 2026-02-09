@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} er i øjeblikket installeret.
     ReportModuleAvailable = {0} {1} er tilgængelig.
     ReportModuleUpdate = Kør 'Update-Module -Name {0} -Force' for at installere den nyeste version.
+    RequiredModuleInstalled = {0} {1} er i øjeblikket installeret.
     RequiredModuleNotInstalled = {0} {1} eller højere er påkrævet. Kør 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' for at installere den påkrævede modul.
     RequiredModuleTooOld = {0} {1} er i øjeblikket installeret. {0} {2} eller højere er påkrævet. Kør 'Update-Module -Name {0} -RequiredVersion {2} -Force' for at opdatere til den påkrævede version.
     TokenParametersProvided = Angivne token-parametre: {0}

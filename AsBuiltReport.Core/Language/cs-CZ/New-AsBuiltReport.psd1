@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} je aktuálně nainstalován.
     ReportModuleAvailable = {0} {1} je k dispozici.
     ReportModuleUpdate = Spusťte 'Update-Module -Name {0} -Force' pro instalaci nejnovější verze.
+    RequiredModuleInstalled = {0} {1} je aktuálně nainstalován.
     RequiredModuleNotInstalled = Je vyžadován {0} {1} nebo vyšší. Spusťte 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' pro instalaci požadovaného modulu.
     RequiredModuleTooOld = {0} {1} je aktuálně nainstalován. Je vyžadován {0} {2} nebo vyšší. Spusťte 'Update-Module -Name {0} -RequiredVersion {2} -Force' pro aktualizaci na požadovanou verzi.
     TokenParametersProvided = Poskytnuté parametry tokenu: {0}

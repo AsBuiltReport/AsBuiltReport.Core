@@ -44,15 +44,16 @@ function Resolve-Culture {
     # Define culture mapping with fallback chain
     $CultureMappings = @{
         # English variants
-        'en-AU' = @('en-AU', 'en-GB', 'en-US')
-        'en-CA' = @('en-CA', 'en-GB', 'en-US')
-        'en-IE' = @('en-IE', 'en-GB', 'en-US')
-        'en-IN' = @('en-IN', 'en-GB', 'en-US')
-        'en-NZ' = @('en-NZ', 'en-GB', 'en-US')
-        'en-SG' = @('en-SG', 'en-GB', 'en-US')
-        'en-ZA' = @('en-ZA', 'en-GB', 'en-US')
-        'en-GB' = @('en-GB', 'en-US')
-        'en-US' = @('en-US')
+        'en-AU' = @('en-AU', 'en-GB', 'en-US')        # English (Australia)
+        'en-CA' = @('en-CA', 'en-GB', 'en-US')        # English (Canada)
+        'en-IE' = @('en-IE', 'en-GB', 'en-US')        # English (Ireland)
+        'en-IN' = @('en-IN', 'en-GB', 'en-US')        # English (India)
+        'en-NZ' = @('en-NZ', 'en-GB', 'en-US')        # English (New Zealand)
+        'en-SG' = @('en-SG', 'en-GB', 'en-US')        # English (Singapore)
+        'en-ZA' = @('en-ZA', 'en-GB', 'en-US')        # English (South Africa)
+        'en-LK' = @('en-LK', 'en-GB', 'en-US')        # English (Sri Lanka)
+        'en-GB' = @('en-GB', 'en-US')                  # English (United Kingdom)
+        'en-US' = @('en-US')                            # English (United States)
 
         # Chinese variants
         'zh-CN' = @('zh-CN', 'zh-Hans', 'en-US')     # Simplified Chinese (China)
@@ -171,6 +172,15 @@ function Resolve-Culture {
 
         # Vietnamese variants
         'vi-VN' = @('vi-VN', 'en-US')                # Vietnamese (Vietnam)
+
+        # Sinhala variants
+        'si-LK' = @('si-LK', 'en-US')                # Sinhala (Sri Lanka)
+
+        # Tamil variants
+        'ta-IN' = @('ta-IN', 'en-US')                # Tamil (India)
+        'ta-LK' = @('ta-LK', 'ta-IN', 'en-US')       # Tamil (Sri Lanka)
+        'ta-SG' = @('ta-SG', 'ta-IN', 'en-US')       # Tamil (Singapore)
+        'ta-MY' = @('ta-MY', 'ta-IN', 'en-US')       # Tamil (Malaysia)
     }
 
     # Automatic fallback for language families not explicitly mapped
@@ -203,6 +213,8 @@ function Resolve-Culture {
         'hi' = @('hi-IN', 'en-US')
         'th' = @('th-TH', 'en-US')
         'vi' = @('vi-VN', 'en-US')
+        'si' = @('si-LK', 'en-US')
+        'ta' = @('ta-IN', 'en-US')
     }
 
     # Return explicit mapping if exists

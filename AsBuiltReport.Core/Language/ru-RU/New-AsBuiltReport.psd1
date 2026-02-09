@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} в настоящее время установлен.
     ReportModuleAvailable = {0} {1} доступен.
     ReportModuleUpdate = Запустите 'Update-Module -Name {0} -Force' для установки последней версии.
+    RequiredModuleInstalled = {0} {1} в настоящее время установлен.
     RequiredModuleNotInstalled = Требуется {0} {1} или выше. Запустите 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' для установки необходимого модуля.
     RequiredModuleTooOld = {0} {1} в настоящее время установлен. Требуется {0} {2} или выше. Запустите 'Update-Module -Name {0} -RequiredVersion {2} -Force' для обновления до требуемой версии.
     TokenParametersProvided = Предоставленные параметры токена: {0}

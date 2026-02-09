@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} वर्तमान में इंस्टॉल है।
     ReportModuleAvailable = {0} {1} उपलब्ध है।
     ReportModuleUpdate = नवीनतम संस्करण इंस्टॉल करने के लिए 'Update-Module -Name {0} -Force' चलाएं।
+    RequiredModuleInstalled = {0} {1} वर्तमान में इंस्टॉल है।
     RequiredModuleNotInstalled = {0} {1} या उच्चतर आवश्यक है। आवश्यक मॉड्यूल इंस्टॉल करने के लिए 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' चलाएं।
     RequiredModuleTooOld = {0} {1} वर्तमान में इंस्टॉल है। {0} {2} या उच्चतर आवश्यक है। आवश्यक संस्करण में अपडेट करने के लिए 'Update-Module -Name {0} -RequiredVersion {2} -Force' चलाएं।
     TokenParametersProvided = प्रदान किए गए टोकन पैरामीटर: {0}

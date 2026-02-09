@@ -62,9 +62,12 @@ Describe 'Get-RequiredModule Unit Tests' {
                         Version = [Version]'2.0.0'
                     }
                 }
+                Mock Write-PScriboMessage {}
+                Mock Write-Host {}
                 $global:translate = @{
                     RequiredModuleNotInstalled = 'Module {0} version {1} or higher is required'
                     RequiredModuleTooOld = 'Module {0} version {1} is installed, but version {2} or higher is required'
+                    RequiredModuleInstalled = '{0} {1} is currently installed.'
                 }
                 { Get-RequiredModule -Name 'TestModule' -Version '1.0.0' } | Should -Not -Throw
             }
@@ -78,9 +81,12 @@ Describe 'Get-RequiredModule Unit Tests' {
                         Version = [Version]'2.0.0'
                     }
                 }
+                Mock Write-PScriboMessage {}
+                Mock Write-Host {}
                 $global:translate = @{
                     RequiredModuleNotInstalled = 'Module {0} version {1} or higher is required'
                     RequiredModuleTooOld = 'Module {0} version {1} is installed, but version {2} or higher is required'
+                    RequiredModuleInstalled = '{0} {1} is currently installed.'
                 }
                 { Get-RequiredModule -Name 'TestModule' -Version '2.0.0' } | Should -Not -Throw
             }
@@ -121,9 +127,12 @@ Describe 'Get-RequiredModule Unit Tests' {
                         Version = [Version]'2.0.0'
                     }
                 }
+                Mock Write-PScriboMessage {}
+                Mock Write-Host {}
                 $global:translate = @{
                     RequiredModuleNotInstalled = 'Module {0} version {1} or higher is required'
                     RequiredModuleTooOld = 'Module {0} version {1} is installed, but version {2} or higher is required'
+                    RequiredModuleInstalled = '{0} {1} is currently installed.'
                 }
                 Get-RequiredModule -Name 'TestModule' -Version '1.0.0'
                 Should -Invoke Get-Module -ParameterFilter {

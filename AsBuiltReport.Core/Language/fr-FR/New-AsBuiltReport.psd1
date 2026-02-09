@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} est actuellement installé.
     ReportModuleAvailable = {0} {1} est disponible.
     ReportModuleUpdate = Exécutez 'Update-Module -Name {0} -Force' pour installer la dernière version.
+    RequiredModuleInstalled = {0} {1} est actuellement installé.
     RequiredModuleNotInstalled = {0} {1} ou supérieur est requis. Exécutez 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' pour installer le module requis.
     RequiredModuleTooOld = {0} {1} est actuellement installé. {0} {2} ou supérieur est requis. Exécutez 'Update-Module -Name {0} -RequiredVersion {2} -Force' pour mettre à jour vers la version requise.
     TokenParametersProvided = Paramètres de jeton fournis : {0}
