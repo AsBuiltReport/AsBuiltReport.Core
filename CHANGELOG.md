@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `Get-RequiredModule` Pester unit tests
 
 ### Fixed
-- Fix issue with `Get-RequiredModule` function where rollup modules (e.g. Azure PowerShell 'Az') are not detected in Windows PowerShell 5.1 when installed in OneDrive paths
+- Fix issue with `Get-RequiredModule` function where rollup modules (e.g. Azure PowerShell 'Az') are not detected in Windows PowerShell 5.1
 
 
 ## [1.6.0] - 2026-02-06
