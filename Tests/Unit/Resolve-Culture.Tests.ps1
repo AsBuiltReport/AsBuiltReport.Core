@@ -194,6 +194,38 @@ Describe 'Resolve-Culture Unit Tests' {
         }
     }
 
+    Context 'Sinhala Culture Variants' {
+        It 'Should resolve si-LK to si-LK, en-US' {
+            InModuleScope 'AsBuiltReport.Core' {
+                $Result = Resolve-Culture -CultureName 'si-LK'
+                $Result | Should -Be @('si-LK', 'en-US')
+            }
+        }
+    }
+
+    Context 'Tamil Culture Variants' {
+        It 'Should resolve ta-IN to ta-IN, en-US' {
+            InModuleScope 'AsBuiltReport.Core' {
+                $Result = Resolve-Culture -CultureName 'ta-IN'
+                $Result | Should -Be @('ta-IN', 'en-US')
+            }
+        }
+
+        It 'Should resolve ta-LK to ta-LK, ta-IN, en-US' {
+            InModuleScope 'AsBuiltReport.Core' {
+                $Result = Resolve-Culture -CultureName 'ta-LK'
+                $Result | Should -Be @('ta-LK', 'ta-IN', 'en-US')
+            }
+        }
+
+        It 'Should resolve ta-SG to ta-SG, ta-IN, en-US' {
+            InModuleScope 'AsBuiltReport.Core' {
+                $Result = Resolve-Culture -CultureName 'ta-SG'
+                $Result | Should -Be @('ta-SG', 'ta-IN', 'en-US')
+            }
+        }
+    }
+
     Context 'Language Family Fallback' {
         It 'Should fallback unmapped French variant to fr-FR' {
             InModuleScope 'AsBuiltReport.Core' {

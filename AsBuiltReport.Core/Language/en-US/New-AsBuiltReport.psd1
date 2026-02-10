@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} is currently installed.
     ReportModuleAvailable = {0} {1} is available.
     ReportModuleUpdate = Run 'Update-Module -Name {0} -Force' to install the latest version.
+    RequiredModuleInstalled = {0} {1} is currently installed.
     RequiredModuleNotInstalled = {0} {1} or higher is required. Run 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' to install the required module.
     RequiredModuleTooOld = {0} {1} is currently installed. {0} {2} or higher is required. Run 'Update-Module -Name {0} -RequiredVersion {2} -Force' to update to the required version.
     TokenParametersProvided = Token parameters provided: {0}

@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} 目前已安裝。
     ReportModuleAvailable = {0} {1} 可用。
     ReportModuleUpdate = 執行 'Update-Module -Name {0} -Force' 以安裝最新版本。
+    RequiredModuleInstalled = {0} {1} 目前已安裝。
     RequiredModuleNotInstalled = 需要 {0} {1} 或更高版本。執行 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' 以安裝所需的模組。
     RequiredModuleTooOld = {0} {1} 目前已安裝。需要 {0} {2} 或更高版本。執行 'Update-Module -Name {0} -RequiredVersion {2} -Force' 以更新至所需版本。
     TokenParametersProvided = 提供的權杖參數: {0}

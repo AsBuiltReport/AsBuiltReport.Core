@@ -36,6 +36,7 @@ ConvertFrom-StringData @'
     ReportModuleInstalled = {0} {1} は現在インストールされています。
     ReportModuleAvailable = {0} {1} が利用可能です。
     ReportModuleUpdate = 最新バージョンをインストールするには 'Update-Module -Name {0} -Force' を実行してください。
+    RequiredModuleInstalled = {0} {1} は現在インストールされています。
     RequiredModuleNotInstalled = {0} {1} 以降が必要です。必要なモジュールをインストールするには 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' を実行してください。
     RequiredModuleTooOld = {0} {1} は現在インストールされています。{0} {2} 以降が必要です。必要なバージョンに更新するには 'Update-Module -Name {0} -RequiredVersion {2} -Force' を実行してください。
     TokenParametersProvided = 提供されたトークンパラメータ: {0}
