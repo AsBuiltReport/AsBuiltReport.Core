@@ -13,7 +13,7 @@
 
     # Version number of this module.
 
-    ModuleVersion = '1.6.1'
+    ModuleVersion = '1.6.2'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Desktop', 'Core')
@@ -120,9 +120,6 @@
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
             # RequireLicenseAcceptance = $false
-
-            # External dependent modules of this module
-            ExternalModuleDependencies = @('PScribo')
 
         } # End of PSData hashtable
 
