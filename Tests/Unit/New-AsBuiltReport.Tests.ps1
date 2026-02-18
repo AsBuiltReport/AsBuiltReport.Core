@@ -65,12 +65,13 @@ Describe 'New-AsBuiltReport Unit Tests' {
             $FormatParam | Should -Not -BeNullOrEmpty
         }
 
-        It 'Format parameter should accept Word, HTML, and Text' {
+        It 'Format parameter should accept Word, HTML, Text, and JSON' {
             $FormatParam = $Command.Parameters['Format']
             $ValidateSetAttribute = $FormatParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ValidateSetAttribute] }
             $ValidateSetAttribute.ValidValues | Should -Contain 'Word'
             $ValidateSetAttribute.ValidValues | Should -Contain 'HTML'
             $ValidateSetAttribute.ValidValues | Should -Contain 'Text'
+            $ValidateSetAttribute.ValidValues | Should -Contain 'JSON'
         }
 
         It 'Orientation parameter should accept Portrait and Landscape' {

@@ -88,7 +88,7 @@ Tests individual functions in isolation:
 - ✓ Parameter validation and types
 - ✓ Parameter aliases (Target/Server/IP, etc.)
 - ✓ Multiple parameter sets (Credential, Token, InteractiveAuth)
-- ✓ Format validation (Word, HTML, Text)
+- ✓ Format validation (Word, HTML, Text, JSON)
 - ✓ Orientation validation (Portrait, Landscape)
 - ✓ Help documentation completeness
 - ✓ Argument completers

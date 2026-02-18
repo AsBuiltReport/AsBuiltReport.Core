@@ -147,12 +147,13 @@ Describe 'AsBuiltReport.Core Module Tests' {
             $NewAsBuiltReportCommand.Parameters.Keys | Should -Contain 'Credential'
         }
 
-        It 'New-AsBuiltReport Format parameter should accept Word, HTML, and Text' {
+        It 'New-AsBuiltReport Format parameter should accept Word, HTML, Text, and JSON' {
             $FormatParam = $NewAsBuiltReportCommand.Parameters['Format']
             $ValidateSetAttribute = $FormatParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ValidateSetAttribute] }
             $ValidateSetAttribute.ValidValues | Should -Contain 'Word'
             $ValidateSetAttribute.ValidValues | Should -Contain 'HTML'
             $ValidateSetAttribute.ValidValues | Should -Contain 'Text'
+            $ValidateSetAttribute.ValidValues | Should -Contain 'JSON'
         }
 
         It 'New-AsBuiltReportConfig should have Report parameter' {
