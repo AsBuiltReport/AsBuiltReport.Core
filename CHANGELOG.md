@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.2] - 2026-02-19
 
+### Changed
+- Update bug report template
+
 ### Fixed
 - Fix issue with module manifest which prevented dependent modules from being installed
 
