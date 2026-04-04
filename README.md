@@ -72,20 +72,21 @@ The module includes comprehensive mappings for:
 ### Languages supported by AsBuiltReport.Core
 | Locale Code | Language | Locale Code | Language |
 |-------------|----------|-------------|----------|
-| **en-US (default)** | English (United States) | **hu-HU** | Hungarian (Hungary) |
-| **en-GB** | English (United Kingdom) | **it-IT** | Italian (Italy) |
-| **ar-SA** | Arabic (Saudi Arabia) | **ja-JP** | Japanese (Japan) |
-| **cs-CZ** | Czech (Czech Republic) | **ko-KR** | Korean (South Korea) |
-| **da-DK** | Danish (Denmark) | **nb-NO** | Norwegian Bokmål (Norway) |
-| **de-DE** | German (Germany) | **nl-NL** | Dutch (Netherlands) |
-| **el-GR** | Greek (Greece) | **pl-PL** | Polish (Poland) |
-| **es-ES** | Spanish (Spain) | **pt-PT** | Portuguese (Portugal) |
-| **fi-FI** | Finnish (Finland) | **ru-RU** | Russian (Russia) |
-| **fr-FR** | French (France) | **sv-SE** | Swedish (Sweden) |
-| **he-IL** | Hebrew (Israel) | **th-TH** | Thai (Thailand) |
-| **hi-IN** | Hindi (India) | **tr-TR** | Turkish (Turkey) |
-| **vi-VN** | Vietnamese (Vietnam) | **zh-CN** | Chinese (China, Simplified) |
-| **zh-Hans** | Chinese (Simplified) | **zh-Hant** | Chinese (Traditional) |
+| **en-US (default)** | English (United States) | **ko-KR** | Korean (South Korea) |
+| **en-GB** | English (United Kingdom) | **nb-NO** | Norwegian Bokmål (Norway) |
+| **ar-SA** | Arabic (Saudi Arabia) | **nl-NL** | Dutch (Netherlands) |
+| **cs-CZ** | Czech (Czech Republic) | **pl-PL** | Polish (Poland) |
+| **da-DK** | Danish (Denmark) | **pt-PT** | Portuguese (Portugal) |
+| **de-DE** | German (Germany) | **ru-RU** | Russian (Russia) |
+| **el-GR** | Greek (Greece) | **si-LK** | Sinhala (Sri Lanka) |
+| **es-ES** | Spanish (Spain) | **sv-SE** | Swedish (Sweden) |
+| **fi-FI** | Finnish (Finland) | **ta-IN** | Tamil (India) |
+| **fr-FR** | French (France) | **th-TH** | Thai (Thailand) |
+| **he-IL** | Hebrew (Israel) | **tr-TR** | Turkish (Turkey) |
+| **hi-IN** | Hindi (India) | **vi-VN** | Vietnamese (Vietnam) |
+| **hu-HU** | Hungarian (Hungary) | **zh-CN** | Chinese (China, Simplified) |
+| **it-IT** | Italian (Italy) | **zh-Hans** | Chinese (Simplified) |
+| **ja-JP** | Japanese (Japan) | **zh-Hant** | Chinese (Traditional) |
 
 ## :wrench: System Requirements
 
