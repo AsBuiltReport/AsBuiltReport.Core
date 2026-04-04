@@ -154,7 +154,7 @@ function New-AsBuiltReport {
             HelpMessage = 'Please specify which report type you wish to run.'
         )]
         [ValidateScript( {
-                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
+                $InstalledReportModules = Get-Module -Name 'AsBuiltReport.*' -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' -and $_.name -ne 'AsBuiltReport.Chart' -and $_.name -ne 'AsBuiltReport.Diagram' } | Sort-Object -Property Version -Descending | Select-Object -Unique
                 $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
                     $NameArray = $InstalledReportModule.Name.Split('.')
                     "$($NameArray[-2]).$($NameArray[-1])"
@@ -374,12 +374,12 @@ function New-AsBuiltReport {
             if (Test-Path -Path $AsBuiltConfigFilePath) {
                 $Global:AsBuiltConfig = Get-Content -Path $AsBuiltConfigFilePath | ConvertFrom-Json
                 # Verbose Output for As Built Report configuration
-                Write-PScriboMessage -Plugin "Module" -Message ($translate.LoadConfig -f $AsBuiltConfigFilePath)
+                Write-PScriboMessage -Plugin 'Module' -Message ($translate.LoadConfig -f $AsBuiltConfigFilePath)
             } else {
                 Write-Error ($translate.NoConfigFound -f $AsBuiltConfigFilePath) -ErrorAction Stop
             }
         } else {
-            Write-PScriboMessage -Plugin "Document" -Message $translate.GeneratingReport
+            Write-PScriboMessage -Plugin 'Document' -Message $translate.GeneratingReport
             $Global:AsBuiltConfig = New-AsBuiltConfig
             # Restore core translations after New-AsBuiltConfig (which loads its own translations)
             Initialize-LocalizedData -ModuleBasePath (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) -LanguageFile 'New-AsBuiltReport' -ModuleType 'Core'
@@ -395,7 +395,7 @@ function New-AsBuiltReport {
             $Global:OutputFolderPath = $OutputFolderPath
         }
 
-        # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
+        # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error'AsBuiltReport.Core'
         if ($StyleFilePath) {
             if (-not (Test-Path -Path $StyleFilePath)) {
                 Write-Error ($translate.StyleScriptNotFound -f $StyleFilePath) -ErrorAction Stop
@@ -418,14 +418,14 @@ function New-AsBuiltReport {
                 Write-Error ($translate.ReportModuleNotFound -f $ReportModuleName, $ReportConfigFilePath) -ErrorAction Stop
             } else {
                 # Import the Report Configuration in to a variable
-                Write-PScriboMessage -Plugin "Document" -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
+                Write-PScriboMessage -Plugin 'Document' -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             }
         } else {
             # If a report config hasn't been provided, check for the existance of the default JSON in the paths the user specified in base config
             $ReportConfigFilePath = Join-Path -Path $ReportModulePath -ChildPath "$($ReportModuleName).json"
             if (Test-Path -Path $ReportConfigFilePath) {
-                Write-PScriboMessage -Plugin "Document" -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
+                Write-PScriboMessage -Plugin 'Document' -Message ($translate.LoadingReportConfig -f $ReportModuleName, $ReportConfigFilePath)
                 $Global:ReportConfig = Get-Content -Path $ReportConfigFilePath | ConvertFrom-Json
             } else {
                 Write-Error ($translate.ReportConfigNotFound -f $ReportModulePath) -ErrorAction Stop
@@ -454,7 +454,7 @@ function New-AsBuiltReport {
             } catch {
                 # If report-specific language file not found or invalid, determine severity
                 $ErrorMessage = $_.Exception.Message
-                if ($ErrorMessage -match "Error:") {
+                if ($ErrorMessage -match 'Error:') {
                     # This is a file validation error from Initialize-LocalizedData - this is FATAL
                     # The file exists but has syntax errors (duplicate keys, invalid PowerShell syntax, etc.)
                     Write-Error "Report module localization file error for $ReportModuleName`: $ErrorMessage`n`nPlease fix the language file syntax errors before running the report." -ErrorAction Stop
@@ -478,9 +478,9 @@ function New-AsBuiltReport {
         }
         # If Timestamp parameter is specified, add the timestamp to the report filename
         if ($Timestamp) {
-            $FileName = $Filename + " - " + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss')
+            $FileName = $Filename + ' - ' + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss')
         }
-        Write-PScriboMessage -Plugin "Document" -Message ($translate.SetReportFileName -f $FileName)
+        Write-PScriboMessage -Plugin 'Document' -Message ($translate.SetReportFileName -f $FileName)
 
         # If the EnableHealthCheck parameter has been specified, set the global healthcheck variable so report scripts can reference the health checks
         if ($EnableHealthCheck) {
@@ -507,29 +507,29 @@ function New-AsBuiltReport {
             $InstalledVersion = Get-Module -ListAvailable -Name AsBuiltReport.Core -ErrorAction SilentlyContinue | Sort-Object -Property Version -Descending | Select-Object -First 1 -ExpandProperty Version
 
             if ($InstalledVersion) {
-                Write-PScriboMessage -Plugin "Module" -Message ($translate.InstalledModule -f $($InstalledVersion.ToString()))
+                Write-PScriboMessage -Plugin 'Module' -Message ($translate.InstalledModule -f $($InstalledVersion.ToString()))
                 $LatestVersion = Find-Module -Name AsBuiltReport.Core -Repository PSGallery -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Version
                 if ($LatestVersion -gt $InstalledVersion) {
-                    Write-PScriboMessage -Plugin "Module" -Message ($translate.AvailableModule -f $($LatestVersion.ToString()))
-                    Write-PScriboMessage -Plugin "Module" -Message $translate.UpdateModule
+                    Write-PScriboMessage -Plugin 'Module' -Message ($translate.AvailableModule -f $($LatestVersion.ToString()))
+                    Write-PScriboMessage -Plugin 'Module' -Message $translate.UpdateModule
                 }
             }
         } catch {
-            Write-PScriboMessage -Plugin "Module" -IsWarning $_.Exception.Message
+            Write-PScriboMessage -Plugin 'Module' -IsWarning $_.Exception.Message
         }
 
         #region Generate PScribo document
         # if Verbose has been passed
-        if ($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent) {
+        if ($PSCmdlet.MyInvocation.BoundParameters['Verbose'].IsPresent) {
             $AsBuiltReport = Document $FileName -Verbose {
-                Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportGenerating -f $($Report.Replace(".", " ")))
+                Write-PScriboMessage -Plugin 'Document' -Message ($translate.ReportGenerating -f $($Report.Replace('.', ' ')))
                 # Set Document Style
                 if ($StyleFilePath) {
-                    Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
+                    Write-PScriboMessage -Plugin 'Document' -Message ($translate.ReportStyleScript -f $StyleFilePath)
                     . $StyleFilePath
                 } else {
                     $StyleFilePath = Join-Path -Path $CoreModulePath -ChildPath 'AsBuiltReport.Core.Style.ps1'
-                    Write-PScriboMessage -Plugin "Document" -Message ($translate.ReportStyleScript -f $StyleFilePath)
+                    Write-PScriboMessage -Plugin 'Document' -Message ($translate.ReportStyleScript -f $StyleFilePath)
                     . $StyleFilePath
                 }
 
@@ -548,7 +548,7 @@ function New-AsBuiltReport {
 
                         # Merge TokenParameters into InvokeParams
                         if ($TokenParameters) {
-                            Write-PScriboMessage -Plugin "Module" -Message ($translate.TokenParametersProvided -f ($TokenParameters.Keys -join ', '))
+                            Write-PScriboMessage -Plugin 'Module' -Message ($translate.TokenParametersProvided -f ($TokenParameters.Keys -join ', '))
                             foreach ($key in $TokenParameters.Keys) {
                                 $InvokeParams[$key] = $TokenParameters[$key]
                             }
@@ -556,7 +556,7 @@ function New-AsBuiltReport {
 
                         & "Invoke-$($ReportModuleName)" @InvokeParams -Verbose -ErrorAction Stop
                     } elseif ($UseInteractiveAuth) {
-                        Write-PScriboMessage -Plugin "Module" -Message ($translate.InteractiveAuth)
+                        Write-PScriboMessage -Plugin 'Module' -Message ($translate.InteractiveAuth)
                         & "Invoke-$($ReportModuleName)" -Target $Target -UseInteractiveAuth -Verbose -ErrorAction Stop
                     }
                 } catch {
@@ -565,7 +565,7 @@ function New-AsBuiltReport {
             }
         } else {
             # Show progress messages for non-verbose report generation
-            Write-Host ($translate.ReportGenerating -f $($Report.Replace(".", " "))) -ForegroundColor Green
+            Write-Host ($translate.ReportGenerating -f $($Report.Replace('.', ' '))) -ForegroundColor Green
             Write-Host ($translate.ReportInitializing) -ForegroundColor Cyan
 
             try {
@@ -625,7 +625,7 @@ function New-AsBuiltReport {
                 $CoreModuleBasePath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
                 Initialize-LocalizedData -ModuleBasePath $CoreModuleBasePath -LanguageFile 'New-AsBuiltReport' -ModuleType 'Core'
             }
-            Write-Host ($translate.OutputFolder -f $($Report.Replace(".", " ")), $FileName, $OutputFolderPath) -ForegroundColor Green
+            Write-Host ($translate.OutputFolder -f $($Report.Replace('.', ' ')), $FileName, $OutputFolderPath) -ForegroundColor Green
         } catch {
             $Err = $_
             Write-Error $Err
@@ -685,7 +685,7 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReport' -ParameterName 'Repo
         $fakeBoundParameter
     )
 
-    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
+    $InstalledReportModules = Get-Module -Name 'AsBuiltReport.*' -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' -and $_.name -ne 'AsBuiltReport.Chart' -and $_.name -ne 'AsBuiltReport.Diagram' } | Sort-Object -Property Version -Descending | Select-Object -Unique
     $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
         $NameArray = $InstalledReportModule.Name.Split('.')
         "$($NameArray[-2]).$($NameArray[-1])"

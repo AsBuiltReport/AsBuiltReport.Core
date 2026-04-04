@@ -34,7 +34,7 @@ function New-AsBuiltReportConfig {
         )]
         [ValidateNotNullOrEmpty()]
         [ValidateScript( {
-                $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
+                $InstalledReportModules = Get-Module -Name 'AsBuiltReport.*' -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' -and $_.name -ne 'AsBuiltReport.Chart' -and $_.name -ne 'AsBuiltReport.Diagram' } | Sort-Object -Property Version -Descending | Select-Object -Unique
                 $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
                     $NameArray = $InstalledReportModule.Name.Split('.')
                     "$($NameArray[-2]).$($NameArray[-1])"
@@ -80,7 +80,7 @@ function New-AsBuiltReportConfig {
     }
     # Find the root folder where the module is located for the report that has been specified
     try {
-        $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
+        $Module = Get-Module -Name "AsBuiltReport.$Report" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' -and $_.name -ne 'AsBuiltReport.Chart' -and $_.name -ne 'AsBuiltReport.Diagram' } | Sort-Object -Property Version -Descending | Select-Object -Unique
         $SourcePath = Join-Path -Path $($Module.ModuleBase) -ChildPath "$($Module.Name).json"
         if (Test-Path -Path $($SourcePath)) {
             Write-Verbose ($translate.ProcessConfig -f $Module.Name, $Module, $Module.Version)
@@ -128,7 +128,7 @@ Register-ArgumentCompleter -CommandName 'New-AsBuiltReportConfig' -ParameterName
         $fakeBoundParameter
     )
 
-    $InstalledReportModules = Get-Module -Name "AsBuiltReport.*" -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' } | Sort-Object -Property Version -Descending | Select-Object -Unique
+    $InstalledReportModules = Get-Module -Name 'AsBuiltReport.*' -ListAvailable | Where-Object { $_.name -ne 'AsBuiltReport.Core' -and $_.name -ne 'AsBuiltReport.Chart' -and $_.name -ne 'AsBuiltReport.Diagram' } | Sort-Object -Property Version -Descending | Select-Object -Unique
     $ValidReports = foreach ($InstalledReportModule in $InstalledReportModules) {
         $NameArray = $InstalledReportModule.Name.Split('.')
         "$($NameArray[-2]).$($NameArray[-1])"
