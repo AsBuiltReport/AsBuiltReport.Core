@@ -496,7 +496,7 @@ function New-AsBuiltReport {
         # If Email Server Authentication is required, prompt user for credentials
         if ($SendEmail -and $AsBuiltConfig.Email.Credentials) {
             Clear-Host
-            Draw-AsciiBox -Lines @($translate.EmailBannerTitle) -ExtraPadding 4 -TextColor 'Cyan' -BorderColor 'Cyan'
+            Draw-AsciiBanner -Lines @($translate.EmailBannerTitle) -TextColor 'Cyan' -SeparatorColor 'Cyan'
             $MailCredentials = Get-Credential -Message ($translate.EmailCredentials -f $AsBuiltConfig.Email.Server)
             Clear-Host
         }
