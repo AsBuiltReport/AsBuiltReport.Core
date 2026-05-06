@@ -395,7 +395,7 @@ function New-AsBuiltReport {
             $Global:OutputFolderPath = $OutputFolderPath
         }
 
-        # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error'AsBuiltReport.Core'
+        # If StyleFilePath was specified, ensure the file provided in the path exists, otherwise exit with error
         if ($StyleFilePath) {
             if (-not (Test-Path -Path $StyleFilePath)) {
                 Write-Error ($translate.StyleScriptNotFound -f $StyleFilePath) -ErrorAction Stop
