@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.3] - 2026-05-12
+
+### Changed
+- Refactor input validation in `New-AsBuiltConfig`, `New-AsBuiltReport`, and `New-AsBuiltReportConfig` to improve string comparison consistency and default value handling
+- Exclude `AsBuiltReport.Chart` and `AsBuiltReport.Diagram` from installed report module lists in `New-AsBuiltConfig`, `New-AsBuiltReport`, and `New-AsBuiltReportConfig`
+- Use `$PSBoundParameters.ContainsKey('Verbose')` for verbose parameter detection in `New-AsBuiltReport`
+
+### Fixed
+- Fix incorrect `Draw-AsciiBox` function call replaced with `Draw-AsciiBanner` in email credentials prompt (Fix [#74](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/74))
+
+### Removed
+- Remove Claude Code and Claude Code Review GitHub Actions workflows
+
 ## [1.6.2] - 2026-02-19
 
 ### Changed
