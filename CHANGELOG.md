@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix verbose output always enabled on Windows PowerShell 5.1 when `-Verbose` is not explicitly passed (Fix [#77](https://github.com/AsBuiltReport/AsBuiltReport.Core/issues/77))
 
+### Removed
+- Remove X (Twitter) post action from release workflow due to API costs
+
 ## [1.6.3] - 2026-05-12
 
 ### Changed
