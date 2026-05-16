@@ -520,7 +520,7 @@ function New-AsBuiltReport {
 
         #region Generate PScribo document
         # if Verbose has been passed
-        if ($PSBoundParameters.ContainsKey('Verbose')) {
+        if ($PSCmdlet.MyInvocation.BoundParameters['Verbose'].IsPresent) {
             $AsBuiltReport = Document $FileName -Verbose {
                 Write-PScriboMessage -Plugin 'Document' -Message ($translate.ReportGenerating -f $($Report.Replace('.', ' ')))
                 # Set Document Style
