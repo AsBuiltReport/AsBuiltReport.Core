@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = ต้องการ {0} {1} หรือสูงกว่า เรียกใช้ 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' เพื่อติดตั้งโมดูลที่ต้องการ
     RequiredModuleTooOld = {0} {1} ติดตั้งอยู่ในปัจจุบัน ต้องการ {0} {2} หรือสูงกว่า เรียกใช้ 'Update-Module -Name {0} -RequiredVersion {2} -Force' เพื่ออัปเดตเป็นเวอร์ชันที่ต้องการ
     TokenParametersProvided = พารามิเตอร์โทเค็นที่ให้มา: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

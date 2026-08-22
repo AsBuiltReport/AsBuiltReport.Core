@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = {0} {1} vagy újabb verzió szükséges. Futtassa az 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' parancsot a szükséges modul telepítéséhez.
     RequiredModuleTooOld = {0} {1} jelenleg telepítve van. {0} {2} vagy újabb verzió szükséges. Futtassa az 'Update-Module -Name {0} -RequiredVersion {2} -Force' parancsot a szükséges verzióra való frissítéshez.
     TokenParametersProvided = Megadott token paraméterek: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

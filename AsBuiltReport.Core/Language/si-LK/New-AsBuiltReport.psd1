@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = {0} {1} හෝ ඊට වැඩි අනුවාදයක් අවශ්‍යයි. අවශ්‍ය මොඩියුලය ස්ථාපනය කිරීමට 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' ධාවනය කරන්න.
     RequiredModuleTooOld = {0} {1} දැනට ස්ථාපිත වී ඇත. {0} {2} හෝ ඊට වැඩි අනුවාදයක් අවශ්‍යයි. අවශ්‍ය අනුවාදයට යාවත්කාලීන කිරීමට 'Update-Module -Name {0} -RequiredVersion {2} -Force' ධාවනය කරන්න.
     TokenParametersProvided = සපයන ලද ටෝකන පරාමිතීන්: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

@@ -126,6 +126,33 @@ Describe 'New-AsBuiltReport Unit Tests' {
         }
     }
 
+    Context 'InputFile Parameter Set' {
+        BeforeAll {
+            $Command = Get-Command -Name 'New-AsBuiltReport'
+        }
+
+        It 'Should have InputFile parameter' {
+            $Command.Parameters.Keys | Should -Contain 'InputFile'
+        }
+
+        It 'InputFile parameter should accept array of strings' {
+            $InputFileParam = $Command.Parameters['InputFile']
+            $InputFileParam.ParameterType.Name | Should -Be 'String[]'
+        }
+
+        It 'InputFile parameter should be mandatory in the InputFile parameter set' {
+            $InputFileParam = $Command.Parameters['InputFile']
+            $ParameterAttribute = $InputFileParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ParameterAttribute] -and $_.ParameterSetName -eq 'InputFile' }
+            $ParameterAttribute.Mandatory | Should -Be $true
+        }
+
+        It 'Target parameter should not be mandatory in the InputFile parameter set' {
+            $TargetParam = $Command.Parameters['Target']
+            $ParameterAttribute = $TargetParam.Attributes | Where-Object { $_ -is [System.Management.Automation.ParameterAttribute] -and $_.ParameterSetName -eq 'InputFile' }
+            $ParameterAttribute.Mandatory | Should -Be $false
+        }
+    }
+
     Context 'Parameter Aliases' {
         BeforeAll {
             $Command = Get-Command -Name 'New-AsBuiltReport'
@@ -240,6 +267,19 @@ Describe 'New-AsBuiltReport Unit Tests' {
         It 'Should throw error when AsBuiltConfigFilePath does not exist' {
             $NonExistentConfig = Join-Path -Path $TestDrive -ChildPath "NonExistent_$(Get-Random).json"
             { New-AsBuiltReport -Report 'Test.Report' -Target '127.0.0.1' -Username 'test' -Password 'test' -OutputFolderPath $TestFolder -AsBuiltConfigFilePath $NonExistentConfig -ErrorAction Stop } | Should -Throw
+        }
+
+        It 'Should throw error when InputFile path does not exist' {
+            $NonExistentInputFile = Join-Path -Path $TestDrive -ChildPath "NonExistent_$(Get-Random).json"
+            { New-AsBuiltReport -Report 'Test.Report' -InputFile $NonExistentInputFile -OutputFolderPath $TestFolder -ErrorAction Stop } | Should -Throw
+        }
+
+        It 'Should throw error when Target and InputFile counts do not match' {
+            $InputFile1 = Join-Path -Path $TestFolder -ChildPath 'export1.json'
+            $InputFile2 = Join-Path -Path $TestFolder -ChildPath 'export2.json'
+            'test' | Out-File -FilePath $InputFile1
+            'test' | Out-File -FilePath $InputFile2
+            { New-AsBuiltReport -Report 'Test.Report' -Target 'system01' -InputFile $InputFile1, $InputFile2 -OutputFolderPath $TestFolder -ErrorAction Stop } | Should -Throw
         }
     }
 }

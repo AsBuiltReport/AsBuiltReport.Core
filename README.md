@@ -174,6 +174,14 @@ The `New-AsBuiltReport` cmdlet is used to generate AsBuiltReports. The type of A
 .PARAMETER Target
     Specifies the IP/FQDN of the system to connect.
     Multiple targets may be specified, separated by a comma.
+    When used with -InputFile, Target is optional and acts as a display-name override for each
+    exported configuration file; if specified, the number of Target values must match the number
+    of InputFile values (1:1 mapping by position).
+.PARAMETER InputFile
+    Specifies the path to one or more exported/offline system configuration files to use as the
+    data source for the report, instead of connecting live to a target system.
+    Multiple files may be specified, separated by a comma, mapping 1:1 to any -Target values supplied.
+    Not all report modules support this parameter; consult the specific report module documentation.
 .PARAMETER Credential
     Specifies the stored credential of the target system.
 .PARAMETER Username
@@ -288,6 +296,9 @@ New-AsBuiltReport -Report Microsoft.Azure -Target 'contoso.onmicrosoft.com' -Tok
 
 # Generate a Rubrik CDM AsBuiltReport using token authentication. Rubrik does not require additional token parameters, so TokenParameters is not needed.
 New-AsBuiltReport -Report Rubrik.CDM -Target 'rubrik.corp.local' -Token 'abc123def456...' -Format HTML -OutputFolderPath 'C:\Reports'
+
+# Generate a VMware vSphere AsBuiltReport from a previously exported configuration file instead of connecting live to the target system.
+New-AsBuiltReport -Report VMware.vSphere -InputFile 'C:\Exports\vcenter01-export.zip' -Format HTML -OutputFolderPath 'C:\Reports'
 ```
 
 ## :x: Known Issues

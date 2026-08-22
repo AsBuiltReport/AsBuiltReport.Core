@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = {0} {1} o superiore è richiesto. Eseguire 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' per installare il modulo richiesto.
     RequiredModuleTooOld = {0} {1} è attualmente installato. {0} {2} o superiore è richiesto. Eseguire 'Update-Module -Name {0} -RequiredVersion {2} -Force' per aggiornare alla versione richiesta.
     TokenParametersProvided = Parametri token forniti: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

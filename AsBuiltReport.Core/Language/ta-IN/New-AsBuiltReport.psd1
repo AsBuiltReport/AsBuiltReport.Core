@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = {0} {1} அல்லது அதற்கு மேல் தேவை. தேவையான தொகுதியை நிறுவ 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' இயக்கவும்.
     RequiredModuleTooOld = {0} {1} தற்போது நிறுவப்பட்டுள்ளது. {0} {2} அல்லது அதற்கு மேல் தேவை. தேவையான பதிப்பிற்கு புதுப்பிக்க 'Update-Module -Name {0} -RequiredVersion {2} -Force' இயக்கவும்.
     TokenParametersProvided = வழங்கப்பட்ட டோக்கன் அளவுருக்கள்: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = 需要 {0} {1} 或更高版本。运行 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' 以安装所需的模块。
     RequiredModuleTooOld = {0} {1} 当前已安装。需要 {0} {2} 或更高版本。运行 'Update-Module -Name {0} -RequiredVersion {2} -Force' 以更新到所需版本。
     TokenParametersProvided = 提供的令牌参数: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

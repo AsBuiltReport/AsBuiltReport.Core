@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = {0} {1} या उच्चतर आवश्यक है। आवश्यक मॉड्यूल इंस्टॉल करने के लिए 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' चलाएं।
     RequiredModuleTooOld = {0} {1} वर्तमान में इंस्टॉल है। {0} {2} या उच्चतर आवश्यक है। आवश्यक संस्करण में अपडेट करने के लिए 'Update-Module -Name {0} -RequiredVersion {2} -Force' चलाएं।
     TokenParametersProvided = प्रदान किए गए टोकन पैरामीटर: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

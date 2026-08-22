@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = Yêu cầu {0} {1} hoặc cao hơn. Chạy 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' để cài đặt mô-đun bắt buộc.
     RequiredModuleTooOld = {0} {1} hiện đang được cài đặt. Yêu cầu {0} {2} hoặc cao hơn. Chạy 'Update-Module -Name {0} -RequiredVersion {2} -Force' để cập nhật lên phiên bản bắt buộc.
     TokenParametersProvided = Tham số mã thông báo được cung cấp: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

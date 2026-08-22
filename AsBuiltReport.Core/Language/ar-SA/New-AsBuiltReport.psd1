@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = {0} {1} أو أعلى مطلوب. قم بتشغيل 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' لتثبيت الوحدة المطلوبة.
     RequiredModuleTooOld = {0} {1} مثبت حالياً. {0} {2} أو أعلى مطلوب. قم بتشغيل 'Update-Module -Name {0} -RequiredVersion {2} -Force' للتحديث إلى الإصدار المطلوب.
     TokenParametersProvided = معلمات الرمز المقدمة: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = Απαιτείται {0} {1} ή νεότερη έκδοση. Εκτελέστε 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' για εγκατάσταση της απαιτούμενης μονάδας.
     RequiredModuleTooOld = Το {0} {1} είναι εγκατεστημένο αυτήν τη στιγμή. Απαιτείται {0} {2} ή νεότερη έκδοση. Εκτελέστε 'Update-Module -Name {0} -RequiredVersion {2} -Force' για ενημέρωση στην απαιτούμενη έκδοση.
     TokenParametersProvided = Παράμετροι διακριτικού που παρέχονται: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

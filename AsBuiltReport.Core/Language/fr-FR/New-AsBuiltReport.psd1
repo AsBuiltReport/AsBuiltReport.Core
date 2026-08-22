@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = {0} {1} ou supérieur est requis. Exécutez 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' pour installer le module requis.
     RequiredModuleTooOld = {0} {1} est actuellement installé. {0} {2} ou supérieur est requis. Exécutez 'Update-Module -Name {0} -RequiredVersion {2} -Force' pour mettre à jour vers la version requise.
     TokenParametersProvided = Paramètres de jeton fournis : {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

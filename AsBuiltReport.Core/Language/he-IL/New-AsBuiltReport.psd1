@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = נדרש {0} {1} או גבוה יותר. הרץ 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' כדי להתקין את המודול הנדרש.
     RequiredModuleTooOld = {0} {1} מותקן כרגע. נדרש {0} {2} או גבוה יותר. הרץ 'Update-Module -Name {0} -RequiredVersion {2} -Force' כדי לעדכן לגרסה הנדרשת.
     TokenParametersProvided = פרמטרים של אסימון שסופקו: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@

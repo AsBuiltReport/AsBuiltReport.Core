@@ -9,6 +9,14 @@ function New-AsBuiltReport {
     .PARAMETER Target
         Specifies the IP/FQDN of the system to connect.
         Multiple targets may be specified, separated by a comma.
+        When used with -InputFile, Target is optional and acts as a display-name override for each
+        exported configuration file; if specified, the number of Target values must match the number
+        of InputFile values (1:1 mapping by position).
+    .PARAMETER InputFile
+        Specifies the path to one or more exported/offline system configuration files to use as the
+        data source for the report, instead of connecting live to a target system.
+        Multiple files may be specified, separated by a comma, mapping 1:1 to any -Target values supplied.
+        Not all report modules support this parameter; consult the specific report module documentation.
     .PARAMETER Credential
         Specifies the stored credential of the target system.
     .PARAMETER Username
@@ -79,6 +87,12 @@ function New-AsBuiltReport {
 
         Creates a Rubrik CDM As Built Report in HTML format.
         An API token is used to connect to the system.
+        The report will be saved to C:\Reports.
+    .EXAMPLE
+        New-AsBuiltReport -Report VMware.vSphere -InputFile 'C:\Exports\vcenter01-export.zip' -Format HTML -OutputFolderPath 'C:\Reports'
+
+        Creates a VMware vSphere As Built Report in HTML format using a previously exported configuration file
+        instead of connecting live to the target system.
         The report will be saved to C:\Reports.
     .EXAMPLE
         New-AsBuiltReport -Report Microsoft.Azure -Target 'contoso.onmicrosoft.com' -Token 'eyJ0eXAiOiJKV1QiLCJhbGc...' -TokenParameters @{AccountId='admin@contoso.com'} -Format HTML -OutputFolderPath 'C:\Reports'
@@ -172,9 +186,33 @@ function New-AsBuiltReport {
             Mandatory = $true,
             HelpMessage = 'Please provide the IP/FQDN of the system'
         )]
+        [Parameter(
+            Position = 1,
+            Mandatory = $false,
+            HelpMessage = 'Optional display-name override(s) for the system(s) documented by the InputFile(s). Must match the number of InputFile values if specified.',
+            ParameterSetName = 'InputFile'
+        )]
         [ValidateNotNullOrEmpty()]
         [Alias('Cluster', 'Server', 'IP')]
         [String[]] $Target,
+
+        [Parameter(
+            Position = 2,
+            Mandatory = $true,
+            HelpMessage = 'Please provide the path to one or more exported system configuration files',
+            ParameterSetName = 'InputFile'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [ValidateScript( {
+                foreach ($Path in $_) {
+                    if (-not (Test-Path -Path $Path -PathType Leaf)) {
+                        throw "InputFile path '$Path' not found."
+                    }
+                }
+                $true
+            })]
+        [String[]] $InputFile,
+
         [Parameter(
             Position = 2,
             Mandatory = $true,
@@ -349,6 +387,11 @@ function New-AsBuiltReport {
 
         if ($psISE) {
             Write-Error ($translate.PwshISE) -ErrorAction Stop
+        }
+
+        # If InputFile was specified alongside Target, enforce a strict 1:1 mapping between the two
+        if ($InputFile -and $Target -and $Target.Count -ne $InputFile.Count) {
+            Write-Error ($translate.TargetInputFileCountMismatch -f $Target.Count, $InputFile.Count) -ErrorAction Stop
         }
 
         # If Username and Password parameters used, convert specified Password to secure string and store in $Credential
@@ -558,6 +601,13 @@ function New-AsBuiltReport {
                     } elseif ($UseInteractiveAuth) {
                         Write-PScriboMessage -Plugin 'Module' -Message ($translate.InteractiveAuth)
                         & "Invoke-$($ReportModuleName)" -Target $Target -UseInteractiveAuth -Verbose -ErrorAction Stop
+                    } elseif ($InputFile) {
+                        Write-PScriboMessage -Plugin 'Module' -Message ($translate.InputFileAuth -f ($InputFile -join ', '))
+                        $InvokeParams = @{ InputFile = $InputFile }
+                        if ($Target) {
+                            $InvokeParams['Target'] = $Target
+                        }
+                        & "Invoke-$($ReportModuleName)" @InvokeParams -Verbose -ErrorAction Stop
                     }
                 } catch {
                     Write-Error ($($translate.ExecutionFailed) -f $($_.Exception.Message)) -ErrorAction Stop
@@ -584,7 +634,11 @@ function New-AsBuiltReport {
                     # Restore core translations after style script (style script loads its own translations)
                     $global:translate = $CoreTranslations
 
-                    Write-Host ($translate.TargetSystem) -ForegroundColor Cyan
+                    if ($InputFile) {
+                        Write-Host ($translate.InputFileSystem) -ForegroundColor Cyan
+                    } else {
+                        Write-Host ($translate.TargetSystem) -ForegroundColor Cyan
+                    }
                     try {
                         # If Credential has been passed or previously created via Username/Password
                         if ($Credential) {
@@ -606,6 +660,12 @@ function New-AsBuiltReport {
                             & "Invoke-$($ReportModuleName)" @InvokeParams -ErrorAction Stop
                         } elseif ($UseInteractiveAuth) {
                             & "Invoke-$($ReportModuleName)" -Target $Target -UseInteractiveAuth -ErrorAction Stop
+                        } elseif ($InputFile) {
+                            $InvokeParams = @{ InputFile = $InputFile }
+                            if ($Target) {
+                                $InvokeParams['Target'] = $Target
+                            }
+                            & "Invoke-$($ReportModuleName)" @InvokeParams -ErrorAction Stop
                         }
                     } catch {
                         Write-Error ($($translate.ExecutionFailed) -f $($_.Exception.Message)) -ErrorAction Stop

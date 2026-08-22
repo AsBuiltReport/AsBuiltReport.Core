@@ -40,4 +40,7 @@ ConvertFrom-StringData @'
     RequiredModuleNotInstalled = Je vyžadován {0} {1} nebo vyšší. Spusťte 'Install-Module -Name {0} -RequiredVersion {1} -AllowClobber' pro instalaci požadovaného modulu.
     RequiredModuleTooOld = {0} {1} je aktuálně nainstalován. Je vyžadován {0} {2} nebo vyšší. Spusťte 'Update-Module -Name {0} -RequiredVersion {2} -Force' pro aktualizaci na požadovanou verzi.
     TokenParametersProvided = Poskytnuté parametry tokenu: {0}
+    InputFileAuth = Loading data from exported configuration file(s): {0}.
+    InputFileSystem = > Loading exported configuration data...
+    TargetInputFileCountMismatch = The number of Target values ({0}) must match the number of InputFile values ({1}).
 '@
