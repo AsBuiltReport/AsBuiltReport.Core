@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.5] - 2026-11-15
+
+### Changed
+- Apply the new AsBuiltReport branding to the default report style (`AsBuiltReport.Core.Style.ps1`)
+  - Update title, heading, table, caption and highlight (Critical, Warning, Info, OK) colours to the AsBuiltReport brand palette
+  - Left-align Title styles and cover page image, and align Header left and Footer right
+  - Update cover page logo image
+- Apply the AsBuiltReport brand to the README
+
 ## [1.6.4] - 2026-05-15
 
 ### Fixed
