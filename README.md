@@ -1,14 +1,14 @@
 <p align="center">
-    <a href="https://www.asbuiltreport.com/" alt="AsBuiltReport"></a>
-            <img src='https://avatars.githubusercontent.com/u/42958564' width="8%" height="8%" /></a>
+    <a href="https://www.asbuiltreport.com/">
+        <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/repo-banners/AsBuiltReport.Core.png" alt="AsBuiltReport.Core" width="880"></a>
 </p>
 <p align="center">
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PowerShell Gallery Version">
-        <img src="https://img.shields.io/powershellgallery/v/AsBuiltReport.Core.svg" /></a>
+        <img src="https://img.shields.io/powershellgallery/v/AsBuiltReport.Core.svg?color=1F5FD0" /></a>
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PS Gallery Downloads">
-        <img src="https://img.shields.io/powershellgallery/dt/AsBuiltReport.Core.svg" /></a>
+        <img src="https://img.shields.io/powershellgallery/dt/AsBuiltReport.Core.svg?color=012456" /></a>
     <a href="https://www.powershellgallery.com/packages/AsBuiltReport.Core/" alt="PS Platform">
-        <img src="https://img.shields.io/powershellgallery/p/AsBuiltReport.Core.svg" /></a>
+        <img src="https://img.shields.io/powershellgallery/p/AsBuiltReport.Core.svg?color=FFD02B" /></a>
 </p>
 <p align="center">
     <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/graphs/commit-activity" alt="GitHub Last Commit">
@@ -16,7 +16,7 @@
     <a href="https://raw.githubusercontent.com/AsBuiltReport/AsBuiltReport.Core/master/LICENSE" alt="GitHub License">
         <img src="https://img.shields.io/github/license/AsBuiltReport/AsBuiltReport.Core.svg" /></a>
     <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/graphs/contributors" alt="GitHub Contributors">
-        <img src="https://img.shields.io/github/contributors/AsBuiltReport/AsBuiltReport.Core.svg"/></a>
+        <img src="https://img.shields.io/github/contributors/AsBuiltReport/AsBuiltReport.Core.svg?color=012456"/></a>
 </p>
 <p align="center">
     <a href="https://codecov.io/gh/AsBuiltReport/AsBuiltReport.Core" alt="Code Coverage">
@@ -24,24 +24,18 @@
     <a href="https://github.com/AsBuiltReport/AsBuiltReport.Core/actions/workflows/Pester.yml" alt="Pester Tests">
         <img src="https://github.com/AsBuiltReport/AsBuiltReport.Core/workflows/Pester%20Tests/badge.svg" /></a>
 </p>
-<p align="center">
-    <a href="https://twitter.com/AsBuiltReport" alt="Twitter">
-            <img src="https://img.shields.io/twitter/follow/AsBuiltReport.svg?style=social"/></a>
-</p>
 
 <p align="center">
     <a href='https://ko-fi.com/B0B7DDGZ7' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://ko-fi.com/img/githubbutton_sm.svg' border='0' alt='Want to keep alive this project? Support me on Ko-fi' /></a>
 </p>
 
-# AsBuiltReport.Core
-
 AsBuiltReport.Core is a PowerShell module which provides the core framework for generating as built documentation for many common datacentre systems. The AsBuiltReport.Core module is required by each individual report module used to generate as built documentation for a specific product and/or technology.
 
-# :beginner: Getting Started
+# <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/getting-started.svg" alt="" width="28" height="28" align="top"> Getting Started
 
 The following simple list of instructions will get you started with the AsBuiltReport.Core module.
 
-## :floppy_disk: Supported Versions
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/supported-versions.svg" alt="" width="24" height="24" align="top"> Supported Versions
 ### **PowerShell**
 The AsBuiltReport Core module is compatible with the following PowerShell versions;
 
@@ -49,7 +43,7 @@ The AsBuiltReport Core module is compatible with the following PowerShell versio
 | :--------------------: | :----------------: |
 |   :white_check_mark:   | :white_check_mark: |
 
-## 🌐 Language Support
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/language-support.svg" alt="" width="24" height="24" align="top"> Language Support
 The AsBuiltReport Core module provides UI language support, translating on-screen prompts and messages to match your PowerShell session's configured language. The UI language is automatically detected from your PowerShell session's [culture](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-culture) settings.
 
 > [!IMPORTANT]
@@ -88,7 +82,7 @@ The module includes comprehensive mappings for:
 | **it-IT** | Italian (Italy) | **zh-Hans** | Chinese (Simplified) |
 | **ja-JP** | Japanese (Japan) | **zh-Hant** | Chinese (Traditional) |
 
-## :wrench: System Requirements
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/system-requirements.svg" alt="" width="24" height="24" align="top"> System Requirements
 
 The following PowerShell module will be automatically installed by following the [module installation](https://github.com/AsBuiltReport/AsBuiltReport.Core#package-module-installation) procedure.
 
@@ -106,7 +100,7 @@ Find-Module -Name AsBuiltReport.* -Repository PSGallery
 
 The pre-requisites for each report type will be documented within its own `README.md` located in the relevant report repository.
 
-## :package: Module Installation
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/module-installation.svg" alt="" width="24" height="24" align="top"> Module Installation
 
 ### PowerShell
 #### Online Installation
@@ -162,7 +156,7 @@ If you are unable to use the PowerShell Gallery, you can still install the `AsBu
 
 _Note: You are not limited to installing the module to those example paths, you can add a new entry to the environment variable PSModulePath if you want to use another path._
 
-## :pencil2: Commands
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/commands.svg" alt="" width="24" height="24" align="top"> Commands
 
 ### **New-AsBuiltReport**
 
@@ -263,7 +257,7 @@ The `New-AsBuiltReportConfig` cmdlet is used to create JSON configuration files 
 Get-Help New-AsBuiltReportConfig -Full
 ```
 
-## :computer: Examples
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/examples.svg" alt="" width="24" height="24" align="top"> Examples
 Here are some examples to get you going.
 
 ```powershell
@@ -290,7 +284,7 @@ New-AsBuiltReport -Report Microsoft.Azure -Target 'contoso.onmicrosoft.com' -Tok
 New-AsBuiltReport -Report Rubrik.CDM -Target 'rubrik.corp.local' -Token 'abc123def456...' -Format HTML -OutputFolderPath 'C:\Reports'
 ```
 
-## :x: Known Issues
+## <img src="https://raw.githubusercontent.com/AsBuiltReport/.github/main/assets/section-icons/known-issues.svg" alt="" width="24" height="24" align="top"> Known Issues
 - **Table Of Contents (TOC) is missing in Word formatted report**
 
     When opening a Microsoft Word (DOCX) report for the first time, you will be prompted with the following warning;
